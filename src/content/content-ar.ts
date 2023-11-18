@@ -9,13 +9,13 @@ import type {
 } from "../../content";
 
 export const tool: _tool = {
-  Orc_PDF: {
-    title: "Orc PDF",
+  Ocr_PDF: {
+    title: "تحويل PDF إلى نص قابل للبحث",
     description:
-      "قم بتحويل ملفات PDF الثابتة إلى وثائق تفاعلية وقابلة للبحث مع إمكانيات دقيقة في التعرف على النص واختياره.",
+      "تحويل ملفات PDF الثابتة إلى مستندات تفاعلية وقابلة للبحث مع إمكانيات دقيقة للتعرف على النص وتحديده.",
     color: "#006266",
     type: ".pdf",
-    to: "/orc-pdf",
+    to: "/ocr-pdf",
   },
 };
 
@@ -40,14 +40,14 @@ export const downloadFile: _downloadFile = {
 
 export const edit_page: _edit_page = {
   edit_page_titles: {
-    orc_pdf: "خيارات Orc PDF",
+    ocr_pdf: "خيارات تحويل PDF إلى نص قابل للبحث",
   },
   loader_text: "يرجى الانتظار...",
   add_more_button: "إضافة المزيد من الملفات",
   action_buttons: {
-    orc_pdf: "Orc PDF",
+    ocr_pdf: "تحويل PDF",
   },
-  orc_options: {
+  ocr_options: {
     info: "اختيار اللغات الصحيحة في الوثيقة يعزز بشكل كبير دقة التعرف على النص.",
     document_languages: "لغات الوثيقة",
     input_placeholder: "اختر اللغات",

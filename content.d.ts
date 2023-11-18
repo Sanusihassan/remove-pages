@@ -10,6 +10,6 @@ export type downloadFile = typeof import("./src/content/content").downloadFile;
 export type translate_pdf =
   typeof import("./src/content/content").translate_pdf;
 
-
 export type ContinueIn = typeof import("./src/content/content").ContinueIn;
 export type ChangeTo = typeof import("./src/content/content").ChangeTo;
+export type languages = typeof import("./src/content/content").languages;

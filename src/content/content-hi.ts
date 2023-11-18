@@ -9,40 +9,14 @@ import type {
   landing_page as _landing_page,
 } from "../../content";
 
-export const nav_content = {
-  // इसे अनदेखा करें
-  brand: "Equips",
-  merge_pdf: "पीडीएफ विलय करें",
-  split_pdf: "पीडीएफ विभाजित करें",
-  compress_pdf: "पीडीएफ संपीड़ित करें",
-  convert_pdf: "पीडीएफ परिवर्तित करें",
-  convert_to_pdf: "पीडीएफ में परिवर्तित करें",
-  jpg_to_pdf: "जेपीजी से पीडीएफ",
-  word_to_pdf: "शब्द से पीडीएफ",
-  markdown_to_pdf: "पीडीएफ में मार्कडाउन करें",
-  powerpoint_to_pdf: "पावरपॉइंट से पीडीएफ",
-  excel_to_pdf: "एक्सेल से पीडीएफ",
-  html_to_pdf: "एचटीएमएल से पीडीएफ",
-  web_to_pdf: "वेब से पीडीएफ",
-  convert_from_pdf: "पीडीएफ से परिवर्तित करें",
-  read_edit_pdf: "पीडीएफ पढ़ें और संपादित करें",
-  pdf_to_jpg: "पीडीएफ से जेपीजी",
-  pdf_to_word: "पीडीएफ से शब्द",
-  pdf_to_powerpoint: "पीडीएफ से पावरपॉइंट",
-  pdf_to_excel: "पीडीएफ से एक्सेल",
-  pdf_to_pdf_a: "पीडीएफ से पीडीएफ/ए",
-  pdf_to_text: "पाठ के लिए पीडीएफ",
-  pdf_to_html: "पीडीएफ से एचटीएमएल",
-  pdf_to_markdown: "PDF से मार्कडाउन तक",
-};
 export const tool: _tool = {
-  Orc_PDF: {
-    title: "Orc PDF",
+  Ocr_PDF: {
+    title: "OCR PDF",
     description:
       "स्थैतिक पीडीएफ को इंटरैक्टिव और खोजने योग्य दस्तावेज़ में बदलें, सटीक पाठ पहचान और चयन क्षमताओं के साथ।",
     color: "#006266",
     type: ".pdf",
-    to: "/orc-pdf",
+    to: "/ocr-pdf",
   },
 };
 
@@ -66,14 +40,14 @@ export const downloadFile: _downloadFile = {
 
 export const edit_page: _edit_page = {
   edit_page_titles: {
-    orc_pdf: "ओर्क पीडीएफ विकल्प",
+    ocr_pdf: "OCR PDF विकल्प",
   },
   loader_text: "कृपया प्रतीक्षा करें...",
   add_more_button: "अधिक फ़ाइलें जोड़ें",
   action_buttons: {
-    orc_pdf: "ओर्क पीडीएफ",
+    ocr_pdf: "OCR PDF",
   },
-  orc_options: {
+  ocr_options: {
     info: "दस्तावेज़ में सही भाषाएं चुनने से पाठ पहचान की सटीकता को काफी बढ़ाया जा सकता है।",
     document_languages: "दस्तावेज़ की भाषाएँ",
     input_placeholder: "भाषाएँ चुनें",

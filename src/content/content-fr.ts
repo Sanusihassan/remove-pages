@@ -10,13 +10,13 @@ import type {
 } from "../../content";
 
 export const tool: _tool = {
-  Orc_PDF: {
-    title: "Orc PDF",
+  Ocr_PDF: {
+    title: "OCR PDF",
     description:
       "Transformez les PDF statiques en documents interactifs et interrogeables avec des capacités précises de reconnaissance et de sélection de texte.",
     color: "#006266",
     type: ".pdf",
-    to: "/orc-pdf",
+    to: "/ocr-pdf",
   },
 };
 
@@ -47,14 +47,14 @@ export const downloadFile: _downloadFile = {
 
 export const edit_page: _edit_page = {
   edit_page_titles: {
-    orc_pdf: "Options d'Orc PDF",
+    ocr_pdf: "Options de reconnaissance de texte pour les PDF",
   },
   loader_text: "Veuillez patienter...",
   add_more_button: "Ajouter plus de fichiers",
   action_buttons: {
-    orc_pdf: "Orc PDF",
+    ocr_pdf: "Reconnaissance PDF",
   },
-  orc_options: {
+  ocr_options: {
     info: "Choisir les bonnes langues dans le document améliore considérablement la précision de la reconnaissance de texte.",
     document_languages: "Langues du document",
     input_placeholder: "Sélectionner des langues",

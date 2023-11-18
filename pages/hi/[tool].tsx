@@ -60,5 +60,5 @@ export default ({ item, lang }: { item: data_type; lang: string }) => {
 };
 
 export const routes = {
-  "/orc-pdf": { item: tool["Orc_PDF"] },
+  "/ocr-pdf": { item: tool["Ocr_PDF"] },
 };

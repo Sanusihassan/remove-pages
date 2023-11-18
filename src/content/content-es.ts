@@ -10,30 +10,30 @@ import type {
 } from "../../content";
 
 export const tool: _tool = {
-  Orc_PDF: {
-    title: "Orc PDF",
+  Ocr_PDF: {
+    title: "OCR PDF",
     description:
       "Transforma los PDF estáticos en documentos interactivos y buscables con capacidades precisas de reconocimiento y selección de texto.",
     color: "#006266",
     type: ".pdf",
-    to: "/orc-pdf",
+    to: "/ocr-pdf",
   },
 };
 
 export const edit_page: _edit_page = {
   edit_page_titles: {
-    orc_pdf: "Opciones de Orc PDF"
+    ocr_pdf: "Opciones de OCR para PDF",
   },
   loader_text: "Por favor espera...",
   add_more_button: "Agrega más archivos",
   action_buttons: {
-    orc_pdf: "Orc PDF",
+    ocr_pdf: "OCR de PDF",
   },
-  orc_options: {
-  info: "Elegir los idiomas correctos en el documento aumenta significativamente la precisión del reconocimiento de texto.",
-  document_languages: "Idiomas del documento",
-  input_placeholder: "Seleccionar idiomas"
-},
+  ocr_options: {
+    info: "Elegir los idiomas correctos en el documento aumenta significativamente la precisión del reconocimiento de texto.",
+    document_languages: "Idiomas del documento",
+    input_placeholder: "Seleccionar idiomas",
+  },
   pages: "paginas",
   page: "página",
 };
