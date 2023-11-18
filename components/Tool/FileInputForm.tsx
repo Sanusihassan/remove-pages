@@ -44,6 +44,10 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
   const errorMessage = useSelector(
     (state: { tool: ToolState }) => state.tool.errorMessage
   );
+
+  const selectedLanguages = useSelector(
+    (state: { tool: ToolState }) => state.tool.selectedLanguages
+  );
   const dispatch = useDispatch();
   // file store
   const {
@@ -97,7 +101,8 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
           files,
           errors,
           filesLengthOnSubmit,
-          setFilesLengthOnSubmit
+          setFilesLengthOnSubmit,
+          selectedLanguages
         )
       }
       method="POST"

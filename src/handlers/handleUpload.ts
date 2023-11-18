@@ -3,9 +3,7 @@ import { Dispatch, RefObject } from "react";
 import { downloadConvertedFile } from "../downloadFile";
 import type { errors as _ } from "../../content";
 import { AnyAction } from "@reduxjs/toolkit";
-// import { shallow } from "zustand"
 import {
-  ToolState,
   resetErrorMessage,
   setErrorMessage,
   setIsSubmitted,
@@ -24,7 +22,8 @@ export const handleUpload = async (
   files: File[],
   errors: _,
   filesLengthOnSubmit: number,
-  setFilesLengthOnSubmit: (value: number) => void
+  setFilesLengthOnSubmit: (value: number) => void,
+  selectedLanguages: { value: string; label: string }[]
 ) => {
   e.preventDefault();
   dispatch(setIsSubmitted(true));
@@ -41,13 +40,15 @@ export const handleUpload = async (
   for (let i = 0; i < files.length; i++) {
     formData.append("files", files[i]);
   }
+  // selected languages
+  formData.append("selectedLanguages", JSON.stringify(selectedLanguages));
   let url;
   // @ts-ignore
   if (process.env.NODE_ENV === "development") {
-    url = `http://127.0.0.1:5000/${state.path}`;
+    url = `http://127.0.0.1:5000/${state.path || "orc-pdf"}`;
     // url = `https://5000-planetcreat-pdfequipsap-te4zoi6qkr3.ws-eu102.gitpod.io/${state.path}`;
   } else {
-    url = `/api/${state.path}`;
+    url = `/api/${state.path || "orc-pdf"}`;
   }
   if (state.errorMessage) {
     return;
@@ -65,38 +66,6 @@ export const handleUpload = async (
     "application/pdf": {
       outputFileMimeType: "application/pdf",
       outputFileName: `${originalFileName}.pdf`,
-    },
-    "application/msword": {
-      outputFileMimeType: "application/msword",
-      outputFileName: `${originalFileName}.docx`,
-    },
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": {
-      outputFileMimeType:
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      outputFileName: `${originalFileName}.docx`,
-    },
-    "application/vnd.ms-excel": {
-      outputFileMimeType: "application/vnd.ms-excel",
-      outputFileName: `${originalFileName}.xlsx`,
-    },
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": {
-      outputFileMimeType:
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      outputFileName: `${originalFileName}.xlsx`,
-    },
-    "application/vnd.ms-powerpoint": {
-      outputFileMimeType: "application/vnd.ms-powerpoint",
-      outputFileName: `${originalFileName}.pptx`,
-    },
-    "application/vnd.openxmlformats-officedocument.presentationml.presentation":
-      {
-        outputFileMimeType:
-          "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-        outputFileName: `${originalFileName}.pptx`,
-      },
-    "text/plain": {
-      outputFileMimeType: "text/plain",
-      outputFileName: `${originalFileName}.txt`,
     },
   };
 
