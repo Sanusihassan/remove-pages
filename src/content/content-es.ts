@@ -10,24 +10,30 @@ import type {
 } from "../../content";
 
 export const tool: _tool = {
-  Merge_PDF: {
-    title: "Combinar PDF",
-    description: "Combina varios archivos PDF en un solo documento",
-    color: "var(--red)",
+  Orc_PDF: {
+    title: "Orc PDF",
+    description:
+      "Transforma los PDF estáticos en documentos interactivos y buscables con capacidades precisas de reconocimiento y selección de texto.",
+    color: "#006266",
     type: ".pdf",
-    to: "/merge-pdf",
+    to: "/orc-pdf",
   },
 };
 
 export const edit_page: _edit_page = {
   edit_page_titles: {
-    merge_pdf: "Opciones para fusionar PDF",
+    orc_pdf: "Opciones de Orc PDF"
   },
   loader_text: "Por favor espera...",
   add_more_button: "Agrega más archivos",
   action_buttons: {
-    merge_pdf: "Combinar PDF",
+    orc_pdf: "Orc PDF",
   },
+  orc_options: {
+  info: "Elegir los idiomas correctos en el documento aumenta significativamente la precisión del reconocimiento de texto.",
+  document_languages: "Idiomas del documento",
+  input_placeholder: "Seleccionar idiomas"
+},
   pages: "paginas",
   page: "página",
 };

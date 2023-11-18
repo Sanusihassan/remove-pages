@@ -61,5 +61,5 @@ export default ({ item, lang }: { item: data_type; lang: string }) => {
 };
 
 export const routes = {
-  "/merge-pdf": { item: tool["Merge_PDF"] },
+  "/orc-pdf": { item: tool["Orc_PDF"] },
 };

@@ -36,12 +36,13 @@ export const nav_content = {
   pdf_to_markdown: "PDF से मार्कडाउन तक",
 };
 export const tool: _tool = {
-  Merge_PDF: {
-    title: "पीडीएफ विलय",
-    description: "एक दस्तावेज में कई पीडीएफ फ़ाइलों को जोड़ें",
-    color: "var(--red)",
+  Orc_PDF: {
+    title: "Orc PDF",
+    description:
+      "स्थैतिक पीडीएफ को इंटरैक्टिव और खोजने योग्य दस्तावेज़ में बदलें, सटीक पाठ पहचान और चयन क्षमताओं के साथ।",
+    color: "#006266",
     type: ".pdf",
-    to: "/merge-pdf",
+    to: "/orc-pdf",
   },
 };
 
@@ -65,12 +66,17 @@ export const downloadFile: _downloadFile = {
 
 export const edit_page: _edit_page = {
   edit_page_titles: {
-    merge_pdf: "PDF फ्यूज़न विकल्प",
+    orc_pdf: "ओर्क पीडीएफ विकल्प",
   },
   loader_text: "कृपया प्रतीक्षा करें...",
   add_more_button: "अधिक फ़ाइलें जोड़ें",
   action_buttons: {
-    merge_pdf: "पीडीएफ विलय करें",
+    orc_pdf: "ओर्क पीडीएफ",
+  },
+  orc_options: {
+    info: "दस्तावेज़ में सही भाषाएं चुनने से पाठ पहचान की सटीकता को काफी बढ़ाया जा सकता है।",
+    document_languages: "दस्तावेज़ की भाषाएँ",
+    input_placeholder: "भाषाएँ चुनें",
   },
   pages: "पृष्ठों",
   page: "पृष्ठ",

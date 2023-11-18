@@ -9,12 +9,13 @@ import type {
 } from "../../content";
 
 export const tool: _tool = {
-  Merge_PDF: {
-    title: "دمج PDF",
-    description: "دمج ملفات PDF متعددة في مستند واحد",
-    color: "var(--red)",
+  Orc_PDF: {
+    title: "Orc PDF",
+    description:
+      "قم بتحويل ملفات PDF الثابتة إلى وثائق تفاعلية وقابلة للبحث مع إمكانيات دقيقة في التعرف على النص واختياره.",
+    color: "#006266",
     type: ".pdf",
-    to: "/merge-pdf",
+    to: "/orc-pdf",
   },
 };
 
@@ -39,12 +40,17 @@ export const downloadFile: _downloadFile = {
 
 export const edit_page: _edit_page = {
   edit_page_titles: {
-    merge_pdf: "خيارات دمج ملف PDF",
+    orc_pdf: "خيارات Orc PDF",
   },
   loader_text: "يرجى الانتظار...",
   add_more_button: "إضافة المزيد من الملفات",
   action_buttons: {
-    merge_pdf: "دمج PDF",
+    orc_pdf: "Orc PDF",
+  },
+  orc_options: {
+    info: "اختيار اللغات الصحيحة في الوثيقة يعزز بشكل كبير دقة التعرف على النص.",
+    document_languages: "لغات الوثيقة",
+    input_placeholder: "اختر اللغات",
   },
   pages: "صفحة",
   page: "صفحة واحدة",

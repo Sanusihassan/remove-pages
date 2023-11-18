@@ -10,12 +10,13 @@ import type {
 } from "../../content";
 
 export const tool: _tool = {
-  Merge_PDF: {
-    title: "合并PDF",
-    description: "将多个PDF文件合并成一个文档",
-    color: "var(--red)",
+  Orc_PDF: {
+    title: "Orc PDF",
+    description:
+      "将静态PDF转换为具有精确文本识别和选择功能的交互式可搜索文档。",
+    color: "#006266",
     type: ".pdf",
-    to: "/merge-pdf",
+    to: "/orc-pdf",
   },
 };
 
@@ -33,12 +34,17 @@ export const downloadFile: _downloadFile = {
 
 export const edit_page: _edit_page = {
   edit_page_titles: {
-    merge_pdf: "合并PDF选项",
+    orc_pdf: "Orc PDF 选项",
   },
   loader_text: "请稍等...",
   add_more_button: "添加更多文件",
   action_buttons: {
-    merge_pdf: "合并PDF",
+    orc_pdf: "Orc PDF",
+  },
+  orc_options: {
+    info: "选择正确的文档语言可以显著提高文本识别的准确性。",
+    document_languages: "文档语言",
+    input_placeholder: "选择语言",
   },
   pages: "页",
   page: "页",

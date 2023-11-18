@@ -1,25 +1,31 @@
 export const tool = {
-  Merge_PDF: {
-    title: "Merge PDF",
-    description: "Combine multiple PDF files into one document",
-    color: "var(--red)",
+  // okay great now give me the same object but in arabic, es, fr, hi and zh(simplified) respectively
+  Orc_PDF: {
+    title: "Orc PDF",
+    description:
+      "Transform static PDFs into interactive, searchable documents with precise text recognition and selection capabilities.",
+    color: "#006266",
     type: ".pdf",
-    to: "/merge-pdf",
+    to: "/orc-pdf",
   },
 };
 
 export const edit_page = {
   edit_page_titles: {
-    merge_pdf: "Merge PDF options",
+    orc_pdf: "Orc PDF options",
   },
   loader_text: "please wait...",
   add_more_button: "Add more files",
-  // translate the values of this object to french.
   action_buttons: {
-    merge_pdf: "Merge PDF",
+    orc_pdf: "Orc PDF",
   },
   pages: "pages",
   page: "page",
+  orc_options: {
+    info: "Choosing the correct document languages significantly boosts the accuracy of text recognition.",
+    document_languages: "Document Languages",
+    input_placeholder: "Select Languages"
+  },
 };
 
 export const tools = {
