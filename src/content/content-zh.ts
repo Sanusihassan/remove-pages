@@ -22,16 +22,17 @@ export const tool: _tool = {
 
 export const downloadFile: _downloadFile = {
   titles: {
-    "merge-pdf": ["PDF文件已合并！", "PDF文件已合并！"],
+    "ocr-pdf": ["您的PDF现在可选择和搜索！", "您的PDF文件现在可选择和搜索！"],
   },
+
   btnText: {
-    "merge-pdf": ["下载合并后的PDF文件", "下载合并后的PDF文件"],
+    "ocr-pdf": ["下载PDF", "下载文件"],
   },
+
   backto: {
-    "merge-pdf": "返回合并PDF",
+    "ocr-pdf": "返回OCR PDF",
   },
 };
-
 export const edit_page: _edit_page = {
   edit_page_titles: {
     ocr_pdf: "OCR PDF 选项",

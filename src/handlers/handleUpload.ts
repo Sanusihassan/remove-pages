@@ -45,7 +45,9 @@ export const handleUpload = async (
   let url;
   // @ts-ignore
   if (process.env.NODE_ENV === "development") {
-    url = `http://127.0.0.1:5000/${state.path || "orc-pdf"}`;
+    url = `https://5000-planetcreat-pdfequipsap-20rnq604504.ws-eu106.gitpod.io/api/${
+      state.path || "orc-pdf"
+    }`;
     // url = `https://5000-planetcreat-pdfequipsap-te4zoi6qkr3.ws-eu102.gitpod.io/${state.path}`;
   } else {
     url = `/api/${state.path || "orc-pdf"}`;
@@ -99,7 +101,7 @@ export const handleUpload = async (
   } catch (error) {
     if ((error as { code: string }).code === "ERR_NETWORK") {
       dispatch(setErrorMessage(errors.ERR_NETWORK.message));
-      return;
+      // return;
     }
     dispatch(setIsSubmitted(false));
   } finally {

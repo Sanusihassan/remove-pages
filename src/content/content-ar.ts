@@ -28,13 +28,18 @@ export const tools: _tools = {
 
 export const downloadFile: _downloadFile = {
   titles: {
-    "merge-pdf": ["تم دمج ملفات ال PDF!", "تم دمج ملف ال PDF!"],
+    "ocr-pdf": [
+      "تم إجراء البحث والتحديد في ملف PDF الخاص بك الآن!",
+      "تم إجراء البحث والتحديد في ملفات PDF الخاصة بك الآن!",
+    ],
   },
+
   btnText: {
-    "merge-pdf": ["تحميل ملفات PDF المدموجة", "تحميل ملف PDF مدموج"],
+    "ocr-pdf": ["تحميل PDF", "تحميل الملفات"],
   },
+
   backto: {
-    "merge-pdf": "العودة إلى دمج ملفات PDF",
+    "ocr-pdf": "العودة إلى PDF المُحدَّد بتقنية OCR",
   },
 };
 

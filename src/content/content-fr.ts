@@ -29,19 +29,18 @@ export const tools: _tools = {
 
 export const downloadFile: _downloadFile = {
   titles: {
-    "merge-pdf": [
-      "Fusion de fichiers PDF réussie !",
-      "Fusion de fichier PDF réussie !",
+    "ocr-pdf": [
+      "Votre PDF est maintenant sélectionnable et recherchable !",
+      "Le texte est maintenant sélectionnable et recherchable dans votre PDF !",
     ],
   },
+
   btnText: {
-    "merge-pdf": [
-      "Télécharger les fichiers PDF fusionnés",
-      "Télécharger le fichier PDF fusionné",
-    ],
+    "ocr-pdf": ["Télécharger PDF", "Télécharger des fichiers"],
   },
+
   backto: {
-    "merge-pdf": "Retour à Fusionner PDF",
+    "ocr-pdf": "Retour à OCR PDF",
   },
 };
 
