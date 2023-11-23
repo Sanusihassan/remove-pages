@@ -43,19 +43,27 @@ export const tools = {
   drop_files: "Drag files here",
 };
 
+/**
+ * now give me 5 new objects of the same type as the downloadFile with the keys but translated in ar, es, fr, hi and zh respectively
+ * and don't add prefexes like downloadFile_ar or somthing just create them all with the same name downloadFile and the same keys only translate the string values for each language.
+ */
 export const downloadFile = {
   titles: {
-    "merge-pdf": ["PDF files have been merged!", "PDF file has been merged!"],
+    "ocr-pdf": [
+      "Your PDF is now selectable and searchable!",
+      "Your PDF files are now selectable and searchable!",
+    ],
   },
 
   btnText: {
-    "merge-pdf": ["Download Merged PDF files", "Download Merged PDF file"],
+    "ocr-pdf": ["Download PDF", "Download files"],
   },
 
   backto: {
-    "merge-pdf": "Back To Merge PDF",
+    "ocr-pdf": "Back To OCR PDF",
   },
 };
+
 
 export const errors = {
   EMPTY_FILE: {

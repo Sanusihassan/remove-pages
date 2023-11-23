@@ -47,19 +47,18 @@ export const tools: _tools = {
 
 export const downloadFile: _downloadFile = {
   titles: {
-    "merge-pdf": [
-      "¡Combinación de archivos PDF exitosa!",
-      "¡Combinación de archivo PDF exitosa!",
+    "ocr-pdf": [
+      "¡Tu PDF ahora es seleccionable y searchable!",
+      "¡El texto ahora es seleccionable y searchable en tu PDF!",
     ],
   },
+
   btnText: {
-    "merge-pdf": [
-      "Descargar archivos PDF combinados",
-      "Descargar archivo PDF combinado",
-    ],
+    "ocr-pdf": ["Descargar PDF", "Descargar PDFs"],
   },
+
   backto: {
-    "merge-pdf": "Volver a unir PDF",
+    "ocr-pdf": "Volver a OCR PDF",
   },
 };
 
