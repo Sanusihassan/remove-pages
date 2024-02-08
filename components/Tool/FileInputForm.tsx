@@ -105,7 +105,7 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
       encType="multipart/form-data"
     >
       <div
-        className={`upload-btn btn btn-lg text-white position-relative overflow-hidden ${data.to.replace("", "")}`}
+        className={`upload-btn btn btn-lg text-white position-relative overflow-hidden ${data.to.replace("/", "")}`}
         onClick={(e) => {
           e.stopPropagation();
           dispatch(setClick(true));
