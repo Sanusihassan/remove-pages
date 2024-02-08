@@ -10,13 +10,12 @@ import { useFileStore } from "../../src/file-store";
 import type { tools } from "../../content";
 import { useRouter } from "next/router";
 import { validateFiles } from "../../src/utils";
+import { ToolData } from "../Tool";
 type AcceptedFileTypes = {
   [key in ".pdf" | ".pptx" | ".docx" | ".xlsx" | ".jpg" | ".html"]: string;
 };
 interface FileInputFormProps {
-  data: {
-    type: string;
-  };
+  data: ToolData;
   acceptedFileTypes: AcceptedFileTypes;
   errors: any;
   lang: string;
@@ -81,9 +80,6 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
       // }
     });
   }, []);
-  // path
-  const router = useRouter();
-  let path = router.asPath.replace(/^\/[a-z]{2}\//, "").replace(/^\//, "");
   return (
     <form
       onClick={(e) => {
@@ -109,7 +105,7 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
       encType="multipart/form-data"
     >
       <div
-        className={`upload-btn btn btn-lg text-white position-relative overflow-hidden ${path}`}
+        className={`upload-btn btn btn-lg text-white position-relative overflow-hidden ${data.to.replace("", "")}`}
         onClick={(e) => {
           e.stopPropagation();
           dispatch(setClick(true));

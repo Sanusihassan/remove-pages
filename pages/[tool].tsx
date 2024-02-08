@@ -1,5 +1,5 @@
 import Head from "next/head";
-import NavBar from "@/components/NavBar/NavBar";
+import NavBar from "pdfequips-navbar/NavBar";
 import Tool from "../components/Tool";
 import {
   edit_page,
@@ -9,11 +9,12 @@ import {
   downloadFile,
 } from "../src/content/content";
 
-type data_type = {
+export type data_type = {
   title: string;
   description: string;
   color: string;
   type: string;
+  to: string;
 };
 
 export async function getStaticPaths() {
@@ -49,7 +50,7 @@ export default ({ item }: { item: data_type }) => {
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         />
       </Head>
-      <NavBar lang="" />
+      <NavBar lang="" path="/remove-pages" />
       <Tool
         tools={tools}
         data={item}

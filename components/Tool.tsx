@@ -29,6 +29,7 @@ export type ToolData = {
   description: string;
   color: string;
   type: string;
+  to: string;
 };
 
 type ToolProps = {

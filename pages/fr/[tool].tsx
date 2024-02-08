@@ -1,5 +1,5 @@
 import Head from "next/head";
-import NavBar from "@/components/NavBar/NavBar";
+import NavBar from "pdfequips-navbar/NavBar";
 import Tool from "../../components/Tool";
 
 import {
@@ -9,13 +9,7 @@ import {
   downloadFile,
 } from "../../src/content/content-fr";
 import { errors } from "../../src/content/content-fr";
-
-type data_type = {
-  title: string;
-  description: string;
-  color: string;
-  type: string;
-};
+import { data_type } from "../[tool]";
 
 export async function getStaticPaths() {
   const paths = Object.keys(routes).map((key) => ({
@@ -45,7 +39,7 @@ export default ({ item, lang }: { item: data_type; lang: string }) => {
         <meta name="description" content={item.description} />
         <link rel="icon" href="/logo.png" />
       </Head>
-      <NavBar lang={lang} />
+      <NavBar lang={lang} path="/remove-pages" />
       <Tool
         tools={tools}
         data={item}
