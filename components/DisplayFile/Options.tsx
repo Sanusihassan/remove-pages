@@ -7,7 +7,7 @@ export interface OptionsProps {
 
 import React, { useEffect, useRef, useState } from "react";
 import { InformationCircleIcon } from "@heroicons/react/solid";
-import { ToolState, setSelectedPages } from "@/src/store";
+import { ToolState, setField } from "@/src/store";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
@@ -66,10 +66,10 @@ const RemovePagesOptions = ({
                 const pattern = /^(\d+(?:-\d+)?,)*(\d+(?:-\d+)?)$/;
                 if (pattern.test(e.target.value.replace(/\s/g, ""))) {
                   setInputVal(e.target.value);
-                  dispatch(setSelectedPages(e.target.value));
+                  dispatch(setField({ selectedPages: e.target.value }));
                 } else {
                   setInputVal("");
-                  dispatch(setSelectedPages(""));
+                  dispatch(setField({ selectedPages: "" }));
                 }
               }, 2000);
             }}

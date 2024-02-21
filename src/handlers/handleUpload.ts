@@ -5,9 +5,7 @@ import type { errors as _ } from "../../content";
 import { AnyAction } from "@reduxjs/toolkit";
 import {
   resetErrorMessage,
-  setErrorMessage,
-  setIsSubmitted,
-  setShowDownloadBtn,
+  setField
 } from "../store";
 
 // this is the handleUpload function that is calling the download function maybe the issue is here
@@ -26,12 +24,12 @@ export const handleUpload = async (
   selectedPages: string
 ) => {
   e.preventDefault();
-  dispatch(setIsSubmitted(true));
+  dispatch(setField({ isSubmitted: true }));
 
   if (!files) return;
   // subscribe to the files state and get the previous files
   if (filesLengthOnSubmit == files.length) {
-    dispatch(setShowDownloadBtn(true));
+    dispatch(setField({ showDownloadBtn: true }));
     dispatch(resetErrorMessage());
     return;
   }
@@ -45,9 +43,8 @@ export const handleUpload = async (
   let url;
   // @ts-ignore
   if (process.env.NODE_ENV === "development") {
-    url = `https://5000-planetcreat-pdfequipsap-20rnq604504.ws-eu106.gitpod.io/api/${
-      state.path || "orc-pdf"
-    }`;
+    url = `https://5000-planetcreat-pdfequipsap-20rnq604504.ws-eu106.gitpod.io/api/${state.path || "orc-pdf"
+      }`;
     // url = `https://5000-planetcreat-pdfequipsap-te4zoi6qkr3.ws-eu102.gitpod.io/${state.path}`;
   } else {
     url = `/api/${state.path || "orc-pdf"}`;
@@ -83,7 +80,7 @@ export const handleUpload = async (
     };
     const { outputFileMimeType, outputFileName } = mimeTypeData;
 
-    dispatch(setShowDownloadBtn(true));
+    dispatch(setField({ showDownloadBtn: true }));
     downloadConvertedFile(
       response,
       outputFileMimeType,
@@ -96,15 +93,15 @@ export const handleUpload = async (
       throw new Error(`HTTP error! status: ${response.status}`);
     } else {
       dispatch(resetErrorMessage());
-      dispatch(setIsSubmitted(false));
+      dispatch(setField({ isSubmitted: false }));
     }
   } catch (error) {
     if ((error as { code: string }).code === "ERR_NETWORK") {
-      dispatch(setErrorMessage(errors.ERR_NETWORK.message));
+      dispatch(setField({ errorMessage: errors.ERR_NETWORK.message }));
       // return;
     }
-    dispatch(setIsSubmitted(false));
+    dispatch(setField({ isSubmitted: false }));
   } finally {
-    dispatch(setIsSubmitted(false));
+    dispatch(setField({ isSubmitted: false }));
   }
 };

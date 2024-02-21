@@ -1,23 +1,18 @@
-//
 import type { errors as _ } from "../../content";
 import { useEffect, useState } from "react";
 import { Loader } from "./Loader";
 import {
   calculatePages,
-  getFileDetailsTooltipContent,
   getNthPageAsImage,
   getPlaceHoderImageUrl,
 } from "../../src/utils";
 import { useDispatch, useSelector } from "react-redux";
 import ImageWithLoader from "./ImageWithLoader";
-// import { ActionProps } from "@/src/globalProps";
 import React from "react";
 import { ExtractFileCard } from "./FileCard/ExtractFileCard";
 import { ActionProps } from "./ActionDiv";
-import { ToolState, setPageCount } from "@/src/store";
+import { ToolState, setField } from "@/src/store";
 type OmitFileName<T extends ActionProps> = Omit<T, "fileName" | "index">;
-// import isEqual from "lodash.isequal";
-// import { RangeFileCard } from "./FileCard/RangeFileCard";
 
 type CardProps = OmitFileName<ActionProps> & {
   file: File;
@@ -118,7 +113,7 @@ const FileCard = React.memo(
         // );
         if ("number" !== typeof to || "number" !== typeof from) {
           let _pageCount = await calculatePages(file);
-          dispatch(setPageCount(_pageCount));
+          dispatch(setField({ pageCount: _pageCount }));
         }
         // setToolTipSize(size);
       })();

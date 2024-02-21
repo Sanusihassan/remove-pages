@@ -1,4 +1,4 @@
-import { ToolState, setSelectedPages } from "@/src/store";
+import { ToolState, setField } from "@/src/store";
 import { XIcon } from "@heroicons/react/outline";
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -44,7 +44,7 @@ const IndividualSelectionComponent = React.memo(
 
       if (pageIndex === 1 && pagesArray.length === 0) {
         let newSelectedPages = "1";
-        dispatch(setSelectedPages(newSelectedPages));
+        dispatch(setField({ selectedPages: newSelectedPages }));
         setShowMark(!showMark);
         return;
       }
@@ -72,7 +72,7 @@ const IndividualSelectionComponent = React.memo(
           ? `${start}`
           : `${start}-${pagesArray[pagesArray.length - 1]}`;
 
-      dispatch(setSelectedPages(newSelectedPages));
+      dispatch(setField({ selectedPages: newSelectedPages }));
       setShowMark(!showMark);
     };
     return (

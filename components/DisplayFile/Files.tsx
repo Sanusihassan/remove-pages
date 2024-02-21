@@ -25,7 +25,7 @@ const Files = ({
   // const store = useSelector((state: { tool: ToolState }) => state.tool);
   const { files, imageUrls, setImageUrls } = useFileStore();
 
-  useEffect(() => {}, [files]);
+  useEffect(() => { }, [files]);
 
   const router = useRouter();
   const handleDragEnd = (result: any) => {
