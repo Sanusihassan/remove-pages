@@ -12,6 +12,7 @@ import type {
 export const tool: _tool = {
   Remove_Page: {
     title: "Eliminar Página",
+    seoTitle: "Eliminar páginas de PDF - Herramienta de eliminación de páginas en línea",
     description:
       "Elimina páginas no deseadas de tu documento PDF y guarda el archivo modificado como un nuevo PDF.",
     color: "#d63031",

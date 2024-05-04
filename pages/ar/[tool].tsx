@@ -10,6 +10,7 @@ import {
   downloadFile,
 } from "../../src/content/content-ar";
 import { data_type } from "../[tool]";
+import { OpenGraph } from "pdfequips-open-graph/OpenGraph";
 
 
 export async function getStaticPaths() {
@@ -38,7 +39,16 @@ export default ({ item, lang }: { item: data_type; lang: string }) => {
       <Head>
         <title>{`PDFEquips | ${item.title}`}</title>
         <meta name="description" content={item.description} />
-        <link rel="icon" href="/logo.png" />
+        <link rel="icon" type="image/svg+xml" href="/images/icons/logo.svg" />
+        <OpenGraph
+          ogUrl={`https://www.pdfequips.com/ar${item.to}`}
+          ogDescription={item.description}
+          ogLocale="ar_AR"
+          ogImageWidth="1200"
+          ogImageHeight="630"
+          ogTitle={item.seoTitle}
+          ogImage={`https://www.pdfequips.com/images/ar${item.to}.png`}
+        />
       </Head>
       <NavBar lang={lang} path="/remove-pages" />
       <Tool

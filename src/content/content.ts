@@ -1,6 +1,7 @@
 export const tool = {
   Remove_Page: {
     title: "Remove Page",
+    seoTitle: "Delete Pages from PDF - Online Page Remover Tool",
     description:
       "Delete unwanted pages from your PDF document and save the modified file as a new PDF.",
     color: "#d63031",

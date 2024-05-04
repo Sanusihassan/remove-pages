@@ -11,6 +11,7 @@ import type {
 export const tool: _tool = {
   Remove_Page: {
     title: "إزالة الصفحات",
+    seoTitle: "حذف الصفحات من ملف PDF - أداة إزالة الصفحات عبر الإنترنت",
     description:
       "حذف الصفحات غير المرغوب فيها من مستند PDF الخاص بك وحفظ الملف المعدل كملف PDF جديد.",
     color: "#d63031",

@@ -12,6 +12,7 @@ import type {
 export const tool: _tool = {
   Remove_Page: {
     title: "Supprimer la Page",
+    seoTitle: "Supprimer des pages d’un PDF - Outil de suppression de page en ligne",
     description:
       "Supprimez les pages indésirables de votre document PDF et enregistrez le fichier modifié sous forme de nouveau PDF.",
     color: "#d63031",

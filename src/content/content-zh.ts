@@ -12,6 +12,7 @@ import type {
 export const tool: _tool = {
   Remove_Page: {
     title: "删除页面",
+    seoTitle: "从 PDF 中删除页面 - 在线页面删除工具",
     description:
       "从您的PDF文档中删除不需要的页面，并将修改后的文件保存为新的PDF。",
     color: "#d63031",
