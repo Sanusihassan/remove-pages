@@ -50,7 +50,7 @@ export default ({ item, lang }: { item: data_type; lang: string }) => {
           ogImage={`https://www.pdfequips.com/images/zh${item.to}.png`}
         />
       </Head>
-      <NavBar lang={lang} path="/remove-pages" />
+      <NavBar lang={lang} path="remove-pages" />
       <Tool
         tools={tools}
         data={item}

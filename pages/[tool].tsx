@@ -58,7 +58,7 @@ export default ({ item }: { item: data_type }) => {
         />
         {/* needed for styles */}
       </Head>
-      <NavBar lang="" path="/remove-pages" />
+      <NavBar lang="" path="remove-pages" />
       <Tool
         tools={tools}
         data={item}
