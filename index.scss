@@ -1,4 +1,5 @@
 @import "pdfequips-navbar/scss/navbar";
+
 %debug {
   outline: 1px solid;
 }
@@ -35,6 +36,15 @@ $color-map: (
 // .tools-page {
 //   height: 100%;
 // }
+
+body {
+  @include ar-wrapper {
+    text-align: right !important;
+  }
+
+  font-family: "Raleway",
+  sans-serif;
+}
 
 .tools-page {
   min-height: fit-content;
@@ -87,6 +97,7 @@ a.dropdown-item {
 }
 
 .dropdown-item {
+
   &.active,
   &:active {
     background-color: initial !important;
@@ -101,6 +112,7 @@ a.dropdown-item {
 // error element styles
 .error-element {
   .hide-on-rtl {
+
     [dir="rtl"] &,
     [lang="ar"] & {
       display: none;
@@ -108,6 +120,7 @@ a.dropdown-item {
   }
 
   .hide-on-rtl {
+
     [dir="ltr"] &,
     :not([lang="ar"]) & {
       display: none;
