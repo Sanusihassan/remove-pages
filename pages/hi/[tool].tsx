@@ -36,7 +36,7 @@ export default ({ item, lang }: { item: data_type; lang: string }) => {
   return (
     <>
       <Head>
-        <title>{`PDFEquips | ${item.title}`}</title>
+        <title>{item.seoTitle}</title>
         <meta name="description" content={item.description} />
         <link rel="icon" type="image/svg+xml" href="/images/icons/logo.svg" />
         <OpenGraph
