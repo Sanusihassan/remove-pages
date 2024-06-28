@@ -7,10 +7,17 @@ import {
   tool,
   tools,
   downloadFile,
+  footer,
 } from "../src/content/content";
 import { OpenGraph } from "pdfequips-open-graph/OpenGraph";
+import { Features } from "@/components/Features";
+import { Footer } from "@/components/Footer";
+import HowTo from "@/components/HowTo";
+import { howToSchema, howToType } from "@/src/how-to/how-to";
 
 export type data_type = {
+  keywords: string;
+  features: { title: string; description: string; }[];
   title: string;
   description: string;
   color: string;
@@ -45,6 +52,7 @@ export default ({ item }: { item: data_type }) => {
       <Head>
         <title>{item.seoTitle}</title>
         <meta name="description" content={item.description} />
+        <meta name="keywords" content={item.keywords} />
         <link rel="icon" type="image/svg+xml" href="/images/icons/logo.svg" />
         <OpenGraph
           ogUrl={`https://www.pdfequips.com${item.to}`}
@@ -69,6 +77,13 @@ export default ({ item }: { item: data_type }) => {
         page={edit_page.page}
         downloadFile={downloadFile}
       />
+      <div className="container">
+        <Features features={item.features as { title: string; description: string }[]} />
+      </div>
+      <div className="container">
+        <HowTo howTo={howToSchema as howToType} alt={item.seoTitle} imgSrc={item.to.replace("/", "")} />
+      </div>
+      <Footer footer={footer} title={item.seoTitle.split("-")[1]} />
     </>
   );
 };

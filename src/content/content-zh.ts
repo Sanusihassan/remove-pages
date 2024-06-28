@@ -9,15 +9,30 @@ import type {
   landing_page as _landing_page,
 } from "../../content";
 
-export const tool: _tool = {
+export const tool = {
   Remove_Page: {
     title: "删除页面",
-    seoTitle: "从 PDF 中删除页面 - 在线页面删除工具",
+    seoTitle: "在线删除PDF页面 - 页面移除工具",
+    keywords: "删除PDF页面, 从PDF中删除页面, PDF页面移除工具, 在线PDF页面移除, PDF编辑器, PDF修改, 安全的PDF工具, 易于使用的PDF工具",
     description:
-      "从您的PDF文档中删除不需要的页面，并将修改后的文件保存为新的PDF。",
+      "从你的PDF文档中删除不需要的页面，并将修改后的文件保存为新的PDF。",
     color: "#d63031",
     type: ".pdf",
     to: "/remove-pages",
+    features: [
+      {
+        title: "快速高效",
+        description: "快速删除PDF文档中不需要的页面而不影响质量。"
+      },
+      {
+        title: "安全和私密",
+        description: "您的文件通过SSL加密保护，并在处理后立即从我们的服务器中删除。"
+      },
+      {
+        title: "易于使用",
+        description: "用户友好的界面，允许您只需几次点击即可删除PDF中的页面。"
+      }
+    ]
   },
 };
 
@@ -59,6 +74,13 @@ export const tools: _tools = {
   or_drop: "或将文件拖放到此处",
   files: "文件",
   drop_files: "在此处拖放文件",
+};
+
+export const footer: _footer = {
+  brand: "PDFEquips",
+  terms: "条款",
+  conditions: "条件",
+  privacy_policy: "隐私政策",
 };
 
 export const errors: _errors = {

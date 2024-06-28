@@ -1,23 +1,31 @@
 export const tool = {
   Remove_Page: {
     title: "Remove Page",
-    seoTitle: "Delete Pages from PDF - Online Page Remover Tool",
+    seoTitle: "Delete Pages from PDF Online - Page Remover Tool",
+    keywords: "remove PDF pages, delete pages from PDF, PDF page remover, online PDF page removal, PDF editor, PDF modification, secure PDF tool, easy-to-use PDF tool",
     description:
       "Delete unwanted pages from your PDF document and save the modified file as a new PDF.",
     color: "#d63031",
     type: ".pdf",
     to: "/remove-pages",
+    features: [
+      {
+        title: "Fast and Efficient",
+        description: "Quickly remove unwanted pages from your PDF documents without compromising quality."
+      },
+      {
+        title: "Secure and Private",
+        description: "Your files are protected with SSL encryption and deleted from our servers immediately after processing."
+      },
+      {
+        title: "Easy-to-Use",
+        description: "User-friendly interface that allows you to remove pages from your PDF with just a few clicks."
+      }
+    ]
   },
 };
 
-/**
- * please give me another 5 versions of this tool object please don't change the schema of the object, i.e don't change the object name nor it's property keys just translate the string values to ar, es, fr, hi, zh respectivly
- * the previous time when you translated the tool object you created 5 different objects with suffexes like _ar, however i don't want that.
- * just create 5 new objects with the same name edit_page and the same keys but with different string values for each language.
- * also each object created should be of type _edit_page.
- * i.e it should be somthing like this for all of the objects:
- * export const edit_page: _edit_page = {...}
- */
+
 export const edit_page = {
   edit_page_titles: {
     remove_pages: "Remove Pages options",
@@ -44,17 +52,6 @@ export const tools = {
   files: "files",
   drop_files: "Drag files here",
 };
-
-/**
- * now give me 5 new objects of the same type as the downloadFile with the keys but translated in ar, es, fr, hi and zh respectively
- * and don't add prefexes like downloadFile_ar or somthing just create them all with the same name downloadFile and the same keys only translate the string values for each language.
- * just create 5 new objects with the same name downloadFile and the same keys but with different string values for each language.
- * also each object created should be of type _downloadFile.
- * i.e it should be somthing like this for all of the objects:
- * export const downloadFile: _downloadFile = {...}
- * please add the : _downloadFile for all of the objects you create okay?
- */
-
 export const downloadFile = {
   titles: {
     "remove-pages": ["Your pages have been successfully removed!"],
@@ -67,6 +64,13 @@ export const downloadFile = {
   backto: {
     "remove-pages": "Back To Remove Pages",
   },
+};
+
+export const footer = {
+  brand: "PDFEquips",
+  terms: "terms",
+  conditions: "conditions",
+  privacy_policy: "privacy policy",
 };
 
 export const errors = {

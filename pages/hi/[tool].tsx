@@ -6,10 +6,16 @@ import {
   tool,
   tools,
   downloadFile,
+  footer,
 } from "../../src/content/content-hi";
 import { errors } from "../../src/content/content-hi";
 import { data_type } from "../[tool]";
 import { OpenGraph } from "pdfequips-open-graph/OpenGraph";
+import { Features } from "@/components/Features";
+import { Footer } from "@/components/Footer";
+import HowTo from "@/components/HowTo";
+import { howToType } from "@/src/how-to/how-to";
+import { howToSchema } from "@/src/how-to/how-to-hi";
 
 
 export async function getStaticPaths() {
@@ -38,6 +44,7 @@ export default ({ item, lang }: { item: data_type; lang: string }) => {
       <Head>
         <title>{item.seoTitle}</title>
         <meta name="description" content={item.description} />
+        <meta name="keywords" content={item.keywords} />
         <link rel="icon" type="image/svg+xml" href="/images/icons/logo.svg" />
         <OpenGraph
           ogUrl={`https://www.pdfequips.com/hi${item.to}`}
@@ -60,6 +67,13 @@ export default ({ item, lang }: { item: data_type; lang: string }) => {
         page={edit_page.page}
         downloadFile={downloadFile}
       />
+      <div className="container">
+        <Features features={item.features as { title: string; description: string }[]} />
+      </div>
+      <div className="container">
+        <HowTo howTo={howToSchema as howToType} alt={item.seoTitle} imgSrc={item.to.replace("/", "")} />
+      </div>
+      <Footer footer={footer} title={item.seoTitle.split("-")[1]} />
     </>
   );
 };

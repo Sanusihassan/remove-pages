@@ -1,17 +1,21 @@
 import Head from "next/head";
 import NavBar from "pdfequips-navbar/NavBar";
 import Tool from "../../components/Tool";
-import { useRouter } from "next/router";
 import {
   edit_page,
   errors,
   tool,
   tools,
   downloadFile,
+  footer,
 } from "../../src/content/content-ar";
 import { data_type } from "../[tool]";
 import { OpenGraph } from "pdfequips-open-graph/OpenGraph";
-
+import { Features } from "@/components/Features";
+import { Footer } from "@/components/Footer";
+import HowTo from "@/components/HowTo";
+import { howToType } from "@/src/how-to/how-to";
+import { howToSchema } from "@/src/how-to/how-to-ar";
 
 export async function getStaticPaths() {
   const paths = Object.keys(routes).map((key) => ({
@@ -61,6 +65,13 @@ export default ({ item, lang }: { item: data_type; lang: string }) => {
         page={edit_page.page}
         downloadFile={downloadFile}
       />
+      <div className="container">
+        <Features features={item.features as { title: string; description: string }[]} />
+      </div>
+      <div className="container">
+        <HowTo howTo={howToSchema as howToType} alt={item.seoTitle} imgSrc={item.to.replace("/", "")} />
+      </div>
+      <Footer footer={footer} title={item.seoTitle.split("-")[1]} />
     </>
   );
 };

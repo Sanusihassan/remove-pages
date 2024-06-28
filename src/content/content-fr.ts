@@ -9,17 +9,34 @@ import type {
   landing_page as _landing_page,
 } from "../../content";
 
-export const tool: _tool = {
+export const tool = {
   Remove_Page: {
-    title: "Supprimer la Page",
-    seoTitle: "Supprimer des pages d’un PDF - Outil de suppression de page en ligne",
+    title: "Supprimer une Page",
+    seoTitle: "Supprimer des Pages d'un PDF en Ligne - Outil de Suppression de Pages",
+    keywords: "supprimer des pages de PDF, supprimer des pages d'un PDF, outil de suppression de pages PDF, suppression de pages PDF en ligne, éditeur de PDF, modification de PDF, outil PDF sécurisé, outil PDF facile à utiliser",
     description:
-      "Supprimez les pages indésirables de votre document PDF et enregistrez le fichier modifié sous forme de nouveau PDF.",
+      "Supprimez les pages indésirables de votre document PDF et enregistrez le fichier modifié en tant que nouveau PDF.",
     color: "#d63031",
     type: ".pdf",
     to: "/remove-pages",
+    features: [
+      {
+        title: "Rapide et Efficace",
+        description: "Supprimez rapidement les pages indésirables de vos documents PDF sans compromettre la qualité."
+      },
+      {
+        title: "Sécurisé et Privé",
+        description: "Vos fichiers sont protégés par un cryptage SSL et supprimés de nos serveurs immédiatement après le traitement."
+      },
+      {
+        title: "Facile à Utiliser",
+        description: "Interface conviviale qui vous permet de supprimer des pages de votre PDF en quelques clics."
+      }
+    ]
   },
 };
+
+
 
 export const tools: _tools = {
   select: "Sélectionner",
@@ -62,6 +79,13 @@ export const edit_page: _edit_page = {
   },
   pages: "pages",
   page: "page",
+};
+
+export const footer: _footer = {
+  brand: "PDFEquips",
+  terms: "conditions",
+  conditions: "conditions d'utilisation",
+  privacy_policy: "politique de confidentialité",
 };
 
 export const errors: _errors = {

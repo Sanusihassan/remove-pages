@@ -48,8 +48,7 @@
       @include extend("w-100 placeholder-glow h-100 position-absolute");
 
       .inner-loader {
-        @include extend(
-          "placeholder col-12 fh position-absolute w-100 d-flex justify-content-center align-items-center"
+        @include extend("placeholder col-12 fh position-absolute w-100 d-flex justify-content-center align-items-center"
         );
       }
     }
@@ -95,8 +94,7 @@
     .icon-container {
       font-size: 1.5em;
       display: flex;
-      @include extend(
-        "w-100 h-100 justify-content-center align-items-center position-absolute rounded-circle"
+      @include extend("w-100 h-100 justify-content-center align-items-center position-absolute rounded-circle"
       );
       top: 0;
       left: 0;
@@ -112,28 +110,29 @@
     flex: 1 0 25%;
     grid-template-rows: 7% 85% 13%;
     padding: 0 10px;
+
     @include xs {
       display: grid;
       grid-template-rows: repeat(12, 1fr);
     }
+
     .hide-onsmall {
       margin: 0 -10px;
     }
 
     grid-template-columns: repeat(12, 1fr);
-    grid-template-areas:
-      "header"
-      "body"
-      "body"
-      "body"
-      "body"
-      "body"
-      "body"
-      "body"
-      "body"
-      "body"
-      "body"
-      "body";
+    grid-template-areas: "header"
+    "body"
+    "body"
+    "body"
+    "body"
+    "body"
+    "body"
+    "body"
+    "body"
+    "body"
+    "body"
+    "body";
     display: flex;
     min-height: 85vh;
     flex-direction: column;
@@ -153,12 +152,13 @@
       @include extend("d-flex justify-content-center align-items-center");
     }
 
-    & + .show-onsmall {
+    &+.show-onsmall {
       @include extend("d-none");
       width: 100%;
       position: fixed;
       bottom: 0;
       left: 0;
+
       @media (max-width: 600px) {
         display: block !important;
       }
@@ -169,9 +169,11 @@
     @media (max-width: 600px) {
       position: fixed;
       width: 100%;
+
       .hide-onsmall {
         display: none;
       }
+
       [dir="rtl"] &,
       [lang="ar"] & {
         right: calc(-100% - 3.25rem);
@@ -223,8 +225,6 @@
       }
     }
   }
-
-  @import "./image-options";
 }
 
 .submit-btn {
@@ -233,7 +233,9 @@
       $r: red($color);
       $g: green($color);
       $b: blue($color);
-      --pulse-animation-color: #{$r}, #{$g}, #{$b};
+      --pulse-animation-color: #{$r},
+      #{$g},
+      #{$b};
       animation: pulse 2s infinite;
     }
   }

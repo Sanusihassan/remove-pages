@@ -9,17 +9,33 @@ import type {
   landing_page as _landing_page,
 } from "../../content";
 
-export const tool: _tool = {
+export const tool = {
   Remove_Page: {
     title: "Eliminar Página",
-    seoTitle: "Eliminar páginas de PDF - Herramienta de eliminación de páginas en línea",
+    seoTitle: "Eliminar Páginas de PDF en Línea - Herramienta de Eliminación de Páginas",
+    keywords: "eliminar páginas de PDF, eliminar páginas de PDF, eliminador de páginas de PDF, eliminación de páginas de PDF en línea, editor de PDF, modificación de PDF, herramienta de PDF segura, herramienta de PDF fácil de usar",
     description:
-      "Elimina páginas no deseadas de tu documento PDF y guarda el archivo modificado como un nuevo PDF.",
+      "Elimina las páginas no deseadas de tu documento PDF y guarda el archivo modificado como un nuevo PDF.",
     color: "#d63031",
     type: ".pdf",
     to: "/remove-pages",
+    features: [
+      {
+        title: "Rápido y Eficiente",
+        description: "Elimina rápidamente las páginas no deseadas de tus documentos PDF sin comprometer la calidad."
+      },
+      {
+        title: "Seguro y Privado",
+        description: "Tus archivos están protegidos con cifrado SSL y se eliminan de nuestros servidores inmediatamente después del procesamiento."
+      },
+      {
+        title: "Fácil de Usar",
+        description: "Interfaz amigable que te permite eliminar páginas de tu PDF con solo unos pocos clics."
+      }
+    ]
   },
 };
+
 
 export const edit_page: _edit_page = {
   edit_page_titles: {
@@ -62,6 +78,13 @@ export const downloadFile: _downloadFile = {
   backto: {
     "remove-pages": "Volver a Eliminar páginas",
   },
+};
+
+export const footer: _footer = {
+  brand: "PDFEquips",
+  terms: "términos",
+  conditions: "condiciones",
+  privacy_policy: "política de privacidad",
 };
 
 export const errors: _errors = {

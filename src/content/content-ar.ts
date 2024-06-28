@@ -10,15 +10,31 @@ import type {
 
 export const tool: _tool = {
   Remove_Page: {
-    title: "إزالة الصفحات",
-    seoTitle: "حذف الصفحات من ملف PDF - أداة إزالة الصفحات عبر الإنترنت",
+    title: "إزالة صفحة",
+    seoTitle: "حذف صفحات من PDF عبر الإنترنت - أداة إزالة الصفحات",
+    keywords: "إزالة صفحات PDF، حذف صفحات من PDF، مزيل صفحات PDF، إزالة صفحات PDF عبر الإنترنت، محرر PDF، تعديل PDF، أداة PDF آمنة، أداة PDF سهلة الاستخدام",
     description:
-      "حذف الصفحات غير المرغوب فيها من مستند PDF الخاص بك وحفظ الملف المعدل كملف PDF جديد.",
+      "احذف الصفحات غير المرغوب فيها من مستند PDF الخاص بك واحفظ الملف المعدل كملف PDF جديد.",
     color: "#d63031",
     type: ".pdf",
     to: "/remove-pages",
+    features: [
+      {
+        title: "سريع وفعال",
+        description: "قم بإزالة الصفحات غير المرغوب فيها من مستندات PDF الخاصة بك بسرعة دون التضحية بالجودة."
+      },
+      {
+        title: "آمن وخاص",
+        description: "ملفاتك محمية بتشفير SSL وتُحذف من خوادمنا فورًا بعد المعالجة."
+      },
+      {
+        title: "سهل الاستخدام",
+        description: "واجهة مستخدم سهلة تتيح لك إزالة الصفحات من PDF الخاص بك ببضع نقرات فقط."
+      }
+    ]
   },
 };
+
 
 export const tools: _tools = {
   select: "اختر",
@@ -58,6 +74,13 @@ export const edit_page: _edit_page = {
   },
   pages: "الصفحات",
   page: "صفحة",
+};
+
+export const footer: _footer = {
+  brand: "PDFEquips",
+  terms: "الشروط",
+  conditions: "والأحكام",
+  privacy_policy: "سياسة الخصوصية",
 };
 
 export const errors: _errors = {
