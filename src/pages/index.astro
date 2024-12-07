@@ -1,16 +1,42 @@
 ---
-
+import { Tool } from "../../components/Tool";
+import BaseLayout from "../BaseLayout.astro";
+import {
+    downloadFile,
+    edit_page,
+    errors,
+    tool,
+    tools,
+} from "../content/content";
+const { title, description, seoTitle, to } = tool.Merge_Pages;
+import { Provider as ReduxProvider } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
+import toolReducer from "../store";
+import { ToolWrapper } from "../../components/ToolWrapper";
+import { howToSchema } from "../how-to/how-to";
+export const store = configureStore({
+    reducer: {
+        tool: toolReducer,
+    },
+});
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title={title} description={description} seoTitle={seoTitle} to={to}>
+    <ReduxProvider store={store}>
+        <ToolWrapper
+            client:load
+            tools={tools}
+            data={tool.Merge_Pages}
+            lang=""
+            errors={errors}
+            edit_page={edit_page}
+            pages={edit_page.pages}
+            page={edit_page.page}
+            downloadFile={downloadFile}
+            features={tool.Merge_Pages.features}
+            howTo={howToSchema}
+            to={to}
+            seoTitle={seoTitle}
+        />
+    </ReduxProvider>
+</BaseLayout>
