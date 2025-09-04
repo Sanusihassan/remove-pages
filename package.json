@@ -12,11 +12,11 @@
     "@astrojs/check": "^0.9.4",
     "@astrolib/seo": "^1.0.0-beta.8",
     "@reduxjs/toolkit": "^2.4.0",
-    "astro": "^5.0.2",
+    "astro": "^5.13.5",
     "astro-seo-schema": "^5.0.0",
     "fetch-subscription-status": "^1.0.4",
     "pdfequips-footer": "^0.1.6",
-    "pdfequips-navbar": "^3.4.0",
+    "pdfequips-navbar": "^3.6.2",
     "pdfjs-dist": "^4.9.155",
     "react-beautiful-dnd": "^13.1.1",
     "react-bootstrap": "^2.10.6",
@@ -28,7 +28,7 @@
     "typescript": "^5.7.2"
   },
   "devDependencies": {
-    "@astrojs/react": "^4.0.0",
+    "@astrojs/react": "^4.3.0",
     "sass": "^1.82.0"
   }
 }
