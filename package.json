@@ -15,7 +15,7 @@
     "astro": "^5.13.5",
     "astro-seo-schema": "^5.0.0",
     "fetch-subscription-status": "^1.0.4",
-    "pdfequips-footer": "^0.1.6",
+    "pdfequips-footer": "^0.1.9",
     "pdfequips-navbar": "^3.6.2",
     "pdfjs-dist": "^4.9.155",
     "react-beautiful-dnd": "^13.1.1",
