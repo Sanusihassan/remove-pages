@@ -46,7 +46,7 @@ export const handleUpload = async (
     formData.append("files", files[i]);
   }
   formData.append("arrangement", state.arrangement);
-  let url;
+  let url: string = "";
   // @ts-ignore
   if (process.env.NODE_ENV === "development") {
     url = `http://127.0.0.1:5000/${state.path}`;

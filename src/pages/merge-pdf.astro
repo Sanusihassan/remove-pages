@@ -1,5 +1,4 @@
 ---
-import { Tool } from "../../components/Tool";
 import BaseLayout from "../BaseLayout.astro";
 import {
     downloadFile,
@@ -8,7 +7,7 @@ import {
     tool,
     tools,
 } from "../content/content";
-const { title, description, seoTitle, to } = tool.Merge_Pages;
+const { title, description, seoTitle, to } = tool.Merge_PDF;
 import { Provider as ReduxProvider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import toolReducer from "../store";
@@ -26,14 +25,14 @@ export const store = configureStore({
         <ToolWrapper
             client:load
             tools={tools}
-            data={tool.Merge_Pages}
+            data={tool.Merge_PDF}
             lang=""
             errors={errors}
             edit_page={edit_page}
             pages={edit_page.pages}
             page={edit_page.page}
             downloadFile={downloadFile}
-            features={tool.Merge_Pages.features}
+            features={tool.Merge_PDF.features}
             howTo={howToSchema}
             to={to}
             seoTitle={seoTitle}

@@ -9,29 +9,29 @@ import type {
 } from "../content";
 
 export const tool: _tool = {
-  Merge_Pages: {
-    title: "دمج صفحات PDF",
-    seoTitle: "دمج صفحات PDF عبر الإنترنت - دمج صفحات متعددة في صفحة واحدة",
-    description: "دمج صفحات PDF متعددة في صفحة واحدة بكفاءة",
-    color: "var(--blue)",
+  Merge_PDF: {
+    title: "دمج PDF",
+    seoTitle: "دمج ملفات PDF عبر الإنترنت - أداة دمج مجانية",
+    description: "دمج ملفات PDF متعددة في مستند واحد",
+    color: "var(--red)",
     type: ".pdf",
-    to: "/merge-pages",
+    to: "/merge-pdf",
     features: [
       {
-        title: "دمج فعال",
-        description: "قم بدمج صفحات PDF متعددة في صفحة واحدة بسهولة، مما يبسط مستنداتك."
+        title: "مجاني تمامًا وبدون تسجيل",
+        description: "PDFEquips يقدم خدمة دمج ملفات PDF عبر الإنترنت مجانًا. ليس من الضروري إنشاء حساب، ونحن لا نطلب أبدًا عنوان بريدك الإلكتروني أو معلومات بطاقة الائتمان الخاصة بك"
       },
       {
-        title: "تخطيطات مخصصة",
-        description: "حدد عدد الصفحات لكل ورقة ورتبها بالترتيب الذي تفضله."
+        title: "أداة قوية لدمج ملفات PDF",
+        description: "PDFEquips يجمع بسهولة بين مستندات PDF اثنين أو أكثر في ملف واحد، سواء كانت صفحة واحدة أو صفحات متعددة، ملفات PDF كبيرة أو صغيرة، جميع الصيغ متوافقة"
       },
       {
-        title: "واجهة سهلة الاستخدام",
-        description: "استمتع بواجهة بسيطة وبديهية تجعل دمج الصفحات سهلاً."
+        title: "دمج ملفات PDF عبر الإنترنت بشكل آمن",
+        description: "جميع الملفات التي تقوم بتحميلها وإنشائها على خوادمنا مشفرة لأسباب أمنية باستخدام TLS. سيتم حذفها فورًا وبشكل دائم بعد الاكتمال. لمزيد من المعلومات، يرجى الرجوع إلى سياسة الخصوصية الخاصة بنا"
       }
     ],
-    keywords: "دمج صفحات PDF، جمع صفحات PDF، أداة دمج صفحات PDF، صفحات متعددة إلى PDF واحد، توحيد صفحات PDF، جامع صفحات PDF، دمج صفحات PDF عبر الإنترنت، أداة دمج صفحات PDF مجانية، دمج صفحات PDF عبر الإنترنت، دمج صفحات PDF متعددة، أداة توحيد صفحات PDF، دمج آمن لصفحات PDF، دمج صفحات PDF بدون تسجيل، أداة تخطيط صفحات PDF، جامع صفحات PDF مجاني عبر الإنترنت، دمج أوراق PDF، دمج صفحات PDF مزدوجة، أداة ترتيب PDF"
-  },
+    keywords: "دمج PDF, أدوات دمج PDF, دمج ملفات PDF, دمج مستندات PDF, دمج PDF عبر الإنترنت, دمج PDF بدون تسجيل, دمج PDF مجانًا, دمج ملفات PDF متعددة, دمج PDF بسرعة, دمج PDF بأمان, دمج مستندات PDF بسهولة, دمج PDF عبر الإنترنت مجانًا, دمج PDF بدون تثبيت, دمج ملفات PDF مشفرة, أدوات دمج PDF مجانًا, دمج PDF عبر الإنترنت بدون تسجيل"
+  }
 };
 export const tools: _tools = {
   select: "اختر",
@@ -42,20 +42,17 @@ export const tools: _tools = {
 
 export const edit_page: _edit_page = {
   edit_page_titles: {
-    merge_pages: "Merge Pages options",
+    merge_pdf: "خيارات دمج ملف PDF",
   },
-  loader_text: "please wait...",
-  add_more_button: "Add more pages",
+  loader_text: "يرجى الانتظار...",
+  add_more_button: "إضافة المزيد من الملفات",
   action_buttons: {
-    merge_pages: "Merge Pages",
+    merge_pdf: "دمج PDF",
   },
-  pages: "pages",
-  page: "page",
-  options: {
-    info: "حدد ترتيب الصفحات من القائمة المنسدلة أدناه. سيحدد هذا كيفية ترتيب الصفحات في مستند PDF المدمج.",
-    placeholder: "حدد ترتيب الصفحات"
-  }
+  pages: "صفحات",
+  page: "صفحة واحدة",
 };
+
 
 export const downloadFile: _downloadFile = {
   titles: {

@@ -1,14 +1,15 @@
-// import { type Dispatch, type SetStateAction, useEffect } from "react";
+import { type Dispatch, type SetStateAction, useEffect } from "react";
 import type { errors as _ } from "../../src/content";
 import ImageCard from "./ImageCard";
 import FileCard from "./FileCard";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  type DropResult,
+} from "react-beautiful-dnd";
 import { isDraggableExtension } from "../../src/utils";
-
-import { useSelector, useDispatch } from "react-redux";
-import store, { type ToolState } from "../../src/store";
 import { useFileStore } from "../../src/file-store";
-import { useEffect, type Dispatch, type SetStateAction } from "react";
 
 type FileProps = {
   errors: _;
@@ -16,38 +17,44 @@ type FileProps = {
   toolTipSizes: string[];
   setToolTipSizes: Dispatch<SetStateAction<string[]>>;
   loader_text: string;
-  showSpinner: boolean;
   fileDetailProps: [string, string, string];
-  path: string;
 };
 const Files = ({
   errors,
   extension,
-  toolTipSizes,
   loader_text,
-  showSpinner,
   fileDetailProps,
-  path
 }: FileProps) => {
-  // const store = useSelector((state: { tool: ToolState }) => state.tool);
-  const { files, imageUrls, setImageUrls } = useFileStore();
+  const { files, setFiles } = useFileStore();
+  useEffect(() => {
 
-  useEffect(() => { }, [files]);
+  }, [files]);
+  const reorderFiles = (
+    files: File[],
+    startIndex: number,
+    endIndex: number
+  ): File[] => {
+    const result = Array.from(files);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
+  };
 
-  const handleDragEnd = (result: any) => {
+  const onDragEnd = (result: DropResult) => {
     if (!result.destination) {
       return;
     }
-    // Argument of type 'Blob[]' is not assignable to parameter of type 'File[]'.
-    // Type 'Blob' is missing the following properties from type 'File': lastModified, webkitRelativePathts(2345)
-    if (isDraggableExtension(extension, path)) {
-      // dispatch(setFiles(store.files));
-    }
-  };
 
+    const updatedFiles = reorderFiles(
+      files,
+      result.source.index,
+      result.destination.index
+    );
+    setFiles(updatedFiles);
+  };
   return (
     <>
-      <DragDropContext onDragEnd={handleDragEnd}>
+      <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="imageUrls" direction="horizontal">
           {(provided, snapshot) => (
             <div
@@ -56,13 +63,12 @@ const Files = ({
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
-              {/* this is what cause the error instead of imageUrls i want to use the files array it's a File[] */}
               {files.map((file, index) => (
                 <Draggable
                   key={file.name}
                   draggableId={file.name}
                   index={index}
-                  isDragDisabled={!isDraggableExtension(extension, path)}
+                  isDragDisabled={!isDraggableExtension(extension, "merge-pdf")}
                 >
                   {(provided, snapshot) => (
                     <div
@@ -74,7 +80,6 @@ const Files = ({
                         ...provided.draggableProps.style,
                       }}
                     >
-                      {/* isDraggableExtension(extension) ? ( */}
                       {extension === ".jpg" ? (
                         (() => {
                           return (
@@ -94,6 +99,9 @@ const Files = ({
                           extension={extension}
                           file={file}
                           index={index}
+                          isDraggable={isDraggableExtension(extension, "merge-pdf")}
+                          provided={provided}
+                          snapshot={snapshot}
                           errors={errors}
                           loader_text={loader_text}
                           fileDetailProps={fileDetailProps}

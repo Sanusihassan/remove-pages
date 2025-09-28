@@ -1,27 +1,27 @@
 export const tool = {
-  Merge_Pages: {
-    title: "Merge PDF Pages",
-    seoTitle: "Merge PDF Pages Online - Combine Multiple Pages Into One",
-    description: "Combine multiple PDF pages into a single page efficiently",
-    color: "var(--blue)",
+  Merge_PDF: {
+    title: "Merge PDF",
+    seoTitle: "Merge PDFs Online - Free PDF Combiner",
+    description: "Combine multiple PDF files into one document",
+    color: "var(--red)",
     type: ".pdf",
-    to: "/merge-pages",
+    to: "/merge-pdf",
     features: [
       {
-        title: "Efficient Combination",
-        description: "Easily combine multiple PDF pages into a single page, streamlining your documents."
+        title: "Completely free and without registration",
+        description: "PDFEquips offers a free online PDF merging service It's not necessary to create an account, and we never ask for your email address or credit card information"
       },
       {
-        title: "Custom Layouts",
-        description: "Specify the number of pages per sheet and arrange them in the order you prefer."
+        title: "Robust tool for merging PDFs",
+        description: "PDFEquips easily combines two or more PDF documents into one file, whether it's a single page or multiple pages, large or small PDF files, all formats are compatible"
       },
       {
-        title: "User-Friendly Interface",
-        description: "Enjoy a simple and intuitive interface that makes merging pages a breeze."
+        title: "Securely merge PDF files online",
+        description: "All files you upload and create on our servers are encrypted for security reasons using TLS They will be immediately and permanently deleted after processing For more information, please refer to our privacy policy"
       }
     ],
-    keywords: "merge PDF pages, combine PDF pages, PDF page merger, multiple pages to one PDF, consolidate PDF pages, PDF page combiner, online PDF page merge, free PDF page merger, merge PDF pages online, combine multiple PDF pages, PDF page consolidation tool, secure PDF page merge, no registration PDF page merge, PDF page layout tool, free online PDF page combiner, merge PDF sheets, combine PDF spreads, PDF imposition tool"
-  },
+    keywords: "merge PDF, merge PDF online, combine PDF files, free PDF merge, PDF merger, PDF combine tool, online PDF merge, PDF merge free, merge PDF documents, combine PDFs online, secure PDF merge, PDF file merger, PDF merge tool, free online PDF combiner, merge multiple PDFs, combine PDF pages, no registration PDF merge, PDF merger tool, online PDF combiner"
+  }
 };
 
 export const tools = {
@@ -33,19 +33,15 @@ export const tools = {
 
 export const edit_page = {
   edit_page_titles: {
-    merge_pages: "Merge Pages options",
+    merge_pdf: "Merge PDF options",
   },
   loader_text: "please wait...",
   add_more_button: "Add more pages",
   action_buttons: {
-    merge_pages: "Merge Pages",
+    merge_pdf: "Merge PDF",
   },
   pages: "pages",
   page: "page",
-  options: {
-    info: "Select a page arrangement from the dropdown menu below. This will determine how the pages are arranged in the merged PDF document.",
-    placeholder: "Select Page Arrangement"
-  }
 };
 
 export const downloadFile = {

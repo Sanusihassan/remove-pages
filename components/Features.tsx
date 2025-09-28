@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 import { type ToolState } from "../src/store";
-import EfficientCombinationIcon from "./icons/EfficientCombinationIcon";
-import { LuLayoutDashboard } from "react-icons/lu";
-import EasyIcon from "./icons/EasyIcon";
+import { MdOutlineMoneyOffCsred } from "react-icons/md";
+import RobustIcon from "./icons/Robust";
+import { CiLock } from "react-icons/ci";
 
 export const Features = ({ features }: {
     features: { title: string; description: string }[];
@@ -10,7 +10,7 @@ export const Features = ({ features }: {
     const stateShowTool = useSelector(
         (state: { tool: ToolState }) => state.tool.showTool
     );
-    const icons = [EfficientCombinationIcon, LuLayoutDashboard, EasyIcon]
+    const icons = [MdOutlineMoneyOffCsred, RobustIcon, CiLock];
     return (
         <div className={`features${stateShowTool ? "" : " d-none"}`}>
             {features.map(({ title, description }, i) => {

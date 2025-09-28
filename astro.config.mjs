@@ -12,5 +12,5 @@ export default defineConfig({
         }
     },
     integrations: [react()],
-    base: isProd ? "/template" : "/",
+    base: isProd ? "/merge-pdf" : "/",
 });

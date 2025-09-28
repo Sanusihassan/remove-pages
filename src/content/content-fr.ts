@@ -10,28 +10,28 @@ import type {
 } from "../content";
 
 export const tool: _tool = {
-  Merge_Pages: {
-    title: "Fusionner des Pages PDF",
-    seoTitle: "Fusionner des Pages PDF en Ligne - Combiner Plusieurs Pages en Une",
-    description: "Combinez efficacement plusieurs pages PDF en une seule page",
-    color: "var(--blue)",
+  Merge_PDF: {
+    title: "Fusionner des PDF",
+    seoTitle: "Fusionner des PDF - Combinez des fichiers en un seul",
+    description: "Combinez plusieurs fichiers PDF en un seul document",
+    color: "var(--red)",
     type: ".pdf",
-    to: "/merge-pages",
+    to: "/merge-pdf",
     features: [
       {
-        title: "Combinaison Efficace",
-        description: "Combinez facilement plusieurs pages PDF en une seule page, simplifiant ainsi vos documents."
+        title: "Complètement gratuit et sans inscription",
+        description: "PDFEquips offre un service de fusion de PDF en ligne gratuit. Il n'est pas nécessaire de créer un compte, et nous ne demandons jamais votre adresse e-mail ou vos informations de carte de crédit."
       },
       {
-        title: "Mises en Page Personnalisées",
-        description: "Spécifiez le nombre de pages par feuille et organisez-les dans l'ordre que vous préférez."
+        title: "Outil robuste pour fusionner des PDF",
+        description: "PDFEquips combine facilement deux ou plusieurs documents PDF en un seul fichier, que ce soit une seule page ou plusieurs pages, des fichiers PDF grands ou petits, tous les formats sont compatibles."
       },
       {
-        title: "Interface Conviviale",
-        description: "Profitez d'une interface simple et intuitive qui facilite la fusion des pages."
+        title: "Fusionnez des fichiers PDF en ligne en toute sécurité",
+        description: "Tous les fichiers que vous téléchargez et créez sur nos serveurs sont cryptés pour des raisons de sécurité en utilisant TLS. Ils seront immédiatement et définitivement supprimés après le traitement. Pour plus d'informations, veuillez consulter notre politique de confidentialité."
       }
     ],
-    keywords: "fusionner pages PDF, combiner pages PDF, fusionneur de pages PDF, plusieurs pages en un PDF, consolider pages PDF, combineur de pages PDF, fusion de pages PDF en ligne, fusionneur de pages PDF gratuit, fusionner pages PDF en ligne, combiner plusieurs pages PDF, outil de consolidation de pages PDF, fusion sécurisée de pages PDF, fusion de pages PDF sans inscription, outil de mise en page PDF, combineur de pages PDF gratuit en ligne, fusionner feuilles PDF, combiner planches PDF, outil d'imposition PDF"
+    keywords: "fusionner PDF, outils de fusion PDF, fusionner des fichiers PDF, fusionner des documents PDF, fusionner PDF en ligne, fusionner PDF sans inscription, fusionner PDF gratuitement, fusionner plusieurs fichiers PDF, fusionner PDF rapidement, fusionner PDF en toute sécurité, fusionner des documents PDF facilement, fusionner PDF en ligne gratuitement, fusionner PDF sans installation, fusionner des fichiers PDF chiffrés, outils gratuits pour fusionner PDF, fusionner PDF en ligne sans inscription"
   },
 };
 
@@ -44,19 +44,15 @@ export const tools: _tools = {
 
 export const edit_page: _edit_page = {
   edit_page_titles: {
-    merge_pages: "Options de fusion des pages",
+    merge_pdf: "Options de fusion de PDF",
   },
-  loader_text: "veuillez patienter...",
-  add_more_button: "Ajouter plus de pages",
+  loader_text: "Veuillez patienter...",
+  add_more_button: "Ajouter plus de fichiers",
   action_buttons: {
-    merge_pages: "Fusionner les pages",
+    merge_pdf: "Fusionner PDF",
   },
   pages: "pages",
   page: "page",
-  options: {
-    info: "Sélectionnez une disposition de page dans le menu déroulant ci-dessous. Cela déterminera comment les pages sont arrangées dans le document PDF fusionné.",
-    placeholder: "Sélectionnez la disposition de la page"
-  }
 };
 
 export const downloadFile: _downloadFile = {

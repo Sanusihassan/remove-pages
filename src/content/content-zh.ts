@@ -10,46 +10,42 @@ import type {
 } from "../content";
 
 export const tool: _tool = {
-  Merge_Pages: {
-    title: "合并PDF页面",
-    seoTitle: "在线合并PDF页面 - 将多个页面合并为一个",
-    description: "高效地将多个PDF页面合并成一个页面",
-    color: "var(--blue)",
+  Merge_PDF: {
+    title: "合并PDF",
+    seoTitle: "合并PDF - 将多个文件合并成一个文档",
+    description: "将多个PDF文件合并成一个文档",
+    color: "var(--red)",
     type: ".pdf",
-    to: "/merge-pages",
+    to: "/merge-pdf",
     features: [
       {
-        title: "高效合并",
-        description: "轻松将多个PDF页面合并成一个页面，简化您的文档。"
+        title: "完全免费，无需注册",
+        description: "PDFEquips提供免费在线PDF合并服务，无需创建帐户，我们从不要求您的电子邮件地址或信用卡信息"
       },
       {
-        title: "自定义布局",
-        description: "指定每张纸上的页面数量，并按您喜欢的顺序排列它们。"
+        title: "强大的PDF合并工具",
+        description: "PDFEquips轻松将两个或更多PDF文档合并为一个文件，无论是单页还是多页，大或小的PDF文件，所有格式都兼容"
       },
       {
-        title: "用户友好界面",
-        description: "享受简单直观的界面，让页面合并变得轻而易举。"
+        title: "在线安全合并PDF文件",
+        description: "您在我们的服务器上上传和创建的所有文件都经过TLS加密，以确保安全性。它们将在处理后立即永久删除。有关更多信息，请参阅我们的隐私政策"
       }
     ],
-    keywords: "合并PDF页面，组合PDF页面，PDF页面合并器，多页合并为一个PDF，整合PDF页面，PDF页面组合器，在线合并PDF页面，免费PDF页面合并器，在线合并PDF页面，合并多个PDF页面，PDF页面整合工具，安全PDF页面合并，无需注册合并PDF页面，PDF页面布局工具，免费在线PDF页面组合器，合并PDF表格，组合PDF跨页，PDF拼版工具"
+    keywords: "合并PDF, PDF合并工具, 合并PDF文件, 合并PDF文档, 在线合并PDF, 无需注册合并PDF, 免费合并PDF, 合并多个PDF文件, 快速合并PDF, 安全合并PDF, 轻松合并PDF文档, 免费在线合并PDF, 无需安装合并PDF, 合并加密PDF文件, 免费PDF合并工具, 无需注册在线合并PDF"
   },
 };
 
 export const edit_page: _edit_page = {
   edit_page_titles: {
-    merge_pages: "合并页面选项",
+    merge_pdf: "合并PDF选项",
   },
-  loader_text: "请稍候...",
-  add_more_button: "添加更多页面",
+  loader_text: "请稍等...",
+  add_more_button: "添加更多文件",
   action_buttons: {
-    merge_pages: "合并页面",
+    merge_pdf: "合并PDF",
   },
   pages: "页",
   page: "页",
-  options: {
-    info: "从下面的下拉菜单中选择页面布局。这将确定在合并的PDF文档中页面的排列方式。",
-    placeholder: "选择页面布局"
-  }
 };
 
 export const downloadFile: _downloadFile = {

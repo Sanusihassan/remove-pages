@@ -17,35 +17,45 @@ export type howToType = {
 export const howToSchema: WithContext<HowTo> = {
     "@context": "https://schema.org",
     "@type": "HowTo",
-    name: "How to Merge PDF Pages?",
-    description: "Steps to combine multiple PDF pages into a single page.",
+    name: "How to Merge PDFs",
+    description: "Step-by-step guide to merge multiple PDF files into one.",
     step: [
         {
             "@type": "HowToStep",
             name: "Step 1",
-            text: "Open the Merge Pages tool on PDFEquips."
+            text: "Open the PDF merge tool on PDFEquips.",
         },
         {
             "@type": "HowToStep",
             name: "Step 2",
-            text: "Upload the PDF files you want to merge."
+            text: "Drag and drop PDF files or click the 'Select PDF Files' button to add PDF files.",
         },
         {
             "@type": "HowToStep",
             name: "Step 3",
-            text: "Select a page arrangement from the dropdown menu. This will determine how the pages are arranged in the merged PDF document."
+            text: "Click and hold a file, move it to the desired location, and release the it.",
         },
         {
             "@type": "HowToStep",
             name: "Step 4",
-            text: "Click the 'Merge Pages' button to combine the pages as per the selected arrangement."
+            text: "PDF files are merged from top to bottom.",
         },
         {
             "@type": "HowToStep",
             name: "Step 5",
-            text: "Click the 'Download Merged PDF file' button to save the merged PDF file to your device."
-        }
-    ]
+            text: "To remove a file, click the delete icon on top of the file.",
+        },
+        {
+            "@type": "HowToStep",
+            name: "Step 6",
+            text: "To rotate a page, click the rotate icon on top of the page thumbnail and select the desired rotation angle.",
+        },
+        {
+            "@type": "HowToStep",
+            name: "Step 7",
+            text: "Once the files are in the desired order and orientation, click the 'Merge' button to combine them into a single PDF file.",
+        },
+    ],
 };
 
 

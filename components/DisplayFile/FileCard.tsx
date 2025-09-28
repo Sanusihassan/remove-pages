@@ -1,85 +1,109 @@
+import type { DraggableProvided, DraggableStateSnapshot } from "react-beautiful-dnd";
+import { ActionDiv, type ActionProps } from "./ActionDiv";
+import { Tooltip } from "react-tooltip";
 import type { errors as _ } from "../../src/content";
 import { useEffect, useState } from "react";
 import { Loader } from "./Loader";
 import {
-  calculatePages,
-  getNthPageAsImage,
+  getFileDetailsTooltipContent,
+  getFirstPageAsImage,
   getPlaceHoderImageUrl,
 } from "../../src/utils";
-import { useDispatch, } from "react-redux";
-import type { ActionProps } from "./ActionDiv";
-import { Pages } from "./Pages";
-type OmitFileName<T extends ActionProps> = Omit<T, "fileName" | "index">;
+import { useDispatch } from "react-redux";
+type OmitFileName<T extends ActionProps> = Omit<T, "fileName">;
 
 type CardProps = OmitFileName<ActionProps> & {
+  index: number;
   file: File;
+  isDraggable: boolean;
+  provided: DraggableProvided;
+  snapshot: DraggableStateSnapshot;
   errors: _;
   loader_text: string;
   fileDetailProps: [string, string, string];
-  index?: number | string;
 };
-export type imageUrlsType = {
-  url: string;
-  id: number;
-}[];
 
 const FileCard = ({
+  index,
   file,
+  isDraggable,
+  provided,
   errors,
   extension,
   loader_text,
+  fileDetailProps,
 }: CardProps) => {
-  const [imageUrls, setImageUrls] = useState<imageUrlsType>([]);
-  const [pageCount, setPageCount] = useState(0);
+  const [showLoader, setShowLoader] = useState(true);
+  const [imageUrl, setImageUrl] = useState("");
+  const [tooltipSize, setToolTipSize] = useState("");
   const dispatch = useDispatch();
   let isSubscribed = true;
-  const processFile = async () => {
-    try {
-      if (extension && extension === ".pdf") {
-        if (isSubscribed) {
-          const urls: imageUrlsType = [];
-          for (let i = 1; i <= pageCount; i += 1) {
-            let url = await getNthPageAsImage(file, dispatch, errors, i);
-            urls.push({ url, id: i });
-          }
-          setImageUrls(urls);
-        }
-      } else if (extension && extension !== ".jpg") {
-        if (isSubscribed) {
-          setImageUrls(
-            !file.size
-              ? [{ url: "/images/corrupted.png", id: 1 }]
-              : [{ url: getPlaceHoderImageUrl(extension), id: 1 }]
-          );
-        }
-      }
-    } catch (error) {
-      console.error("Error processing files:", error);
-    }
-  };
   useEffect(() => {
     (async () => {
-      let _pageCount = await calculatePages(file);
-      setPageCount(_pageCount <= 16 ? _pageCount : 16);
+      let size = await getFileDetailsTooltipContent(
+        file,
+        ...fileDetailProps,
+        dispatch,
+        errors
+      );
+      setToolTipSize(size);
     })();
+    const processFile = async () => {
+      try {
+        setShowLoader(true);
+        if (extension && extension === ".pdf") {
+          if (isSubscribed) {
+            setImageUrl(await getFirstPageAsImage(file, dispatch, errors));
+          }
+        } else if (extension && extension !== ".jpg") {
+          if (isSubscribed) {
+            setImageUrl(
+              !file.size
+                ? "/images/corrupted.png"
+                : getPlaceHoderImageUrl(extension)
+            );
+          }
+        }
+      } finally {
+        setShowLoader(false);
+      }
+    };
     processFile();
     return () => {
       isSubscribed = false;
     };
-  }, [extension, file, pageCount]);
-
+  }, [extension, file]);
   return (
-    <>
-      {imageUrls.length == 0 ? (
-        <div className="initial-loader">
-          <Loader loader_text={loader_text} />
-        </div>
-      ) : null}
-      <Pages
-        imageUrls={imageUrls}
-        loader_text={loader_text}
+    <div
+      className="card item"
+      data-tooltip-id={`item-tooltip-${index}`}
+      data-tooltip-html={tooltipSize}
+      data-tooltip-place="top"
+      {...(isDraggable ? provided.dragHandleProps : {})}
+    >
+      {showLoader ? <Loader loader_text={loader_text} /> : null}
+      <bdi>
+        <Tooltip id={`item-tooltip-${index}`} />
+      </bdi>
+      <ActionDiv
+        extension={extension}
+        index={index}
+        errors={errors}
+        fileName={file.name}
       />
-    </>
+      <div className="card-body d-flex flex-column">
+        {!showLoader ? (
+          <img
+            className="img-fluid-custom object-fit-contain rounded item-img"
+            src={imageUrl}
+            alt={`Selected file ${index}`}
+            draggable={false}
+          />
+        ) : null}
+
+        <p className="text-center">{file.name}</p>
+      </div>
+    </div>
   );
 };
 

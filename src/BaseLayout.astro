@@ -103,7 +103,7 @@ import { howToSchema } from "./how-to/how-to";
         />
 
         <slot name="head" />
-        <script define:vars={fetchSubscriptionStatus}>
+        <script define:vars={fetchSubscriptionStatus} is:inline>
             document.addEventListener("DOMContentLoaded", async () => {
                 const status = await fetchSubscriptionStatus();
                 if (!status) {

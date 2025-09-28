@@ -1,4 +1,4 @@
-import type { RefObject } from "../react-astro";
+import type { RefObject } from "react";
 
 export const downloadConvertedFile = (
   response: any,
