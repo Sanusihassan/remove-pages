@@ -53,19 +53,24 @@ export const edit_page: _edit_page = {
   },
   pages: "pages",
   page: "page",
+  options: {
+    label: "Nom du fichier de sortie (facultatif)",
+    placeholder: "Entrez le nom du fichier",
+    helperText: "Ce sera le nom du PDF fusionné lors du téléchargement."
+  }
 };
 
 export const downloadFile: _downloadFile = {
   titles: {
-    "merge-pages": ["Les pages PDF ont été fusionnées !", "La page PDF a été fusionnée !"],
+    "merge-pdf": ["Les fichiers PDF ont été fusionnés !", "Le fichier PDF a été fusionné !"],
   },
 
   btnText: {
-    "merge-pages": ["Télécharger les pages PDF fusionnées", "Télécharger la page PDF fusionnée"],
+    "merge-pdf": ["Télécharger les fichiers PDF fusionnés", "Télécharger le fichier PDF fusionné"],
   },
 
   backto: {
-    "merge-pages": "Retour à Fusionner les pages",
+    "merge-pdf": "Retour à Fusionner PDF",
   },
 };
 

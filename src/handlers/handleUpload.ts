@@ -8,7 +8,7 @@ import {
   setField
 } from "../store";
 import type { Action, Dispatch } from "@reduxjs/toolkit/react";
-
+let filesOnSubmit = [];
 export const handleUpload = async (
   e: React.FormEvent<HTMLFormElement>,
   downloadBtn: RefObject<HTMLAnchorElement>,
@@ -16,12 +16,10 @@ export const handleUpload = async (
   state: {
     path: string;
     errorMessage: string;
-    arrangement: string;
+    fileName: string
   },
   files: File[],
   errors: _,
-  filesOnSubmit: string[],
-  setFilesOnSubmit: (value: string[]) => void
 ) => {
   e.preventDefault();
   dispatch(setField({ isSubmitted: true }));
@@ -45,11 +43,10 @@ export const handleUpload = async (
   for (let i = 0; i < files.length; i++) {
     formData.append("files", files[i]);
   }
-  formData.append("arrangement", state.arrangement);
   let url: string = "";
   // @ts-ignore
   if (process.env.NODE_ENV === "development") {
-    url = `http://127.0.0.1:5000/${state.path}`;
+    url = `https://www.pdfequips.com/api/${state.path}`;
     // url = `https://5000-planetcreat-pdfequipsap-te4zoi6qkr3.ws-eu102.gitpod.io/${state.path}`;
   } else {
     url = `/api/${state.path}`;
@@ -121,10 +118,10 @@ export const handleUpload = async (
     downloadConvertedFile(
       response,
       outputFileMimeType,
-      outputFileName,
+      state.fileName || outputFileName,
       downloadBtn
     );
-    setFilesOnSubmit(files.map(f => f.name));
+    filesOnSubmit = files.map(f => f.name);
 
     if (response.status !== 200) {
       throw new Error(`HTTP error! status: ${response.status}`);

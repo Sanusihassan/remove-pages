@@ -42,21 +42,27 @@ export const edit_page = {
   },
   pages: "pages",
   page: "page",
+  options: {
+    label: "Output File Name (Optional)",
+    placeholder: "Enter file name",
+    helperText: "This will be the name of the merged PDF when downloaded."
+  }
 };
 
 export const downloadFile = {
   titles: {
-    "merge-pages": ["PDF pages have been merged!", "PDF page has been merged!"],
+    "merge-pdf": ["PDF files have been merged!", "PDF file has been merged!"],
   },
 
   btnText: {
-    "merge-pages": ["Download Merged PDF pages", "Download Merged PDF page"],
+    "merge-pdf": ["Download Merged PDF files", "Download Merged PDF file"],
   },
 
   backto: {
-    "merge-pages": "Back To Merge Pages",
+    "merge-pdf": "Back To Merge PDF",
   },
 };
+
 
 export const footer = {
   brand: "PDFEquips",

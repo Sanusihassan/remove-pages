@@ -11,7 +11,7 @@ export function SubmitBtn({
   edit_page: edit_page;
 }): JSX.Element {
   const dispatch = useDispatch();
-  const { submitBtn } = useFileStore();
+  const { submitBtn, files } = useFileStore();
   // state variables:
   const errorMessage = useSelector(
     (state: { tool: ToolState }) => state.tool.errorMessage
@@ -29,7 +29,7 @@ export function SubmitBtn({
           submitBtn?.current?.click();
         }
       }}
-      disabled={errorMessage.length > 0}
+      disabled={errorMessage.length > 0 || files.length <= 1}
     >
       <bdi>
         {

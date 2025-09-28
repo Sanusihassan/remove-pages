@@ -6,7 +6,6 @@ export interface FileStore {
   fileInput: RefObject<HTMLInputElement> | null;
   submitBtn: React.RefObject<HTMLButtonElement> | null;
   downloadBtn: React.RefObject<HTMLAnchorElement> | null;
-  filesOnSubmit: string[];
   imageUrls: {
     file: File;
     imageUrl: string;
@@ -23,7 +22,6 @@ export interface FileStore {
       }[]
     >
   >;
-  setFilesOnSubmit(value: string[]): void;
 }
 
 export const useFileStore = create<FileStore>((set) => ({
@@ -58,8 +56,5 @@ export const useFileStore = create<FileStore>((set) => ({
       imageUrls:
         typeof value === "function" ? value(prevState.imageUrls) : value,
     }));
-  },
-  setFilesOnSubmit(value: string[]) {
-    set({ filesOnSubmit: value });
   },
 }));

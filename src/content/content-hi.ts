@@ -47,19 +47,24 @@ export const edit_page: _edit_page = {
   },
   pages: "पृष्ठों",
   page: "पृष्ठ",
+  options: {
+    label: "आउटपुट फ़ाइल का नाम (वैकल्पिक)",
+    placeholder: "फ़ाइल का नाम दर्ज करें",
+    helperText: "यह डाउनलोड किए गए संयुक्त PDF का नाम होगा।"
+  }
 };
 
 export const downloadFile: _downloadFile = {
   titles: {
-    "merge-pages": ["PDF पृष्ठ मर्ज कर दिए गए हैं!", "PDF पृष्ठ मर्ज कर दिया गया है!"],
+    "merge-pdf": ["PDF फ़ाइलें मर्ज कर दी गई हैं!", "PDF फ़ाइल मर्ज कर दी गई है!"],
   },
 
   btnText: {
-    "merge-pages": ["मर्ज किए गए PDF पृष्ठ डाउनलोड करें", "मर्ज किया गया PDF पृष्ठ डाउनलोड करें"],
+    "merge-pdf": ["मर्ज की गई PDF फ़ाइलें डाउनलोड करें", "मर्ज की गई PDF फ़ाइल डाउनलोड करें"],
   },
 
   backto: {
-    "merge-pages": "पृष्ठ मर्ज करने पर वापस जाएं",
+    "merge-pdf": "PDF मर्ज पर वापस जाएँ",
   },
 };
 

@@ -51,22 +51,28 @@ export const edit_page: _edit_page = {
   },
   pages: "صفحات",
   page: "صفحة واحدة",
+  options: {
+    label: "اسم الملف الناتج (اختياري)",
+    placeholder: "أدخل اسم الملف",
+    helperText: "سيكون هذا اسم ملف PDF المدمج عند تنزيله."
+  }
 };
 
 
 export const downloadFile: _downloadFile = {
   titles: {
-    "merge-pages": ["PDF pages have been merged!", "PDF page has been merged!"],
+    "merge-pdf": ["تم دمج ملفات PDF!", "تم دمج ملف PDF!"],
   },
 
   btnText: {
-    "merge-pages": ["Download Merged PDF pages", "Download Merged PDF page"],
+    "merge-pdf": ["تحميل ملفات PDF المدمجة", "تحميل ملف PDF المدمج"],
   },
 
   backto: {
-    "merge-pages": "Back To Merge Pages",
+    "merge-pdf": "العودة إلى دمج PDF",
   },
 };
+
 
 export const footer: _footer = {
   brand: "PDFEquips",

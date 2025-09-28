@@ -32,8 +32,8 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
   const errorMessage = useSelector(
     (state: { tool: ToolState }) => state.tool.errorMessage
   );
-  const arrangement = useSelector(
-    (state: { tool: ToolState }) => state.tool.arrangement
+  const fileName = useSelector(
+    (state: { tool: ToolState }) => state.tool.fileName
   );
   const dispatch = useDispatch();
   // file store
@@ -43,8 +43,6 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
     setFileInput,
     setDownloadBtn,
     setSubmitBtn,
-    filesOnSubmit,
-    setFilesOnSubmit,
   } = useFileStore();
   // refs
   const fileInput = useRef<HTMLInputElement>(null);
@@ -68,12 +66,10 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
           {
             path,
             errorMessage,
-            arrangement
+            fileName
           },
           files,
           errors,
-          filesOnSubmit,
-          setFilesOnSubmit
         )
       }
       method="POST"

@@ -46,21 +46,27 @@ export const edit_page: _edit_page = {
   },
   pages: "页",
   page: "页",
+  options: {
+    label: "输出文件名（可选）",
+    placeholder: "输入文件名",
+    helperText: "这将是下载的合并 PDF 的名称。"
+  }
 };
 
-export const downloadFile: _downloadFile = {
+export const downloadFile_zh: _downloadFile = {
   titles: {
-    "merge-pages": ["PDF页面已合并！", "PDF页面已合并！"],
+    "merge-pdf": ["PDF 文件已合并！", "PDF 文件已合并！"],
   },
 
   btnText: {
-    "merge-pages": ["下载合并的PDF页面", "下载合并的PDF页面"],
+    "merge-pdf": ["下载合并的 PDF 文件", "下载合并的 PDF 文件"],
   },
 
   backto: {
-    "merge-pages": "返回到合并页面",
+    "merge-pdf": "返回合并 PDF",
   },
 };
+
 
 export const tools: _tools = {
   select: "选择",

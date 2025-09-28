@@ -13,6 +13,7 @@ import {
 import { useFileStore } from "../src/file-store";
 import AddMoreButton from "./EditArea/AddMoreButton";
 import { SubmitBtn } from "./EditArea/SubmitBtn";
+import { Options } from "./DisplayFile/Options";
 
 type editPageProps = {
   extension: string;
@@ -96,7 +97,7 @@ const EditPage = ({
             }
           </bdi>
         </h5>
-
+        <Options content={edit_page.options} />
         <div className="hide-onsmall">
           <SubmitBtn k={path} edit_page={edit_page} />
         </div>
