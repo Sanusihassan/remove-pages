@@ -1,1 +1,11 @@
 ADD LIMIT TO FILE COUNT AND FILESIZE, MAX FILE SIZE = 100MB, LIMIT 15.
+
+i want an info message for all of these i.e this is an info alert for free version of our PDF Merger tool: https://www.pdfequips.com/merge-pdf
+
+Maximum Files to Combine: You can typically combine up to 50 individual files.
+
+Total Page Limit: The final, merged PDF document cannot exceed 1,500 pages.
+
+Individual File Page Limit: Each separate file being merged is generally limited to 500 pages.
+
+File Size Limit: Each individual file you upload is usually limited to 50MB in size.

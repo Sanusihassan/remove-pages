@@ -19,6 +19,9 @@ export function SubmitBtn({
   const isSubmitted = useSelector(
     (state: { tool: ToolState }) => state.tool.isSubmitted
   );
+  const limitationMsg = useSelector(
+    (state: { tool: ToolState }) => state.tool.limitationMsg
+  );
   return (
     <button
       className={`submit-btn btn btn-lg text-white position-relative overflow-hidden ${k} grid-footer`}
@@ -29,7 +32,7 @@ export function SubmitBtn({
           submitBtn?.current?.click();
         }
       }}
-      disabled={errorMessage.length > 0 || files.length <= 1}
+      disabled={errorMessage.length > 0 || files.length <= 1 || limitationMsg.length > 0}
     >
       <bdi>
         {

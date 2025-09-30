@@ -181,28 +181,12 @@ export const validateFiles = (
   extension: string,
   errors: _,
   dispatch: Dispatch<Action>,
-  state: {
-    path: string;
-  }
 ) => {
   const files = Array.from(_files); // convert FileList to File[] array
 
   let allowedMimeTypes = [
     "application/pdf",
-    "text/html",
-    "image/jpeg",
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-    "application/vnd.ms-powerpoint",
-    "application/vnd.ms-excel",
   ];
-  // validation for merge-pdf page & empty files
-  if (state.path == "merge-pdf" && files.length <= 1) {
-    dispatch(setField({ errorMessage: errors.ERR_UPLOAD_COUNT.message }));
-    dispatch(setField({ errorCode: "ERR_UPLOAD_COUNT" }));
-    return false;
-  }
   if (files.length == 0) {
     dispatch(setField({ errorMessage: errors.NO_FILES_SELECTED.message }));
     dispatch(setField({ errorCode: "ERR_NO_FILES_SELECTED" }));
@@ -215,15 +199,6 @@ export const validateFiles = (
     let file_extension = file.name.split(".").pop()?.toUpperCase() || "";
     // this contains all types and some special types that might potentially be of than one extension
     const types = [
-      "ppt",
-      "pptx",
-      "doc",
-      "docx",
-      "xls",
-      "xlsx",
-      "html",
-      "htm",
-      "jpg",
       "pdf",
     ];
 
@@ -336,4 +311,99 @@ export async function getNthPageAsImage(
       return DEFAULT_PDF_IMAGE; // Return the placeholder image URL when an error occurs
     }
   }
+}
+
+
+/**
+ * Sanitizes a string to be a valid key for both JavaScript objects and Python dictionaries.
+ * 
+ * Rules applied:
+ * - Converts to string if not already
+ * - Removes/replaces invalid characters
+ * - Ensures it starts with a letter, underscore, or dollar sign
+ * - Replaces spaces and special chars with underscores
+ * - Handles empty strings and edge cases
+ * 
+ * @param input - The string to sanitize
+ * @param options - Configuration options
+ * @returns A sanitized key safe for both JS and Python
+ */
+export function sanitizeKey(
+  input: string | number | null | undefined,
+  options: {
+    replaceWith?: string;
+    preserveCase?: boolean;
+    maxLength?: number;
+    prefix?: string;
+  } = {}
+): string {
+  const {
+    replaceWith = '_',
+    preserveCase = true,
+    maxLength,
+    prefix = 'key_'
+  } = options;
+
+  // Handle null, undefined, or empty input
+  if (input == null || input === '') {
+    return `${prefix}empty`;
+  }
+
+  // Convert to string
+  let key = String(input);
+
+  // Optionally convert case
+  if (!preserveCase) {
+    key = key.toLowerCase();
+  }
+
+  // Replace spaces and common separators with the replacement character
+  key = key.replace(/[\s\-\.\/\\]+/g, replaceWith);
+
+  // Remove characters that aren't alphanumeric, underscore, or dollar sign
+  // Keep Unicode letters for broader compatibility
+  key = key.replace(/[^\w$]/g, replaceWith);
+
+  // Remove consecutive replacement characters
+  const replacePattern = new RegExp(`${escapeRegex(replaceWith)}{2,}`, 'g');
+  key = key.replace(replacePattern, replaceWith);
+
+  // Ensure it doesn't start with a digit
+  if (/^\d/.test(key)) {
+    key = prefix + key;
+  }
+
+  // Ensure it starts with a valid character (letter, underscore, or $)
+  // If it starts with something else after sanitization, prefix it
+  if (key.length > 0 && !/^[a-zA-Z_$]/.test(key)) {
+    key = prefix + key;
+  }
+
+  // Handle empty result after sanitization
+  if (key === '' || key === replaceWith) {
+    return `${prefix}sanitized`;
+  }
+
+  // Trim replacement characters from start and end
+  const trimPattern = new RegExp(`^${escapeRegex(replaceWith)}+|${escapeRegex(replaceWith)}+$`, 'g');
+  key = key.replace(trimPattern, '');
+
+  // Apply max length if specified
+  if (maxLength && key.length > maxLength) {
+    key = key.substring(0, maxLength);
+  }
+
+  // Final check: ensure we have a valid key
+  if (key === '') {
+    return `${prefix}sanitized`;
+  }
+
+  return key;
+}
+
+/**
+ * Helper function to escape special regex characters
+ */
+function escapeRegex(str: string): string {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }

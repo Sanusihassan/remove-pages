@@ -16,7 +16,11 @@ export const handleUpload = async (
   state: {
     path: string;
     errorMessage: string;
-    fileName: string
+    fileName: string,
+    rotations: {
+      k: string;
+      r: number;
+    }[]
   },
   files: File[],
   errors: _,
@@ -43,6 +47,7 @@ export const handleUpload = async (
   for (let i = 0; i < files.length; i++) {
     formData.append("files", files[i]);
   }
+  formData.append("rotations", JSON.stringify(state.rotations));
   let url: string = "";
   // @ts-ignore
   if (process.env.NODE_ENV === "development") {

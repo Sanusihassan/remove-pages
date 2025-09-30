@@ -45,7 +45,8 @@ export const edit_page = {
   options: {
     label: "Output File Name (Optional)",
     placeholder: "Enter file name",
-    helperText: "This will be the name of the merged PDF when downloaded."
+    helperText: "This will be the name of the merged PDF when downloaded.",
+    cta: "View Plans"
   }
 };
 
@@ -139,4 +140,10 @@ export const errors = {
     message: "Please upload at least two files to merge.",
     code: "ERR_UPLOAD_COUNT",
   },
+  alerts: {
+    maxFiles: "Max 50 files. Subscribe for more!",
+    totalPages: "Max 1,500 pages. Upgrade now!",
+    perFilePages: "500 pages per file. Unlock more now!",
+    fileSize: "50MB per file. Upgrade for more!"
+  }
 };

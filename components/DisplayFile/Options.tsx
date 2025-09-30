@@ -7,6 +7,7 @@ import type { edit_page } from "../../src/content";
 
 export const Options = ({ content }: { content: edit_page["options"] }) => {
   const fileName = useSelector((state: { tool: ToolState }) => state.tool.fileName);
+  const limitationMsg = useSelector((state: { tool: ToolState }) => state.tool.limitationMsg);
   const dispatch = useDispatch();
   const { files } = useFileStore();
 
@@ -18,7 +19,7 @@ export const Options = ({ content }: { content: edit_page["options"] }) => {
       dispatch(setField({ fileName: files[0].name }));
       hasSetDefault.current = true; // ensure we don't reset again
     }
-  }, [files, fileName, dispatch]);
+  }, [files, fileName, dispatch, limitationMsg]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setField({ fileName: e.target.value }));
@@ -36,6 +37,24 @@ export const Options = ({ content }: { content: edit_page["options"] }) => {
         />
         <Form.Text className="text-muted">{content.helperText}</Form.Text>
       </Form.Group>
+      {/* Show alert if limitationMsg is set */}
+      {limitationMsg ? (
+        <>
+          <div className="mt-3 alert alert-info mb-3" role="alert">
+            {limitationMsg}
+            <div className="mt-2">
+              <a
+                href="/pricing"
+                className="btn btn-primary btn-sm"
+                style={{ fontWeight: "500" }}
+              >
+                {content.cta}
+              </a>
+            </div>
+          </div>
+        </>
+      ) : null}
     </div>
   );
+
 };

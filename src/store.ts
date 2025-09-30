@@ -9,24 +9,26 @@ export interface ToolState {
   showTool: boolean;
   isSubmitted: boolean;
   errorMessage: string;
-  showErrorMessage: boolean;
   errorCode: string | null;
   showDownloadBtn: boolean;
   showOptions: boolean;
   nav_height: number;
   fileName: string;
+  limitationMsg: string,
+  rotations: { k: string; r: number }[]
 }
 
 const initialState: ToolState = {
   showTool: true,
   errorMessage: "",
-  showErrorMessage: false,
   isSubmitted: false,
   errorCode: null,
   showDownloadBtn: false,
   showOptions: false,
   nav_height: 0,
-  fileName: ""
+  fileName: "",
+  limitationMsg: "",
+  rotations: []
 };
 
 const toolSlice = createSlice({
@@ -35,7 +37,6 @@ const toolSlice = createSlice({
   reducers: {
     resetErrorMessage(state: ToolState) {
       state.errorMessage = "";
-      state.showErrorMessage = false;
       state.errorCode = null;
       state.isSubmitted = false;
     },

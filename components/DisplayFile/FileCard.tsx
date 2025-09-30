@@ -2,14 +2,17 @@ import type { DraggableProvided, DraggableStateSnapshot } from "react-beautiful-
 import { ActionDiv, type ActionProps } from "./ActionDiv";
 import { Tooltip } from "react-tooltip";
 import type { errors as _ } from "../../src/content";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Loader } from "./Loader";
 import {
   getFileDetailsTooltipContent,
   getFirstPageAsImage,
   getPlaceHoderImageUrl,
+  sanitizeKey,
 } from "../../src/utils";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import type { ToolState } from "../../src/store";
+
 type OmitFileName<T extends ActionProps> = Omit<T, "fileName">;
 
 type CardProps = OmitFileName<ActionProps> & {
@@ -37,7 +40,22 @@ const FileCard = ({
   const [imageUrl, setImageUrl] = useState("");
   const [tooltipSize, setToolTipSize] = useState("");
   const dispatch = useDispatch();
+
+  // Memoize the sanitized key to avoid recalculating
+  const sanitizedKey = useMemo(() =>
+    file.name ? sanitizeKey(file.name) : null,
+    [file.name]
+  );
+
+  // Use a specific selector that only subscribes to THIS file's rotation
+  // This prevents re-renders when other files' rotations change
+  const rotation = useSelector((state: { tool: ToolState }) => {
+    if (!sanitizedKey) return null;
+    return state.tool.rotations?.find(r => r.k === sanitizedKey) || null;
+  });
+
   let isSubscribed = true;
+
   useEffect(() => {
     (async () => {
       let size = await getFileDetailsTooltipContent(
@@ -48,6 +66,7 @@ const FileCard = ({
       );
       setToolTipSize(size);
     })();
+
     const processFile = async () => {
       try {
         setShowLoader(true);
@@ -68,11 +87,15 @@ const FileCard = ({
         setShowLoader(false);
       }
     };
+
     processFile();
+
     return () => {
       isSubscribed = false;
     };
+    // Only depend on things that affect the image loading, not rotation
   }, [extension, file]);
+
   return (
     <div
       className="card item"
@@ -87,8 +110,6 @@ const FileCard = ({
       </bdi>
       <ActionDiv
         extension={extension}
-        index={index}
-        errors={errors}
         fileName={file.name}
       />
       <div className="card-body d-flex flex-column">
@@ -98,6 +119,7 @@ const FileCard = ({
             src={imageUrl}
             alt={`Selected file ${index}`}
             draggable={false}
+            style={rotation ? { rotate: `${rotation.r}deg` } : undefined}
           />
         ) : null}
 
