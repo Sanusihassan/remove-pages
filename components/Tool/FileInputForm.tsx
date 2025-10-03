@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 // store
@@ -8,6 +8,7 @@ import { handleChange } from "../../src/handlers/handleChange";
 import { useFileStore } from "../../src/file-store";
 // types
 import type { tools } from "../../src/content";
+import { getUserInfo } from "fetch-subscription-status";
 type AcceptedFileTypes = {
   [key in ".pdf" | ".pptx" | ".docx" | ".xlsx" | ".jpg" | ".html"]: string;
 };
@@ -49,7 +50,12 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
   const fileInput = useRef<HTMLInputElement>(null);
   const submitBtn = useRef<HTMLButtonElement>(null);
   const downloadBtn = useRef<HTMLAnchorElement>(null);
+  const [userId, setUserId] = useState<string | null>(null);
   useEffect(() => {
+    (async () => {
+      const user = await getUserInfo();
+      setUserId(user.id);
+    })();
     setFileInput(fileInput);
     setSubmitBtn(submitBtn);
     setDownloadBtn(downloadBtn);
@@ -68,7 +74,8 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
             path,
             errorMessage,
             fileName,
-            rotations
+            rotations,
+            userId
           },
           files,
           errors,

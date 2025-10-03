@@ -24,7 +24,7 @@ export const ActionDiv = ({
   };
 
   const handleRotate = () => {
-    const k = sanitizeKey(fileName);
+    const k = sanitizeKey(fileName.split(".")[0]);
     const existingRotation = rotations && k ? rotations.find(r => r.k === k) : null;
     const newRotation = existingRotation ? existingRotation.r + 90 : 90;
 

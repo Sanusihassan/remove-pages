@@ -20,7 +20,8 @@ export const handleUpload = async (
     rotations: {
       k: string;
       r: number;
-    }[]
+    }[],
+    userId: string | null
   },
   files: File[],
   errors: _,
@@ -48,11 +49,11 @@ export const handleUpload = async (
     formData.append("files", files[i]);
   }
   formData.append("rotations", JSON.stringify(state.rotations));
+  formData.append("userId", state.userId);
   let url: string = "";
   // @ts-ignore
   if (process.env.NODE_ENV === "development") {
-    url = `https://www.pdfequips.com/api/${state.path}`;
-    // url = `https://5000-planetcreat-pdfequipsap-te4zoi6qkr3.ws-eu102.gitpod.io/${state.path}`;
+    url = `https://redesigned-acorn-q45xrp7p45j3q69-8000.app.github.dev/api/${state.path}`;
   } else {
     url = `/api/${state.path}`;
   }

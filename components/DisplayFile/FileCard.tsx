@@ -43,7 +43,7 @@ const FileCard = ({
 
   // Memoize the sanitized key to avoid recalculating
   const sanitizedKey = useMemo(() =>
-    file.name ? sanitizeKey(file.name) : null,
+    file.name ? sanitizeKey(file.name.split(".")[0]) : null,
     [file.name]
   );
 
