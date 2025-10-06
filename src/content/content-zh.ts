@@ -54,7 +54,7 @@ export const edit_page: _edit_page = {
   }
 };
 
-export const downloadFile_zh: _downloadFile = {
+export const downloadFile: _downloadFile = {
   titles: {
     "merge-pdf": ["PDF 文件已合并！", "PDF 文件已合并！"],
   },
