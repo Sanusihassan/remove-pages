@@ -55,7 +55,8 @@ export const edit_page: _edit_page = {
   options: {
     label: "Nombre del archivo de salida (opcional)",
     placeholder: "Ingrese el nombre del archivo",
-    helperText: "Este será el nombre del PDF combinado al descargarlo."
+    helperText: "Este será el nombre del PDF combinado al descargarlo.",
+    cta: "Ver planes"
   }
 };
 
@@ -147,5 +148,11 @@ export const errors: _errors = {
   ERR_UPLOAD_COUNT: {
     message: "Por favor, suba al menos dos archivos para fusionar.",
     code: "ERR_UPLOAD_COUNT",
+  },
+  alerts: {
+    maxFiles: "Máximo 50 archivos. ¡Suscríbete para más!",
+    totalPages: "Máximo 1,500 páginas. ¡Actualiza ahora!",
+    perFilePages: "500 páginas por archivo. ¡Desbloquea más ahora!",
+    fileSize: "50 MB por archivo. ¡Mejora para obtener más!"
   },
 };

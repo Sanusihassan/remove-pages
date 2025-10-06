@@ -1,6 +1,5 @@
 import { type Dispatch, type SetStateAction, useEffect, useRef } from "react";
 import type { errors as _ } from "../../src/content";
-import ImageCard from "./ImageCard";
 import FileCard from "./FileCard";
 import {
   DragDropContext,
@@ -108,33 +107,17 @@ const Files = ({
                         ...provided.draggableProps.style,
                       }}
                     >
-                      {extension === ".jpg" ? (
-                        (() => {
-                          return (
-                            <ImageCard
-                              index={index}
-                              provided={provided}
-                              extension={extension}
-                              errors={errors}
-                              fileDetailProps={fileDetailProps}
-                              file={file}
-                              loader_text={loader_text}
-                            />
-                          );
-                        })()
-                      ) : (
-                        <FileCard
-                          extension={extension}
-                          file={file}
-                          index={index}
-                          isDraggable={isDraggableExtension(extension, "merge-pdf")}
-                          provided={provided}
-                          snapshot={snapshot}
-                          errors={errors}
-                          loader_text={loader_text}
-                          fileDetailProps={fileDetailProps}
-                        />
-                      )}
+                      <FileCard
+                        extension={extension}
+                        file={file}
+                        index={index}
+                        isDraggable={isDraggableExtension(extension, "merge-pdf")}
+                        provided={provided}
+                        snapshot={snapshot}
+                        errors={errors}
+                        loader_text={loader_text}
+                        fileDetailProps={fileDetailProps}
+                      />
                     </div>
                   )}
                 </Draggable>

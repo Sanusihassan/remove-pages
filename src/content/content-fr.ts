@@ -56,7 +56,8 @@ export const edit_page: _edit_page = {
   options: {
     label: "Nom du fichier de sortie (facultatif)",
     placeholder: "Entrez le nom du fichier",
-    helperText: "Ce sera le nom du PDF fusionné lors du téléchargement."
+    helperText: "Ce sera le nom du PDF fusionné lors du téléchargement.",
+    cta: "Voir les forfaits"
   }
 };
 
@@ -148,5 +149,11 @@ export const errors: _errors = {
   ERR_UPLOAD_COUNT: {
     message: "Veuillez télécharger au moins deux fichiers à fusionner.",
     code: "ERR_UPLOAD_COUNT",
+  },
+  alerts: {
+    maxFiles: "Maximum 50 fichiers. Abonnez-vous pour plus!",
+    totalPages: "Maximum 1 500 pages. Mettez à niveau maintenant!",
+    perFilePages: "500 pages par fichier. Débloquez-en plus maintenant!",
+    fileSize: "50 Mo par fichier. Passez à la version supérieure!"
   },
 };

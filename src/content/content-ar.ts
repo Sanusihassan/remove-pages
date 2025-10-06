@@ -54,8 +54,9 @@ export const edit_page: _edit_page = {
   options: {
     label: "اسم الملف الناتج (اختياري)",
     placeholder: "أدخل اسم الملف",
-    helperText: "سيكون هذا اسم ملف PDF المدمج عند تنزيله."
-  }
+    helperText: "سيكون هذا اسم ملف PDF المدمج عند تنزيله.",
+    cta: "عرض الخطط"
+  },
 };
 
 
@@ -146,5 +147,11 @@ export const errors: _errors = {
   ERR_UPLOAD_COUNT: {
     message: "يرجى رفع ملفين على الأقل للدمج.",
     code: "ERR_UPLOAD_COUNT",
+  },
+  alerts: {
+    maxFiles: "الحد الأقصى 50 ملفًا. اشترك للمزيد!",
+    totalPages: "الحد الأقصى 1,500 صفحة. قم بالترقية الآن!",
+    perFilePages: "500 صفحة لكل ملف. افتح المزيد الآن!",
+    fileSize: "50 ميجابايت لكل ملف. قم بالترقية للمزيد!"
   },
 };

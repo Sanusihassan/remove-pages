@@ -48,10 +48,11 @@ export const edit_page: _edit_page = {
   pages: "पृष्ठों",
   page: "पृष्ठ",
   options: {
-    label: "आउटपुट फ़ाइल का नाम (वैकल्पिक)",
+    label: "आउटपुट फ़ाइल नाम (वैकल्पिक)",
     placeholder: "फ़ाइल का नाम दर्ज करें",
-    helperText: "यह डाउनलोड किए गए संयुक्त PDF का नाम होगा।"
-  }
+    helperText: "डाउनलोड करते समय यह मर्ज किए गए PDF का नाम होगा।",
+    cta: "प्लान देखें"
+  },
 };
 
 export const downloadFile: _downloadFile = {
@@ -149,5 +150,11 @@ export const errors: _errors = {
   ERR_UPLOAD_COUNT: {
     message: "कृपया फ्यूजन करने के लिए कम से कम दो फ़ाइलें अपलोड करें।",
     code: "ERR_UPLOAD_COUNT",
+  },
+  alerts: {
+    maxFiles: "अधिकतम 50 फ़ाइलें। अधिक के लिए सदस्यता लें!",
+    totalPages: "अधिकतम 1,500 पेज। अभी अपग्रेड करें!",
+    perFilePages: "प्रति फ़ाइल 500 पेज। अभी और अनलॉक करें!",
+    fileSize: "प्रति फ़ाइल 50MB। अधिक के लिए अपग्रेड करें!"
   },
 };

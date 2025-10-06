@@ -49,7 +49,8 @@ export const edit_page: _edit_page = {
   options: {
     label: "输出文件名（可选）",
     placeholder: "输入文件名",
-    helperText: "这将是下载的合并 PDF 的名称。"
+    helperText: "这将是下载时合并的 PDF 的名称。",
+    cta: "查看方案"
   }
 };
 
@@ -142,4 +143,10 @@ export const errors: _errors = {
     message: "请至少上传两个文件以合并。",
     code: "ERR_UPLOAD_COUNT",
   },
+  alerts: {
+    maxFiles: "最多 50 个文件。订阅以获取更多！",
+    totalPages: "最多 1,500 页。立即升级！",
+    perFilePages: "每个文件 500 页。立即解锁更多！",
+    fileSize: "每个文件 50MB。升级以获取更多！"
+  }
 };
