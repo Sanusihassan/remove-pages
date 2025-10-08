@@ -3,8 +3,6 @@ const { pathname } = Astro.url;
 const { title, description, seoTitle, to } = Astro.props;
 let lang = "en";
 let dir = "ltr";
-import { fetchSubscriptionStatus } from "fetch-subscription-status";
-
 let locale;
 
 switch (lang) {
@@ -102,28 +100,6 @@ import { howToSchema } from "./how-to/how-to";
         />
 
         <slot name="head" />
-        <script define:vars={fetchSubscriptionStatus} is:inline>
-            document.addEventListener("DOMContentLoaded", async () => {
-                const status = await fetchSubscriptionStatus();
-                if (!status) {
-                    const head = document.head;
-
-                    // Create and append meta tag
-                    const metaTag = document.createElement("meta");
-                    metaTag.name = "google-adsense-account";
-                    metaTag.content = "ca-pub-7801483217621867";
-                    head.appendChild(metaTag);
-
-                    // Create and append script tag
-                    const scriptTag = document.createElement("script");
-                    scriptTag.async = true;
-                    scriptTag.src =
-                        "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7801483217621867";
-                    scriptTag.crossOrigin = "anonymous";
-                    head.appendChild(scriptTag);
-                }
-            });
-        </script>
     </head>
     <body>
         <main>

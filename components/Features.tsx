@@ -16,7 +16,7 @@ export const Features = ({ features }: {
             {features.map(({ title, description }, i) => {
                 const Icon = icons[i];
                 return (
-                    <div className="feature">
+                    <div className="feature" key={i}>
                         <Icon className={`feature-icon${i === 1 ? " no-fill" : ""}`} />
                         <div className="title">{title}</div>
                         <p className="description">{description}</p>
