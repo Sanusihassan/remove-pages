@@ -7,11 +7,15 @@ import {
   Draggable,
   type DropResult,
 } from "react-beautiful-dnd";
-import { calculatePages, isDraggableExtension, sanitizeKey } from "../../src/utils";
+import {
+  calculatePages,
+  isDraggableExtension,
+  sanitizeKey,
+} from "../../src/utils";
 import { useFileStore } from "../../src/file-store";
 import { useDispatch } from "react-redux";
 import { setField } from "../../src/store";
-import { fetchSubscriptionStatus } from 'fetch-subscription-status';
+import { fetchSubscriptionStatus } from "fetch-subscription-status";
 
 type FileProps = {
   errors: _;
@@ -31,31 +35,31 @@ const Files = ({
   const dispatch = useDispatch();
   let pageCounts = [];
 
-  useEffect(() => {
-    let limitationMsg = "";
-    // Assuming calculatePages is an async function
-    (async () => {
-      const isSubscribed = await fetchSubscriptionStatus();
-      if (isSubscribed) {
-        return;
-      }
-      pageCounts = await Promise.all(files.map(calculatePages));
-      const totalPages = pageCounts.reduce((sum, count) => sum + count, 0);
-      // Check limitations
-      if (files.length >= 50) {
-        limitationMsg = errors.alerts.maxFiles;
-      } else if (totalPages > 1500) {
-        limitationMsg = errors.alerts.totalPages;
-      } else if (pageCounts.some(pageCount => pageCount > 500)) {
-        limitationMsg = errors.alerts.perFilePages;
-      } else if (files.some(file => file.size > 50 * 1024 * 1024)) {
-        limitationMsg = errors.alerts.fileSize;
-      }
-      // Dispatch the message
-      dispatch(setField({ limitationMsg }));
-    })();
+  // useEffect(() => {
+  //   let limitationMsg = "";
+  //   // Assuming calculatePages is an async function
+  //   (async () => {
+  //     const isSubscribed = await fetchSubscriptionStatus();
+  //     if (isSubscribed) {
+  //       return;
+  //     }
+  //     pageCounts = await Promise.all(files.map(calculatePages));
+  //     const totalPages = pageCounts.reduce((sum, count) => sum + count, 0);
+  //     // Check limitations
+  //     if (files.length >= 50) {
+  //       limitationMsg = errors.alerts.maxFiles;
+  //     } else if (totalPages > 1500) {
+  //       limitationMsg = errors.alerts.totalPages;
+  //     } else if (pageCounts.some(pageCount => pageCount > 500)) {
+  //       limitationMsg = errors.alerts.perFilePages;
+  //     } else if (files.some(file => file.size > 50 * 1024 * 1024)) {
+  //       limitationMsg = errors.alerts.fileSize;
+  //     }
+  //     // Dispatch the message
+  //     dispatch(setField({ limitationMsg }));
+  //   })();
 
-  }, [files]);
+  // }, [files]);
   const reorderFiles = (
     files: File[],
     startIndex: number,
@@ -85,8 +89,9 @@ const Files = ({
         <Droppable droppableId="imageUrls" direction="horizontal">
           {(provided, snapshot) => (
             <div
-              className={`display-file ${snapshot.isDraggingOver ? "dragging-over" : ""
-                }`}
+              className={`display-file ${
+                snapshot.isDraggingOver ? "dragging-over" : ""
+              }`}
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
@@ -101,8 +106,9 @@ const Files = ({
                     <div
                       {...provided.draggableProps}
                       ref={provided.innerRef}
-                      className={`drag-element ${snapshot.isDragging ? "dragging" : ""
-                        }`}
+                      className={`drag-element ${
+                        snapshot.isDragging ? "dragging" : ""
+                      }`}
                       style={{
                         ...provided.draggableProps.style,
                       }}
@@ -111,7 +117,10 @@ const Files = ({
                         extension={extension}
                         file={file}
                         index={index}
-                        isDraggable={isDraggableExtension(extension, "merge-pdf")}
+                        isDraggable={isDraggableExtension(
+                          extension,
+                          "merge-pdf"
+                        )}
                         provided={provided}
                         snapshot={snapshot}
                         errors={errors}

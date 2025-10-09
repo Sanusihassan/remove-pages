@@ -1,27 +1,85 @@
+// please translate these 3 ts objects to arabic, same names i.e export const tool, export const edit_page and export const downloadFile
+// but we'll be using our pre-defined ts interfaces to preserve the schema, please make sure to preserve the schema and just translate the text content.
+// we'll be using the _tool, _edit_page, _downloadFile interfaces respectively for each obj.
 export const tool = {
-  Merge_PDF: {
-    title: "Merge PDF",
-    seoTitle: "Merge PDFs Online - Free PDF Combiner",
-    description: "Combine multiple PDF files into one document",
-    color: "var(--red)",
+  Compress_PDF: {
+    title: "Compress PDF",
+    seoTitle: "Compress PDFs Online - Free File Size Reducer",
+    description: "Reduce the file size of a PDF while maintaining quality",
+    color: "var(--green)",
     type: ".pdf",
-    to: "/merge-pdf",
+    to: "/compress-pdf",
     features: [
       {
-        title: "Completely free and without registration",
-        description: "PDFEquips offers a free online PDF merging service It's not necessary to create an account, and we never ask for your email address or credit card information"
+        title: "Versatile PDF Compression",
+        description:
+          "Get fast and reliable results that you can count on every time, Choose from a range of compression levels to adjust your file size without compromising document quality",
       },
       {
-        title: "Robust tool for merging PDFs",
-        description: "PDFEquips easily combines two or more PDF documents into one file, whether it's a single page or multiple pages, large or small PDF files, all formats are compatible"
+        title: "No need for email registration",
+        description:
+          "Start compressing your PDFs right away - no email sign-up, no need for credit card details Just upload your document and compress it as needed",
       },
       {
-        title: "Securely merge PDF files online",
-        description: "All files you upload and create on our servers are encrypted for security reasons using TLS They will be immediately and permanently deleted after processing For more information, please refer to our privacy policy"
-      }
+        title: "Maintaining quality all the time",
+        description:
+          "PDFEquips uses advanced technology to optimize both the size and quality of images in your PDFs This ensures that you achieve significantly smaller file sizes without compromising the fidelity of your documents",
+      },
     ],
-    keywords: "merge PDF, merge PDF online, combine PDF files, free PDF merge, PDF merger, PDF combine tool, online PDF merge, PDF merge free, merge PDF documents, combine PDFs online, secure PDF merge, PDF file merger, PDF merge tool, free online PDF combiner, merge multiple PDFs, combine PDF pages, no registration PDF merge, PDF merger tool, online PDF combiner"
-  }
+    keywords:
+      "compress PDF, compress PDF online, reduce PDF file size, free PDF compression, PDF file compressor, online PDF compressor, PDF compression tool, PDF size reduction, PDF file size reducer, compress PDF documents, shrink PDF files, secure PDF compression, PDF optimizer, compress PDFs for free, online PDF file compressor, no registration PDF compression, reduce PDF size online, free PDF shrinker, fast PDF compression",
+  },
+};
+
+export const edit_page = {
+  edit_page_titles: {
+    compress_pdf: "Compress PDF options",
+  },
+  loader_text: "please wait...",
+  add_more_button: "Add more pages",
+  action_buttons: {
+    compress_pdf: "Compress PDF",
+  },
+  pages: "pages",
+  page: "page",
+  compress_pdf: [
+    {
+      title: "Recommended compression",
+      description: "Best balance between size and quality",
+    },
+    {
+      title: "Less compression",
+      description: "Smaller file size but lower quality",
+    },
+    {
+      title: "Extreme compression",
+      description: "Significantly smaller file size but much lower quality",
+    },
+    {
+      title: "Custom compression",
+      description: "Choose your own compression amount",
+    },
+  ],
+};
+
+export const downloadFile = {
+  titles: {
+    "compress-pdf": [
+      "PDF files have been compressed!",
+      "PDF file has been compressed!",
+    ],
+  },
+
+  btnText: {
+    "compress-pdf": [
+      "Download Compressed PDF files",
+      "Download Compressed PDF file",
+    ],
+  },
+
+  backto: {
+    "compress-pdf": "Back To Compress PDF",
+  },
 };
 
 export const tools = {
@@ -30,47 +88,6 @@ export const tools = {
   files: "files",
   drop_files: "Drag files here",
 };
-
-export const edit_page = {
-  edit_page_titles: {
-    merge_pdf: "Merge PDF options",
-  },
-  loader_text: "please wait...",
-  add_more_button: "Add more pages",
-  action_buttons: {
-    merge_pdf: "Merge PDF",
-  },
-  pages: "pages",
-  page: "page",
-  options: {
-    label: "Output File Name (Optional)",
-    placeholder: "Enter file name",
-    helperText: "This will be the name of the merged PDF when downloaded.",
-    cta: "View Plans"
-  }
-};
-
-export const downloadFile = {
-  titles: {
-    "merge-pdf": ["PDF files have been merged!", "PDF file has been merged!"],
-  },
-
-  btnText: {
-    "merge-pdf": ["Download Merged PDF files", "Download Merged PDF file"],
-  },
-
-  backto: {
-    "merge-pdf": "Back To Merge PDF",
-  },
-};
-
-
-export const footer = {
-  brand: "PDFEquips",
-  terms: "terms",
-  conditions: "conditions",
-  privacy_policy: "privacy policy",
-}
 
 export const errors = {
   EMPTY_FILE: {
@@ -130,20 +147,9 @@ export const errors = {
       "An unknown error occurred. Please try again later or contact support.",
     code: "ERR_UNKNOWN",
   },
-  // i want another error like this but when only one file is uploaded
   ERR_NETWORK: {
     message:
       "A network error occurred. Please check your internet connection and try again.",
     code: "ERR_NETWORK",
   },
-  ERR_UPLOAD_COUNT: {
-    message: "Please upload at least two files to merge.",
-    code: "ERR_UPLOAD_COUNT",
-  },
-  alerts: {
-    maxFiles: "Max 50 files. Subscribe for more!",
-    totalPages: "Max 1,500 pages. Upgrade now!",
-    perFilePages: "500 pages per file. Unlock more now!",
-    fileSize: "50MB per file. Upgrade for more!"
-  }
 };

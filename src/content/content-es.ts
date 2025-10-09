@@ -9,28 +9,33 @@ import type {
   landing_page as _landing_page,
 } from "../content";
 export const tool: _tool = {
-  Merge_PDF: {
-    title: "Combinar PDF",
-    seoTitle: "Combinar PDF - Herramienta para unir archivos PDF",
-    description: "Combina varios archivos PDF en un solo documento",
-    color: "var(--red)",
+  Compress_PDF: {
+    title: "Comprimir PDF",
+    seoTitle:
+      "Comprimir PDFs en línea — Reductor gratuito de tamaño de archivo",
+    description: "Reduce el tamaño de un archivo PDF manteniendo la calidad",
+    color: "var(--green)",
     type: ".pdf",
-    to: "/merge-pdf",
+    to: "/compress-pdf",
     features: [
       {
-        title: "Completamente gratis y sin registro",
-        description: "PDFEquips ofrece un servicio gratuito en línea para combinar archivos PDF. No es necesario crear una cuenta, y nunca solicitamos su dirección de correo electrónico ni información de tarjeta de crédito."
+        title: "Compresión de PDF versátil",
+        description:
+          "Obtén resultados rápidos y fiables en los que puedes confiar cada vez. Elige entre varios niveles de compresión para ajustar el tamaño del archivo sin comprometer la calidad del documento.",
       },
       {
-        title: "Herramienta sólida para fusionar PDFs",
-        description: "PDFEquips combina fácilmente dos o más documentos PDF en un archivo, ya sea una sola página o varias páginas, archivos PDF grandes o pequeños, todos los formatos son compatibles."
+        title: "No es necesario registrarse por correo",
+        description:
+          "Comienza a comprimir tus PDFs de inmediato: sin registro por correo electrónico y sin necesidad de datos de tarjeta de crédito. Simplemente sube tu documento y comprímelo según lo necesites.",
       },
       {
-        title: "Fusionar archivos PDF en línea de forma segura",
-        description: "Todos los archivos que cargue y cree en nuestros servidores están cifrados por razones de seguridad utilizando TLS. Se eliminarán inmediata y permanentemente después del procesamiento. Para obtener más información, consulte nuestra política de privacidad."
-      }
+        title: "Manteniendo la calidad en todo momento",
+        description:
+          "PDFEquips utiliza tecnología avanzada para optimizar tanto el tamaño como la calidad de las imágenes en tus PDFs. Esto garantiza archivos significativamente más pequeños sin sacrificar la fidelidad de tus documentos.",
+      },
     ],
-    keywords: "combinar PDF, herramientas para combinar PDF, fusionar archivos PDF, combinar documentos PDF, combinar PDF en línea, combinar PDF sin registro, combinar PDF gratis, combinar múltiples archivos PDF, combinar PDF rápidamente, combinar PDF de manera segura, combinar documentos PDF fácilmente, combinar PDF en línea gratis, combinar PDF sin instalación, combinar archivos PDF cifrados, herramientas gratuitas para combinar PDF, combinar PDF en línea sin registro"
+    keywords:
+      "comprimir PDF, comprimir PDF en línea, reducir tamaño de PDF, compresión de PDF gratis, compresor de PDF, compresor de PDF en línea, herramienta de compresión de PDF, reducción de tamaño de PDF, reductor de tamaño de archivo PDF, comprimir documentos PDF, achicar archivos PDF, compresión segura de PDF, optimizador de PDF, comprimir PDFs gratis, compresor de archivos PDF en línea, compresión PDF sin registro, reducir tamaño PDF en línea, reductor gratuito de PDF, compresión rápida de PDF",
   },
 };
 
@@ -43,34 +48,53 @@ export const tools: _tools = {
 
 export const edit_page: _edit_page = {
   edit_page_titles: {
-    merge_pdf: "Opciones para fusionar PDF",
+    compress_pdf: "Opciones de compresión de PDF",
   },
-  loader_text: "Por favor espera...",
-  add_more_button: "Agrega más archivos",
+  loader_text: "Por favor, espere...",
+  add_more_button: "Agregar más páginas",
   action_buttons: {
-    merge_pdf: "Combinar PDF",
+    compress_pdf: "Comprimir PDF",
   },
-  pages: "paginas",
+  pages: "páginas",
   page: "página",
-  options: {
-    label: "Nombre del archivo de salida (opcional)",
-    placeholder: "Ingrese el nombre del archivo",
-    helperText: "Este será el nombre del PDF combinado al descargarlo.",
-    cta: "Ver planes"
-  }
+  compress_pdf: [
+    {
+      title: "Compresión recomendada",
+      description: "Mejor equilibrio entre tamaño y calidad",
+    },
+    {
+      title: "Menos compresión",
+      description: "Tamaño de archivo más pequeño pero calidad inferior",
+    },
+    {
+      title: "Compresión extrema",
+      description:
+        "Tamaño de archivo significativamente menor pero calidad mucho más baja",
+    },
+    {
+      title: "Compresión personalizada",
+      description: "Elige tu propio nivel de compresión",
+    },
+  ],
 };
 
 export const downloadFile: _downloadFile = {
   titles: {
-    "merge-pdf": ["¡Los archivos PDF se han combinado!", "¡El archivo PDF se ha combinado!"],
+    "compress-pdf": [
+      "¡Los archivos PDF han sido comprimidos!",
+      "¡El archivo PDF ha sido comprimido!",
+    ],
   },
 
   btnText: {
-    "merge-pdf": ["Descargar archivos PDF combinados", "Descargar archivo PDF combinado"],
+    "compress-pdf": [
+      "Descargar archivos PDF comprimidos",
+      "Descargar archivo PDF comprimido",
+    ],
   },
 
   backto: {
-    "merge-pdf": "Volver a Combinar PDF",
+    "compress-pdf": "Volver a Comprimir PDF",
   },
 };
 
@@ -144,15 +168,5 @@ export const errors: _errors = {
     message:
       "Ha ocurrido un error en la red. Por favor, comprueba tu conexión a internet e inténtalo de nuevo.",
     code: "ERR_NETWORK",
-  },
-  ERR_UPLOAD_COUNT: {
-    message: "Por favor, suba al menos dos archivos para fusionar.",
-    code: "ERR_UPLOAD_COUNT",
-  },
-  alerts: {
-    maxFiles: "Máximo 50 archivos. ¡Suscríbete para más!",
-    totalPages: "Máximo 1,500 páginas. ¡Actualiza ahora!",
-    perFilePages: "500 páginas por archivo. ¡Desbloquea más ahora!",
-    fileSize: "50 MB por archivo. ¡Mejora para obtener más!"
   },
 };

@@ -10,64 +10,79 @@ import type {
 } from "../content";
 
 export const tool: _tool = {
-  Merge_PDF: {
-    title: "合并PDF",
-    seoTitle: "合并PDF - 将多个文件合并成一个文档",
-    description: "将多个PDF文件合并成一个文档",
-    color: "var(--red)",
+  Compress_PDF: {
+    title: "压缩 PDF",
+    seoTitle: "在线压缩 PDF - 免费文件大小减小工具",
+    description: "在保持质量的同时减少 PDF 文件大小",
+    color: "var(--green)",
     type: ".pdf",
-    to: "/merge-pdf",
+    to: "/compress-pdf",
     features: [
       {
-        title: "完全免费，无需注册",
-        description: "PDFEquips提供免费在线PDF合并服务，无需创建帐户，我们从不要求您的电子邮件地址或信用卡信息"
+        title: "多功能 PDF 压缩",
+        description:
+          "每次都能获得快速且可靠的结果。可从多个压缩级别中选择，在不影响文档质量的情况下调整文件大小。",
       },
       {
-        title: "强大的PDF合并工具",
-        description: "PDFEquips轻松将两个或更多PDF文档合并为一个文件，无论是单页还是多页，大或小的PDF文件，所有格式都兼容"
+        title: "无需邮箱注册",
+        description:
+          "立即开始压缩您的 PDF 文件——无需邮箱注册，无需信用卡信息。只需上传文件并按需压缩即可。",
       },
       {
-        title: "在线安全合并PDF文件",
-        description: "您在我们的服务器上上传和创建的所有文件都经过TLS加密，以确保安全性。它们将在处理后立即永久删除。有关更多信息，请参阅我们的隐私政策"
-      }
+        title: "始终保持高质量",
+        description:
+          "PDFEquips 使用先进技术优化 PDF 中图像的大小和质量，确保在显著减小文件大小的同时保持文档的清晰度。",
+      },
     ],
-    keywords: "合并PDF, PDF合并工具, 合并PDF文件, 合并PDF文档, 在线合并PDF, 无需注册合并PDF, 免费合并PDF, 合并多个PDF文件, 快速合并PDF, 安全合并PDF, 轻松合并PDF文档, 免费在线合并PDF, 无需安装合并PDF, 合并加密PDF文件, 免费PDF合并工具, 无需注册在线合并PDF"
+    keywords:
+      "压缩PDF,在线压缩PDF,减小PDF文件大小,免费PDF压缩,PDF压缩工具,在线PDF压缩器,PDF文件优化,减小PDF大小,压缩PDF文档,安全PDF压缩,免费PDF压缩工具,无需注册PDF压缩,在线减小PDF大小,快速PDF压缩",
   },
 };
 
 export const edit_page: _edit_page = {
   edit_page_titles: {
-    merge_pdf: "合并PDF选项",
+    compress_pdf: "PDF 压缩选项",
   },
-  loader_text: "请稍等...",
-  add_more_button: "添加更多文件",
+  loader_text: "请稍候...",
+  add_more_button: "添加更多页面",
   action_buttons: {
-    merge_pdf: "合并PDF",
+    compress_pdf: "压缩 PDF",
   },
   pages: "页",
   page: "页",
-  options: {
-    label: "输出文件名（可选）",
-    placeholder: "输入文件名",
-    helperText: "这将是下载时合并的 PDF 的名称。",
-    cta: "查看方案"
-  }
+  compress_pdf: [
+    {
+      title: "推荐压缩",
+      description: "文件大小与质量的最佳平衡",
+    },
+    {
+      title: "较低压缩",
+      description: "文件稍大但质量更高",
+    },
+    {
+      title: "极限压缩",
+      description: "文件体积大幅减小但质量降低",
+    },
+    {
+      title: "自定义压缩",
+      description: "选择您自己的压缩级别",
+    },
+  ],
 };
 
 export const downloadFile: _downloadFile = {
   titles: {
-    "merge-pdf": ["PDF 文件已合并！", "PDF 文件已合并！"],
+    "compress-pdf": ["PDF 文件已成功压缩！", "PDF 文件已压缩！"],
   },
 
   btnText: {
-    "merge-pdf": ["下载合并的 PDF 文件", "下载合并的 PDF 文件"],
+    "compress-pdf": ["下载压缩后的 PDF 文件", "下载压缩后的 PDF 文件"],
   },
 
   backto: {
-    "merge-pdf": "返回合并 PDF",
+    "compress-pdf": "返回 PDF 压缩",
   },
 };
-
 
 export const tools: _tools = {
   select: "选择",
@@ -139,14 +154,4 @@ export const errors: _errors = {
     message: "网络错误，请检查您的互联网连接并重试。",
     code: "ERR_NETWORK",
   },
-  ERR_UPLOAD_COUNT: {
-    message: "请至少上传两个文件以合并。",
-    code: "ERR_UPLOAD_COUNT",
-  },
-  alerts: {
-    maxFiles: "最多 50 个文件。订阅以获取更多！",
-    totalPages: "最多 1,500 页。立即升级！",
-    perFilePages: "每个文件 500 页。立即解锁更多！",
-    fileSize: "每个文件 50MB。升级以获取更多！"
-  }
 };
