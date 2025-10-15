@@ -42,6 +42,12 @@ export const edit_page = {
   },
   pages: "pages",
   page: "page",
+  filenameOptions: {
+    label: "Output File Name (Optional)",
+    placeholder: "Enter file name",
+    helperText: "This will be the name of the compressed PDF when downloaded.",
+    cta: "View Plans",
+  },
   compress_pdf: [
     {
       title: "Recommended compression",
@@ -151,5 +157,12 @@ export const errors = {
     message:
       "A network error occurred. Please check your internet connection and try again.",
     code: "ERR_NETWORK",
+  },
+  alerts: {
+    maxFiles: "Max 15 files allowed. Subscribe for more!",
+    singleFileSize:
+      "Single file size must be under 100 MB. Upgrade to upload bigger files!",
+    fileSize:
+      "Each file must be under 50 MB. Unlock higher limits with subscription!",
   },
 };

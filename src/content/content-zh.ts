@@ -50,6 +50,12 @@ export const edit_page: _edit_page = {
   },
   pages: "页",
   page: "页",
+  filenameOptions: {
+    label: "输出文件名（可选）",
+    placeholder: "输入文件名",
+    helperText: "这将是下载时压缩 PDF 的名称。",
+    cta: "查看方案",
+  },
   compress_pdf: [
     {
       title: "推荐压缩",
@@ -153,5 +159,10 @@ export const errors: _errors = {
   ERR_NETWORK: {
     message: "网络错误，请检查您的互联网连接并重试。",
     code: "ERR_NETWORK",
+  },
+  alerts: {
+    maxFiles: "最多允许 15 个文件。订阅以获取更多！",
+    singleFileSize: "单个文件大小必须低于 100 MB。升级以上传更大的文件！",
+    fileSize: "每个文件必须低于 50 MB。通过订阅解锁更高的限制！",
   },
 };

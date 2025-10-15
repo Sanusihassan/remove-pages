@@ -11,7 +11,7 @@ export function SubmitBtn({
   edit_page: edit_page;
 }): JSX.Element {
   const dispatch = useDispatch();
-  const { submitBtn, files } = useFileStore();
+  const { submitBtn } = useFileStore();
   // state variables:
   const errorMessage = useSelector(
     (state: { tool: ToolState }) => state.tool.errorMessage
@@ -32,12 +32,12 @@ export function SubmitBtn({
           submitBtn?.current?.click();
         }
       }}
-      disabled={errorMessage.length > 0 || files.length <= 1 || limitationMsg.length > 0}
+      disabled={errorMessage.length > 0 || limitationMsg.length > 0}
     >
       <bdi>
         {
           edit_page.action_buttons[
-          k.replace(/-/g, "_") as keyof typeof edit_page.action_buttons
+            k.replace(/-/g, "_") as keyof typeof edit_page.action_buttons
           ]
         }
       </bdi>{" "}

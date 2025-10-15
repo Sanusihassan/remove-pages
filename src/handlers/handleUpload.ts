@@ -3,10 +3,7 @@ import axios from "axios";
 import { downloadConvertedFile } from "../downloadFile";
 import type { errors as _ } from "../content";
 import { type RefObject } from "react";
-import {
-  resetErrorMessage,
-  setField
-} from "../store";
+import { resetErrorMessage, setField, type compressionType } from "../store";
 import type { Action, Dispatch } from "@reduxjs/toolkit/react";
 let filesOnSubmit = [];
 export const handleUpload = async (
@@ -16,15 +13,16 @@ export const handleUpload = async (
   state: {
     path: string;
     errorMessage: string;
-    fileName: string,
+    fileName: string;
     rotations: {
       k: string;
       r: number;
-    }[],
-    userId: string | null
+    }[];
+    userId: string | null;
+    compressPdf: compressionType;
   },
   files: File[],
-  errors: _,
+  errors: _
 ) => {
   e.preventDefault();
   dispatch(setField({ isSubmitted: true }));
@@ -53,14 +51,14 @@ export const handleUpload = async (
   let url: string = "";
   // @ts-ignore
   if (process.env.NODE_ENV === "development") {
-    url = `https://redesigned-acorn-q45xrp7p45j3q69-8000.app.github.dev/api/${state.path}`;
+    url = `http://localhost:8000/api/compress-pdf`;
   } else {
-    url = `/api/${state.path}`;
+    url = `/api/compress-pdf`;
   }
   if (state.errorMessage) {
     return;
   }
-  // formData.append("compress_amount", String(state.compressPdf));
+  formData.append("compress_amount", String(state.compressPdf));
   const originalFileName = files[0]?.name?.split(".").slice(0, -1).join(".");
 
   const mimeTypeLookupTable: {
@@ -68,7 +66,7 @@ export const handleUpload = async (
   } = {
     "application/zip": {
       outputFileMimeType: "application/zip",
-      outputFileName: `PDFEquips-${state.path}.zip`,
+      outputFileName: `PDFEquips-compress-pdf.zip`,
     },
     "application/pdf": {
       outputFileMimeType: "application/pdf",
@@ -97,11 +95,11 @@ export const handleUpload = async (
       outputFileName: `${originalFileName}.pptx`,
     },
     "application/vnd.openxmlformats-officedocument.presentationml.presentation":
-    {
-      outputFileMimeType:
-        "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-      outputFileName: `${originalFileName}.pptx`,
-    },
+      {
+        outputFileMimeType:
+          "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        outputFileName: `${originalFileName}.pptx`,
+      },
     "text/plain": {
       outputFileMimeType: "text/plain",
       outputFileName: `${originalFileName}.txt`,
@@ -127,7 +125,7 @@ export const handleUpload = async (
       state.fileName || outputFileName,
       downloadBtn
     );
-    filesOnSubmit = files.map(f => f.name);
+    filesOnSubmit = files.map((f) => f.name);
 
     if (response.status !== 200) {
       throw new Error(`HTTP error! status: ${response.status}`);

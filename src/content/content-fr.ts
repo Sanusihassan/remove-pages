@@ -59,6 +59,13 @@ export const edit_page: _edit_page = {
   },
   pages: "pages",
   page: "page",
+  filenameOptions: {
+    label: "Nom du fichier de sortie (facultatif)",
+    placeholder: "Entrez le nom du fichier",
+    helperText: "Ce sera le nom du PDF compressé lors du téléchargement.",
+    cta: "Voir les forfaits",
+  },
+
   compress_pdf: [
     {
       title: "Compression recommandée",
@@ -170,5 +177,13 @@ export const errors: _errors = {
     message:
       "Une erreur de réseau s'est produite. Veuillez vérifier votre connexion Internet et réessayer.",
     code: "ERR_NETWORK",
+  },
+  alerts: {
+    maxFiles:
+      "Maximum 15 fichiers autorisés. Abonnez-vous pour en ajouter plus !",
+    singleFileSize:
+      "La taille d'un fichier unique doit être inférieure à 100 Mo. Passez à la version supérieure pour télécharger des fichiers plus volumineux !",
+    fileSize:
+      "Chaque fichier doit être inférieur à 50 Mo. Débloquez des limites plus élevées avec un abonnement !",
   },
 };

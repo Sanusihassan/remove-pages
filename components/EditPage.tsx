@@ -19,6 +19,7 @@ type editPageProps = {
   lang: string;
   errors: _;
   path: string;
+  drop_files: string;
 };
 
 const EditPage = ({
@@ -29,6 +30,7 @@ const EditPage = ({
   lang,
   errors,
   path,
+  drop_files,
 }: editPageProps) => {
   // state variables
   const errorCode = useSelector(
@@ -63,6 +65,7 @@ const EditPage = ({
           lang={lang}
           errors={errors}
           edit_page={edit_page}
+          drop_files={drop_files}
         />
         <ErrorElement />
         <AddMoreButton
@@ -97,7 +100,10 @@ const EditPage = ({
             }
           </bdi>
         </h5>
-        <Options content={edit_page.compress_pdf} />
+        <Options
+          content={edit_page.compress_pdf}
+          filenameOptions={edit_page.filenameOptions}
+        />
         <div className="hide-onsmall">
           <SubmitBtn k={path} edit_page={edit_page} />
         </div>

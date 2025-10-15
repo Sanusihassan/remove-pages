@@ -57,6 +57,13 @@ export const edit_page: _edit_page = {
   },
   pages: "páginas",
   page: "página",
+  filenameOptions: {
+    label: "Nombre del archivo de salida (opcional)",
+    placeholder: "Ingrese el nombre del archivo",
+    helperText: "Este será el nombre del PDF comprimido al descargarlo.",
+    cta: "Ver planes",
+  },
+
   compress_pdf: [
     {
       title: "Compresión recomendada",
@@ -168,5 +175,12 @@ export const errors: _errors = {
     message:
       "Ha ocurrido un error en la red. Por favor, comprueba tu conexión a internet e inténtalo de nuevo.",
     code: "ERR_NETWORK",
+  },
+  alerts: {
+    maxFiles: "Máximo 15 archivos permitidos. ¡Suscríbete para más!",
+    singleFileSize:
+      "El tamaño de un solo archivo debe ser menor a 100 MB. ¡Actualiza para subir archivos más grandes!",
+    fileSize:
+      "Cada archivo debe ser menor a 50 MB. ¡Desbloquea límites más altos con la suscripción!",
   },
 };

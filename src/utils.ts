@@ -3,7 +3,11 @@ import { type Action, type Dispatch } from "@reduxjs/toolkit";
 import type { errors as _ } from "./content";
 import { setField } from "./store";
 import * as pdfjs from "pdfjs-dist";
-import { type PDFDocumentProxy, type PageViewport, type RenderTask } from "pdfjs-dist";
+import {
+  type PDFDocumentProxy,
+  type PageViewport,
+  type RenderTask,
+} from "pdfjs-dist";
 
 // @ts-ignore
 const pdfjsWorker = await import("pdfjs-dist/build/pdf.worker.min.mjs");
@@ -92,8 +96,9 @@ export const getFileDetailsTooltipContent = async (
         if (pageCount === 2 && lang === "ar") {
           tooltipContent += " - صفحتين</bdi>";
         } else {
-          tooltipContent += ` - ${lang === "ar" && pageCount === 1 ? "" : pageCount + " "
-            }${pageCount > 1 ? pages : page}</bdi>`;
+          tooltipContent += ` - ${
+            lang === "ar" && pageCount === 1 ? "" : pageCount + " "
+          }${pageCount > 1 ? pages : page}</bdi>`;
         }
         URL.revokeObjectURL(url);
         if (!file.size) {
@@ -180,13 +185,11 @@ export const validateFiles = (
   _files: FileList | File[],
   extension: string,
   errors: _,
-  dispatch: Dispatch<Action>,
+  dispatch: Dispatch<Action>
 ) => {
   const files = Array.from(_files); // convert FileList to File[] array
 
-  let allowedMimeTypes = [
-    "application/pdf",
-  ];
+  let allowedMimeTypes = ["application/pdf"];
   if (files.length == 0) {
     dispatch(setField({ errorMessage: errors.NO_FILES_SELECTED.message }));
     dispatch(setField({ errorCode: "ERR_NO_FILES_SELECTED" }));
@@ -198,9 +201,7 @@ export const validateFiles = (
     extension = extension.replace(".", "").toUpperCase();
     let file_extension = file.name.split(".").pop()?.toUpperCase() || "";
     // this contains all types and some special types that might potentially be of than one extension
-    const types = [
-      "pdf",
-    ];
+    const types = ["pdf"];
 
     if (!file || !file.name) {
       // handle FILE_CORRUPT error
@@ -216,7 +217,7 @@ export const validateFiles = (
     ) {
       const errorMessage =
         errors.NOT_SUPPORTED_TYPE.types[
-        extension as keyof typeof errors.NOT_SUPPORTED_TYPE.types
+          extension as keyof typeof errors.NOT_SUPPORTED_TYPE.types
         ] || errors.NOT_SUPPORTED_TYPE.message;
       dispatch(setField({ errorMessage: errorMessage }));
       return false;
@@ -270,7 +271,6 @@ export async function calculatePages(file: PDFFile): Promise<number> {
   });
 }
 
-
 export async function getNthPageAsImage(
   file: File,
   dispatch: Dispatch<Action>,
@@ -313,17 +313,16 @@ export async function getNthPageAsImage(
   }
 }
 
-
 /**
  * Sanitizes a string to be a valid key for both JavaScript objects and Python dictionaries.
- * 
+ *
  * Rules applied:
  * - Converts to string if not already
  * - Removes/replaces invalid characters
  * - Ensures it starts with a letter, underscore, or dollar sign
  * - Replaces spaces and special chars with underscores
  * - Handles empty strings and edge cases
- * 
+ *
  * @param input - The string to sanitize
  * @param options - Configuration options
  * @returns A sanitized key safe for both JS and Python
@@ -338,14 +337,14 @@ export function sanitizeKey(
   } = {}
 ): string {
   const {
-    replaceWith = '_',
+    replaceWith = "_",
     preserveCase = true,
     maxLength,
-    prefix = 'key_'
+    prefix = "key_",
   } = options;
 
   // Handle null, undefined, or empty input
-  if (input == null || input === '') {
+  if (input == null || input === "") {
     return `${prefix}empty`;
   }
 
@@ -365,7 +364,7 @@ export function sanitizeKey(
   key = key.replace(/[^\w$]/g, replaceWith);
 
   // Remove consecutive replacement characters
-  const replacePattern = new RegExp(`${escapeRegex(replaceWith)}{2,}`, 'g');
+  const replacePattern = new RegExp(`${escapeRegex(replaceWith)}{2,}`, "g");
   key = key.replace(replacePattern, replaceWith);
 
   // Ensure it doesn't start with a digit
@@ -380,13 +379,16 @@ export function sanitizeKey(
   }
 
   // Handle empty result after sanitization
-  if (key === '' || key === replaceWith) {
+  if (key === "" || key === replaceWith) {
     return `${prefix}sanitized`;
   }
 
   // Trim replacement characters from start and end
-  const trimPattern = new RegExp(`^${escapeRegex(replaceWith)}+|${escapeRegex(replaceWith)}+$`, 'g');
-  key = key.replace(trimPattern, '');
+  const trimPattern = new RegExp(
+    `^${escapeRegex(replaceWith)}+|${escapeRegex(replaceWith)}+$`,
+    "g"
+  );
+  key = key.replace(trimPattern, "");
 
   // Apply max length if specified
   if (maxLength && key.length > maxLength) {
@@ -394,7 +396,7 @@ export function sanitizeKey(
   }
 
   // Final check: ensure we have a valid key
-  if (key === '') {
+  if (key === "") {
     return `${prefix}sanitized`;
   }
 
@@ -405,5 +407,25 @@ export function sanitizeKey(
  * Helper function to escape special regex characters
  */
 function escapeRegex(str: string): string {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
+
+export const ACCEPTED = ".pdf";
+
+// Generalized filter function for file validation
+export const filterNewFiles = (
+  acceptedFiles: File[],
+  existingFiles: File[],
+  allowedExtension?: string
+): File[] => {
+  return acceptedFiles.filter((newFile) => {
+    const isDuplicate = existingFiles.some(
+      (existingFile) =>
+        existingFile.name === newFile.name && existingFile.size === newFile.size
+    );
+    const hasCorrectExtension = allowedExtension
+      ? newFile.name.endsWith(allowedExtension)
+      : true;
+    return !isDuplicate && hasCorrectExtension;
+  });
+};

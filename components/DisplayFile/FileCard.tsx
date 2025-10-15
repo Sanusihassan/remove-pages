@@ -1,4 +1,7 @@
-import type { DraggableProvided, DraggableStateSnapshot } from "react-beautiful-dnd";
+import type {
+  DraggableProvided,
+  DraggableStateSnapshot,
+} from "react-beautiful-dnd";
 import { ActionDiv, type ActionProps } from "./ActionDiv";
 import { Tooltip } from "react-tooltip";
 import type { errors as _ } from "../../src/content";
@@ -42,8 +45,8 @@ const FileCard = ({
   const dispatch = useDispatch();
 
   // Memoize the sanitized key to avoid recalculating
-  const sanitizedKey = useMemo(() =>
-    file.name ? sanitizeKey(file.name.split(".")[0]) : null,
+  const sanitizedKey = useMemo(
+    () => (file.name ? sanitizeKey(file.name.split(".")[0]) : null),
     [file.name]
   );
 
@@ -51,7 +54,7 @@ const FileCard = ({
   // This prevents re-renders when other files' rotations change
   const rotation = useSelector((state: { tool: ToolState }) => {
     if (!sanitizedKey) return null;
-    return state.tool.rotations?.find(r => r.k === sanitizedKey) || null;
+    return state.tool.rotations?.find((r) => r.k === sanitizedKey) || null;
   });
 
   let isSubscribed = true;
@@ -108,10 +111,7 @@ const FileCard = ({
       <bdi>
         <Tooltip id={`item-tooltip-${index}`} />
       </bdi>
-      <ActionDiv
-        extension={extension}
-        fileName={file.name}
-      />
+      <ActionDiv extension={extension} fileName={file.name} />
       <div className="card-body d-flex flex-column">
         {!showLoader ? (
           <img
@@ -119,7 +119,14 @@ const FileCard = ({
             src={imageUrl}
             alt={`Selected file ${index}`}
             draggable={false}
-            style={rotation ? { rotate: `${rotation.r}deg` } : undefined}
+            style={
+              rotation
+                ? {
+                    rotate: `${rotation.r}deg`,
+                    scale: rotation.r === 180 || rotation.r === 0 ? "1" : ".9",
+                  }
+                : undefined
+            }
           />
         ) : null}
 
