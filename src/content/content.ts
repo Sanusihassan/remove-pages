@@ -158,6 +158,20 @@ export const errors = {
       "A network error occurred. Please check your internet connection and try again.",
     code: "ERR_NETWORK",
   },
+  PASSWORD_REQUIRED: {
+    message: "PDF requires a password.",
+    code: "PASSWORD_REQUIRED",
+  },
+
+  INCORRECT_PASSWORD: {
+    message: "The password you entered is incorrect.",
+    code: "INCORRECT_PASSWORD",
+  },
+  MAX_DAILY_USAGE: {
+    message:
+      "You’ve reached your daily usage limit. Please upgrade your plan to continue using this feature without interruption.",
+    code: "MAX_DAILY_USAGE",
+  },
   alerts: {
     maxFiles: "Max 15 files allowed. Subscribe for more!",
     singleFileSize:

@@ -1,13 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 import { type Action, type Dispatch } from "@reduxjs/toolkit";
 import type { errors as _ } from "./content";
-import { setField } from "./store";
+import { resetErrorMessage, setField } from "./store";
 import * as pdfjs from "pdfjs-dist";
 import {
   type PDFDocumentProxy,
   type PageViewport,
   type RenderTask,
 } from "pdfjs-dist";
+import { toast } from "react-toastify";
+
+import Cookies from "js-cookie";
 
 // @ts-ignore
 const pdfjsWorker = await import("pdfjs-dist/build/pdf.worker.min.mjs");
@@ -115,22 +118,38 @@ export const getFileDetailsTooltipContent = async (
   return tooltipContent;
 };
 
-/**
- * this is the current function and it's working,
- * but i want to display the pdf.png file while fetching the first page from the pdf
- */
-
 export async function getFirstPageAsImage(
   file: File,
   dispatch: Dispatch<Action>,
-  errors: _
+  errors: _,
+  password?: string
 ): Promise<string> {
   const fileUrl = URL.createObjectURL(file);
   if (!file.size) {
     return emptyPDFHandler(dispatch, errors);
   } else {
     try {
-      const loadingTask = pdfjs.getDocument(fileUrl);
+      const loadingTask = pdfjs.getDocument({
+        url: fileUrl,
+        password: password || undefined,
+      });
+
+      // Handle password requests
+      loadingTask.onPassword = (updatePassword, reason) => {
+        if (reason === pdfjs.PasswordResponses.NEED_PASSWORD) {
+          // First time asking for password
+          if (password) {
+            updatePassword(password);
+          } else {
+            dispatch(setField({ errorCode: "PASSWORD_REQUIRED" }));
+            throw new Error("PASSWORD_REQUIRED");
+          }
+        } else if (reason === pdfjs.PasswordResponses.INCORRECT_PASSWORD) {
+          dispatch(setField({ errorCode: "INCORRECT_PASSWORD" }));
+          throw new Error("INCORRECT_PASSWORD");
+        }
+      };
+
       const pdf: PDFDocumentProxy = await loadingTask.promise;
       const page = await pdf.getPage(1); // Get the first page
 
@@ -152,15 +171,39 @@ export async function getFirstPageAsImage(
 
       await renderTask.promise;
 
+      // Clean up the object URL
+      URL.revokeObjectURL(fileUrl);
+
       return canvas.toDataURL();
     } catch (error) {
-      dispatch(setField({ errorMessage: errors.FILE_CORRUPT.message }));
+      // Clean up the object URL on error
+      URL.revokeObjectURL(fileUrl);
 
-      return DEFAULT_PDF_IMAGE; // Return the placeholder image URL when an error occurs
+      // Check if it's not password-related error
+      if (!error.code) {
+        dispatch(setField({ errorMessage: errors.FILE_CORRUPT.message }));
+        return DEFAULT_PDF_IMAGE;
+      } else {
+        const { code } = error;
+        if (code === pdfjs.PasswordResponses.NEED_PASSWORD) {
+          dispatch(
+            setField({
+              errorMessage: errors.PASSWORD_REQUIRED.message,
+            })
+          );
+          return "/images/locked.png";
+        } else {
+          dispatch(
+            setField({
+              errorMessage: errors.INCORRECT_PASSWORD.message,
+            })
+          );
+          return "/images/locked.png";
+        }
+      }
     }
   }
 }
-
 export const getPlaceHoderImageUrl = (extension: string) => {
   switch (extension) {
     case ".docx":
@@ -179,76 +222,6 @@ export const getPlaceHoderImageUrl = (extension: string) => {
 // a function to check if the extension is .jpg or .pdf:
 export const isDraggableExtension = (ext: string, asPath: string) => {
   return ext === ".jpg" || asPath.includes("merge-pdf");
-};
-
-export const validateFiles = (
-  _files: FileList | File[],
-  extension: string,
-  errors: _,
-  dispatch: Dispatch<Action>
-) => {
-  const files = Array.from(_files); // convert FileList to File[] array
-
-  let allowedMimeTypes = ["application/pdf"];
-  if (files.length == 0) {
-    dispatch(setField({ errorMessage: errors.NO_FILES_SELECTED.message }));
-    dispatch(setField({ errorCode: "ERR_NO_FILES_SELECTED" }));
-    return false;
-  }
-  const fileSizeLimit = 50 * 1024 * 1024; // 50 MB
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i] || null;
-    extension = extension.replace(".", "").toUpperCase();
-    let file_extension = file.name.split(".").pop()?.toUpperCase() || "";
-    // this contains all types and some special types that might potentially be of than one extension
-    const types = ["pdf"];
-
-    if (!file || !file.name) {
-      // handle FILE_CORRUPT error
-      dispatch(setField({ errorMessage: errors.FILE_CORRUPT.message }));
-      return false;
-    } else if (!file.type) {
-      // handle NOT_SUPPORTED_TYPE error
-      dispatch(setField({ errorMessage: errors.NOT_SUPPORTED_TYPE.message }));
-      return false;
-    } else if (
-      !allowedMimeTypes.includes(file.type) ||
-      !types.includes(file_extension.toLowerCase())
-    ) {
-      const errorMessage =
-        errors.NOT_SUPPORTED_TYPE.types[
-          extension as keyof typeof errors.NOT_SUPPORTED_TYPE.types
-        ] || errors.NOT_SUPPORTED_TYPE.message;
-      dispatch(setField({ errorMessage: errorMessage }));
-      return false;
-    } else if (file.size > fileSizeLimit) {
-      // handle FILE_TOO_LARGE error
-      dispatch(setField({ errorMessage: errors.FILE_TOO_LARGE.message }));
-      return false;
-    } else if (!file.size) {
-      // handle EMPTY_FILE error
-
-      dispatch(setField({ errorMessage: errors.EMPTY_FILE.message }));
-      dispatch(setField({ errorCode: "ERR_EMPTY_FILE" }));
-      return false;
-    } else if (file.type.startsWith("image/")) {
-      // handle INVALID_IMAGE_DATA error
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        const img = new Image();
-        img.src = reader.result as string;
-        img.onerror = () => {
-          dispatch(
-            setField({ errorMessage: errors.INVALID_IMAGE_DATA.message })
-          );
-          return false;
-        };
-      };
-      return true;
-    }
-  }
-  return true;
 };
 
 interface PDFFile extends Blob {
@@ -315,99 +288,51 @@ export async function getNthPageAsImage(
 
 /**
  * Sanitizes a string to be a valid key for both JavaScript objects and Python dictionaries.
- *
- * Rules applied:
- * - Converts to string if not already
- * - Removes/replaces invalid characters
- * - Ensures it starts with a letter, underscore, or dollar sign
- * - Replaces spaces and special chars with underscores
- * - Handles empty strings and edge cases
+ * Produces a Linux filename-friendly string using built-in functions.
+ * Ensures consistent behavior across JS and Python.
  *
  * @param input - The string to sanitize
- * @param options - Configuration options
  * @returns A sanitized key safe for both JS and Python
  */
-export function sanitizeKey(
-  input: string | number | null | undefined,
-  options: {
-    replaceWith?: string;
-    preserveCase?: boolean;
-    maxLength?: number;
-    prefix?: string;
-  } = {}
-): string {
-  const {
-    replaceWith = "_",
-    preserveCase = true,
-    maxLength,
-    prefix = "key_",
-  } = options;
-
+export function sanitizeKey(input: string | number | null | undefined): string {
   // Handle null, undefined, or empty input
   if (input == null || input === "") {
-    return `${prefix}empty`;
+    return "key_empty";
   }
 
   // Convert to string
   let key = String(input);
 
-  // Optionally convert case
-  if (!preserveCase) {
-    key = key.toLowerCase();
+  // Normalize unicode by removing diacritics
+  key = key.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+  // Replace any non-alphanumeric or underscore characters with underscore
+  key = key.replace(/[^a-zA-Z0-9_]/g, "_");
+
+  // Remove consecutive underscores
+  while (key.includes("__")) {
+    key = key.replace(/__/g, "_");
   }
 
-  // Replace spaces and common separators with the replacement character
-  key = key.replace(/[\s\-\.\/\\]+/g, replaceWith);
-
-  // Remove characters that aren't alphanumeric, underscore, or dollar sign
-  // Keep Unicode letters for broader compatibility
-  key = key.replace(/[^\w$]/g, replaceWith);
-
-  // Remove consecutive replacement characters
-  const replacePattern = new RegExp(`${escapeRegex(replaceWith)}{2,}`, "g");
-  key = key.replace(replacePattern, replaceWith);
+  // Trim leading and trailing underscores
+  key = key.replace(/^_+|_+$/g, "");
 
   // Ensure it doesn't start with a digit
   if (/^\d/.test(key)) {
-    key = prefix + key;
+    key = "key_" + key;
   }
 
-  // Ensure it starts with a valid character (letter, underscore, or $)
-  // If it starts with something else after sanitization, prefix it
-  if (key.length > 0 && !/^[a-zA-Z_$]/.test(key)) {
-    key = prefix + key;
+  // Ensure it starts with a valid character (letter or underscore)
+  if (key.length > 0 && !/^[a-zA-Z_]/.test(key)) {
+    key = "key_" + key;
   }
 
   // Handle empty result after sanitization
-  if (key === "" || key === replaceWith) {
-    return `${prefix}sanitized`;
-  }
-
-  // Trim replacement characters from start and end
-  const trimPattern = new RegExp(
-    `^${escapeRegex(replaceWith)}+|${escapeRegex(replaceWith)}+$`,
-    "g"
-  );
-  key = key.replace(trimPattern, "");
-
-  // Apply max length if specified
-  if (maxLength && key.length > maxLength) {
-    key = key.substring(0, maxLength);
-  }
-
-  // Final check: ensure we have a valid key
-  if (key === "") {
-    return `${prefix}sanitized`;
+  if (key === "" || key === "_") {
+    return "key_sanitized";
   }
 
   return key;
-}
-
-/**
- * Helper function to escape special regex characters
- */
-function escapeRegex(str: string): string {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 export const ACCEPTED = ".pdf";
@@ -428,4 +353,135 @@ export const filterNewFiles = (
       : true;
     return !isDuplicate && hasCorrectExtension;
   });
+};
+
+/**
+ * Safely unpacks an ArrayBuffer into a typed object
+ * @param buffer - The ArrayBuffer to unpack
+ * @param encoding - Character encoding (default: 'utf-8')
+ * @returns The parsed JSON object or null if parsing fails
+ */
+export function unpackArrayBuffer<T = any>(
+  buffer: ArrayBuffer,
+  encoding: string = "utf-8"
+): T | null {
+  try {
+    const decoder = new TextDecoder(encoding);
+    const jsonString = decoder.decode(buffer);
+    return JSON.parse(jsonString) as T;
+  } catch (error) {
+    console.error("Failed to unpack ArrayBuffer:", error);
+    return null;
+  }
+}
+
+/**
+ * Increases the daily site usage count by a given amount (default = 1).
+ * Uses the same "dailySiteUsage" cookie structure as canUseSiteToday().
+ *
+ * @param amount - How much to increase today's usage by (default 1)
+ * @returns The updated usage count for today
+ */
+export const increaseDailySiteUsage = (amount: number = 1): number => {
+  const today = new Date().toISOString().split("T")[0];
+
+  // Read existing usage object
+  const usageData = JSON.parse(Cookies.get("dailySiteUsage") || "{}") as Record<
+    string,
+    number
+  >;
+
+  // Increment today's count
+  usageData[today] = (usageData[today] || 0) + amount;
+
+  // Save updated usage
+  Cookies.set("dailySiteUsage", JSON.stringify(usageData), {
+    expires: 1, // expires in 1 day
+    path: "/",
+  });
+
+  return usageData[today];
+};
+
+type FileValidationError =
+  | "NO_FILES_SELECTED"
+  | "FILE_CORRUPT"
+  | "EMPTY_FILE"
+  | "NOT_SUPPORTED_TYPE"
+  | "UNKNOWN_ERROR";
+
+/**
+ * Perform generic file validations.
+ */
+export function genericFileValidation(
+  file: File | null,
+  contentType: string | string[]
+): FileValidationError | null {
+  if (file === null) {
+    return "NO_FILES_SELECTED";
+  }
+
+  try {
+    if (!file.name) {
+      return "FILE_CORRUPT";
+    }
+
+    // Check if file is empty
+    if (file.size === 0) {
+      return "EMPTY_FILE";
+    }
+
+    // Normalize content_type to array
+    const allowedTypes =
+      typeof contentType === "string" ? [contentType] : contentType;
+
+    if (!file.type || !allowedTypes.includes(file.type)) {
+      return "NOT_SUPPORTED_TYPE";
+    }
+  } catch {
+    return "UNKNOWN_ERROR";
+  }
+
+  return null;
+}
+
+export const validateFiles = (
+  filesToValidate: File[],
+  dispatch: Dispatch<Action>,
+  errors: _,
+  mimetype: "application/pdf"
+): { isValid: boolean } => {
+  const errorCode =
+    filesToValidate
+      .map((file) => genericFileValidation(file, mimetype))
+      .find((result) => result !== null) || null;
+
+  console.log("errorCode", errorCode);
+  console.log("files", filesToValidate);
+
+  if (errorCode) {
+    dispatch(setField({ errorCode }));
+    let errMsg = "";
+
+    if (errorCode === "EMPTY_FILE") {
+      errMsg = errors.EMPTY_FILE.message;
+    } else if (errorCode === "FILE_CORRUPT") {
+      errMsg = errors.FILE_CORRUPT.message;
+    } else if (errorCode === "NO_FILES_SELECTED") {
+      errMsg = errors.NO_FILES_SELECTED.message;
+    } else if (errorCode === "NOT_SUPPORTED_TYPE") {
+      errMsg = errors.NOT_SUPPORTED_TYPE.message;
+    } else if (errorCode === "UNKNOWN_ERROR") {
+      errMsg = errors.UNKNOWN_ERROR.message;
+    }
+
+    toast(errMsg);
+
+    return { isValid: false };
+  }
+
+  dispatch(setField({ showTool: false }));
+  dispatch(resetErrorMessage());
+
+  return { isValid: true };
 };

@@ -176,6 +176,20 @@ export const errors: _errors = {
       "Ha ocurrido un error en la red. Por favor, comprueba tu conexión a internet e inténtalo de nuevo.",
     code: "ERR_NETWORK",
   },
+  PASSWORD_REQUIRED: {
+    message: "El PDF requiere una contraseña.",
+    code: "PASSWORD_REQUIRED",
+  },
+
+  INCORRECT_PASSWORD: {
+    message: "La contraseña que ingresaste es incorrecta.",
+    code: "INCORRECT_PASSWORD",
+  },
+  MAX_DAILY_USAGE: {
+    message:
+      "Has alcanzado tu límite de uso diario. Por favor, actualiza tu plan para seguir usando esta función sin interrupciones.",
+    code: "MAX_DAILY_USAGE",
+  },
   alerts: {
     maxFiles: "Máximo 15 archivos permitidos. ¡Suscríbete para más!",
     singleFileSize:

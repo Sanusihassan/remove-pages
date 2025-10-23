@@ -18,6 +18,10 @@ export const handleUpload = async (
       k: string;
       r: number;
     }[];
+    passwords: {
+      k: string;
+      p: string;
+    }[];
     userId: string | null;
     compressPdf: compressionType;
   },
@@ -47,6 +51,7 @@ export const handleUpload = async (
     formData.append("files", files[i]);
   }
   formData.append("rotations", JSON.stringify(state.rotations));
+  formData.append("passwords", JSON.stringify(state.passwords));
   formData.append("userId", state.userId);
   let url: string = "";
   // @ts-ignore
@@ -59,14 +64,15 @@ export const handleUpload = async (
     return;
   }
   formData.append("compress_amount", String(state.compressPdf));
-  const originalFileName = files[0]?.name?.split(".").slice(0, -1).join(".");
+  const originalFileName =
+    state.fileName || files[0]?.name?.split(".").slice(0, -1).join(".");
 
   const mimeTypeLookupTable: {
     [key: string]: { outputFileMimeType: string; outputFileName: string };
   } = {
     "application/zip": {
       outputFileMimeType: "application/zip",
-      outputFileName: `PDFEquips-compress-pdf.zip`,
+      outputFileName: `${originalFileName || "PDFEquips"}-compressed.zip`,
     },
     "application/pdf": {
       outputFileMimeType: "application/pdf",
@@ -122,7 +128,7 @@ export const handleUpload = async (
     downloadConvertedFile(
       response,
       outputFileMimeType,
-      state.fileName || outputFileName,
+      outputFileName,
       downloadBtn
     );
     filesOnSubmit = files.map((f) => f.name);

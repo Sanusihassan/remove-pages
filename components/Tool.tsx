@@ -7,7 +7,10 @@ import { FileInputForm } from "./Tool/FileInputForm";
 import DownloadFile from "./DownloadFile";
 import { useFileStore } from "../src/file-store";
 import { setField } from "../src/store";
-import { ACCEPTED, filterNewFiles } from "../src/utils";
+import { ACCEPTED, filterNewFiles, validateFiles } from "../src/utils";
+import type { edit_page } from "../src/content";
+import { fetchSubscriptionStatus } from "fetch-subscription-status";
+import { Bounce, ToastContainer } from "react-toastify";
 
 export type errorType = {
   response: {
@@ -28,13 +31,13 @@ export type ToolData = {
 
 export type ToolProps = {
   data: ToolData;
-  tools: any; // Define your type for 'tools' and 'downloadFile' appropriately
+  tools: any;
   lang: string;
-  errors: any; // Define your type for 'errors' appropriately
-  edit_page: any; // Define your type for 'edit_page' appropriately
+  errors: any;
+  edit_page: edit_page;
   pages: string;
   page: string;
-  downloadFile: any; // Define your type for 'downloadFile' appropriately
+  downloadFile: any;
 };
 
 const Tool: React.FC<ToolProps> = ({
@@ -64,11 +67,19 @@ const Tool: React.FC<ToolProps> = ({
   useEffect(() => {
     dispatch(setField({ showDownloadBtn: false }));
   }, [stateShowTool]);
-
+  // i need it here also:
   const onDrop = useCallback((acceptedFiles: File[]) => {
+    const { isValid } = validateFiles(
+      acceptedFiles,
+      dispatch,
+      errors,
+      "application/pdf"
+    );
     const newFiles = filterNewFiles(acceptedFiles, files, ACCEPTED);
-    setFiles(newFiles);
-    handleHideTool();
+    if (isValid) {
+      setFiles(newFiles);
+      handleHideTool();
+    }
   }, []);
 
   const handlePaste = useCallback(
@@ -102,6 +113,38 @@ const Tool: React.FC<ToolProps> = ({
     ".html": ".html, .htm",
   };
 
+  useEffect(() => {
+    (async () => {
+      const status = await fetchSubscriptionStatus();
+      dispatch(setField({ SubscriptionStatus: status }));
+      if (!status) {
+        const head = document.head;
+
+        // Check if meta tag already exists to avoid duplicates
+        if (!head.querySelector('meta[name="google-adsense-account"]')) {
+          const metaTag = document.createElement("meta");
+          metaTag.name = "google-adsense-account";
+          metaTag.content = "ca-pub-7801483217621867";
+          head.appendChild(metaTag);
+        }
+
+        // Check if script tag already exists to avoid duplicates
+        if (
+          !head.querySelector(
+            'script[src*="adsbygoogle.js?client=ca-pub-7801483217621867"]'
+          )
+        ) {
+          const scriptTag = document.createElement("script");
+          scriptTag.async = true;
+          scriptTag.src =
+            "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7801483217621867";
+          scriptTag.crossOrigin = "anonymous";
+          head.appendChild(scriptTag);
+        }
+      }
+    })();
+  }, []);
+
   return (
     <>
       <div
@@ -129,7 +172,7 @@ const Tool: React.FC<ToolProps> = ({
             acceptedFileTypes={acceptedFileTypes}
           />
           <p>{tools.or_drop}</p>
-          <ErrorElement />
+          <ErrorElement cta={edit_page.filenameOptions.cta} />
         </div>
         <EditPage
           extension={data.type}
@@ -143,6 +186,19 @@ const Tool: React.FC<ToolProps> = ({
         />
         <DownloadFile lang={lang} downloadFile={downloadFile} path={path} />
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
     </>
   );
 };

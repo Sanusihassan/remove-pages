@@ -166,6 +166,20 @@ export const errors: _errors = {
       "حدث خطأ في الشبكة. يرجى التحقق من اتصالك بالإنترنت وحاول مرة أخرى.",
     code: "ERR_NETWORK",
   },
+  PASSWORD_REQUIRED: {
+    message: "ملف PDF يتطلب كلمة مرور.",
+    code: "PASSWORD_REQUIRED",
+  },
+  INCORRECT_PASSWORD: {
+    message: "كلمة المرور التي أدخلتها غير صحيحة.",
+    code: "INCORRECT_PASSWORD",
+  },
+
+  MAX_DAILY_USAGE: {
+    message:
+      "لقد وصلت إلى الحد الأقصى للاستخدام اليومي. يُرجى ترقية خطتك لمواصلة استخدام هذه الميزة دون انقطاع.",
+    code: "MAX_DAILY_USAGE",
+  },
   alerts: {
     maxFiles: "الحد الأقصى 15 ملفاً فقط مسموح. اشترك للحصول على المزيد!",
     singleFileSize:

@@ -178,6 +178,20 @@ export const errors: _errors = {
       "Une erreur de réseau s'est produite. Veuillez vérifier votre connexion Internet et réessayer.",
     code: "ERR_NETWORK",
   },
+  PASSWORD_REQUIRED: {
+    message: "Le PDF nécessite un mot de passe.",
+    code: "PASSWORD_REQUIRED",
+  },
+
+  INCORRECT_PASSWORD: {
+    message: "Le mot de passe que vous avez saisi est incorrect.",
+    code: "INCORRECT_PASSWORD",
+  },
+  MAX_DAILY_USAGE: {
+    message:
+      "Vous avez atteint votre limite d’utilisation quotidienne. Veuillez mettre à niveau votre forfait pour continuer à utiliser cette fonctionnalité sans interruption.",
+    code: "MAX_DAILY_USAGE",
+  },
   alerts: {
     maxFiles:
       "Maximum 15 fichiers autorisés. Abonnez-vous pour en ajouter plus !",

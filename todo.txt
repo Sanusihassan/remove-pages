@@ -13,3 +13,8 @@ File Size Limit: Each individual file you upload is usually limited to 50MB in s
 add a dnd in the files-list page for all apps.
 
 add new fieild for file name in the options.
+
+add rotation & password support, daily limit & limitations based on the tool.
+
+
+filename functionality.

@@ -39,6 +39,9 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
   const rotations = useSelector(
     (state: { tool: ToolState }) => state.tool.rotations
   );
+  const passwords = useSelector(
+    (state: { tool: ToolState }) => state.tool.passwords
+  );
   const compressPdf = useSelector(
     (state: { tool: ToolState }) => state.tool.compressPdf
   );
@@ -77,6 +80,7 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
             rotations,
             userId,
             compressPdf,
+            passwords,
           },
           files,
           errors
@@ -119,9 +123,7 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
             e.stopPropagation();
           }}
           onChange={(e) => {
-            handleChange(e, dispatch, setFiles, data.type, errors, files, {
-              path,
-            });
+            handleChange(e, dispatch, setFiles, errors, files);
           }}
         />
       </div>

@@ -160,6 +160,19 @@ export const errors: _errors = {
     message: "网络错误，请检查您的互联网连接并重试。",
     code: "ERR_NETWORK",
   },
+  PASSWORD_REQUIRED: {
+    message: "该 PDF 需要密码。",
+    code: "PASSWORD_REQUIRED",
+  },
+
+  INCORRECT_PASSWORD: {
+    message: "您输入的密码不正确。",
+    code: "INCORRECT_PASSWORD",
+  },
+  MAX_DAILY_USAGE: {
+    message: "您已达到每日使用上限。请升级您的套餐以继续不间断地使用此功能。",
+    code: "MAX_DAILY_USAGE",
+  },
   alerts: {
     maxFiles: "最多允许 15 个文件。订阅以获取更多！",
     singleFileSize: "单个文件大小必须低于 100 MB。升级以上传更大的文件！",

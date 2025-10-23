@@ -3,10 +3,10 @@ import type { errors as _ } from "../../src/content";
 import FileCard from "./FileCard";
 import { useDropzone } from "react-dropzone";
 import { useFileStore } from "../../src/file-store";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchSubscriptionStatus } from "fetch-subscription-status";
-import { setField } from "../../src/store";
-import { ACCEPTED, filterNewFiles } from "../../src/utils";
+import { setField, type ToolState } from "../../src/store";
+import { ACCEPTED, filterNewFiles, validateFiles } from "../../src/utils";
 
 type FileProps = {
   errors: _;
@@ -27,11 +27,17 @@ const Files = ({
 }: FileProps) => {
   const { files, setFiles } = useFileStore();
   const dispatch = useDispatch();
+  const subscriptionStatus = useSelector(
+    (state: { tool: ToolState }) => state.tool.subscriptionStatus
+  );
 
   useEffect(() => {
     let limitationMsg = "";
     (async () => {
-      const isSubscribed = await fetchSubscriptionStatus();
+      const isSubscribed =
+        subscriptionStatus === null
+          ? await fetchSubscriptionStatus()
+          : subscriptionStatus;
       if (isSubscribed) {
         return;
       }
@@ -50,8 +56,16 @@ const Files = ({
   }, [files]);
 
   const onDrop = (acceptedFiles: File[]) => {
+    const { isValid } = validateFiles(
+      acceptedFiles,
+      dispatch,
+      errors,
+      "application/pdf"
+    );
     const newFiles = filterNewFiles(acceptedFiles, files, ACCEPTED);
-    setFiles([...files, ...newFiles]);
+    if (isValid) {
+      setFiles([...files, ...newFiles]);
+    }
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

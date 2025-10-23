@@ -174,6 +174,20 @@ export const errors: _errors = {
       "नेटवर्क में त्रुटि हो गई है। कृपया अपना इंटरनेट कनेक्शन जांचें और पुनः प्रयास करें।",
     code: "ERR_NETWORK",
   },
+  PASSWORD_REQUIRED: {
+    message: "PDF को पासवर्ड की आवश्यकता है।",
+    code: "PASSWORD_REQUIRED",
+  },
+
+  INCORRECT_PASSWORD: {
+    message: "आपने जो पासवर्ड दर्ज किया है वह गलत है।",
+    code: "INCORRECT_PASSWORD",
+  },
+  MAX_DAILY_USAGE: {
+    message:
+      "आपने अपनी दैनिक उपयोग सीमा पूरी कर ली है। कृपया इस सुविधा का निर्बाध उपयोग जारी रखने के लिए अपनी योजना अपग्रेड करें।",
+    code: "MAX_DAILY_USAGE",
+  },
   alerts: {
     maxFiles: "अधिकतम 15 फ़ाइलें अनुमति हैं। अधिक के लिए सब्सक्राइब करें!",
     singleFileSize:
