@@ -53,9 +53,7 @@ export function SubmitBtn({
           );
         }
       }}
-      disabled={
-        errorMessage.length > 0 || files.length <= 1 || limitationMsg.length > 0
-      }
+      disabled={errorMessage.length > 0 || limitationMsg.length > 0}
     >
       <bdi>
         {

@@ -67,7 +67,6 @@ const Tool: React.FC<ToolProps> = ({
   useEffect(() => {
     dispatch(setField({ showDownloadBtn: false }));
   }, [stateShowTool]);
-  // i need it here also:
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const { isValid } = validateFiles(
       acceptedFiles,

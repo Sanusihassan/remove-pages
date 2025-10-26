@@ -55,6 +55,10 @@ export const edit_page: _edit_page = {
     placeholder: "输入文件名",
     helperText: "这将是下载时压缩 PDF 的名称。",
     cta: "查看方案",
+    upgradeNotice: {
+      msg: "2.0 到 10.0 的级别可在高级版中使用。",
+      cta: "立即升级",
+    },
   },
   compress_pdf: [
     {
@@ -87,6 +91,21 @@ export const downloadFile: _downloadFile = {
 
   backto: {
     "compress-pdf": "返回 PDF 压缩",
+  },
+  compressionAnalyticsContent: {
+    title: "压缩分析",
+    description: "您的 PDF 压缩结果的详细分析",
+    sizeComparisonTitle: "大小对比",
+    reductionBreakdownTitle: "压缩比例分析",
+    sizeSavedLabel: "节省的空间",
+    compressionRatioLabel: "压缩比",
+    sizeReducedLabel: "减小的大小",
+    chart: {
+      original: "原始",
+      compressed: "已压缩",
+      reduced: "已减少",
+      remaining: "剩余",
+    },
   },
 };
 

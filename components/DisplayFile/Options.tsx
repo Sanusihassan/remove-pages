@@ -23,9 +23,11 @@ export const CTABtn = ({
 export const Options = ({
   content,
   filenameOptions,
+  lang,
 }: {
   content: edit_page["compress_pdf"];
   filenameOptions: edit_page["filenameOptions"];
+  lang: string;
 }) => {
   return (
     <>
@@ -33,6 +35,7 @@ export const Options = ({
         options={content}
         c="compress-pdf"
         filenameOptions={filenameOptions}
+        lang={lang}
       />
     </>
   );

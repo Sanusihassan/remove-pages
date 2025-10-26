@@ -55,6 +55,10 @@ export const edit_page: _edit_page = {
     placeholder: "फ़ाइल का नाम दर्ज करें",
     helperText: "डाउनलोड करते समय यह संकुचित PDF का नाम होगा।",
     cta: "योजनाएँ देखें",
+    upgradeNotice: {
+      msg: "2.0 से 10.0 तक के स्तर प्रीमियम में उपलब्ध हैं।",
+      cta: "अभी अपग्रेड करें",
+    },
   },
 
   compress_pdf: [
@@ -94,6 +98,21 @@ export const downloadFile: _downloadFile = {
 
   backto: {
     "compress-pdf": "PDF संपीड़न पर वापस जाएँ",
+  },
+  compressionAnalyticsContent: {
+    title: "संपीड़न विश्लेषण",
+    description: "आपकी PDF संपीड़न के परिणामों का विस्तृत विवरण",
+    sizeComparisonTitle: "आकार तुलना",
+    reductionBreakdownTitle: "कमी का विश्लेषण",
+    sizeSavedLabel: "बचाई गई जगह",
+    compressionRatioLabel: "संपीड़न अनुपात",
+    sizeReducedLabel: "कम किया गया आकार",
+    chart: {
+      original: "मूल",
+      compressed: "संपीड़ित",
+      reduced: "कम किया गया",
+      remaining: "शेष",
+    },
   },
 };
 

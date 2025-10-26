@@ -1,11 +1,11 @@
 import axios from "axios";
-
 import { downloadConvertedFile } from "../downloadFile";
 import type { errors as _ } from "../content";
 import { type RefObject } from "react";
 import { resetErrorMessage, setField, type compressionType } from "../store";
 import type { Action, Dispatch } from "@reduxjs/toolkit/react";
 let filesOnSubmit = [];
+let prevState = null;
 export const handleUpload = async (
   e: React.FormEvent<HTMLFormElement>,
   downloadBtn: RefObject<HTMLAnchorElement>,
@@ -39,12 +39,17 @@ export const handleUpload = async (
   const allFilesPresent = fileNames.every((fileName) =>
     filesOnSubmit.includes(fileName)
   );
-
-  if (allFilesPresent && files.length === filesOnSubmit.length) {
+  const strState = JSON.stringify(state);
+  if (
+    allFilesPresent &&
+    files.length === filesOnSubmit.length &&
+    prevState === strState
+  ) {
     dispatch(setField({ showDownloadBtn: true }));
     dispatch(resetErrorMessage());
     return;
   }
+  prevState = strState;
 
   const formData = new FormData();
   for (let i = 0; i < files.length; i++) {
@@ -123,6 +128,14 @@ export const handleUpload = async (
       outputFileName: "",
     };
     const { outputFileMimeType, outputFileName } = mimeTypeData;
+    const compressedFileSize = response.data.byteLength;
+
+    // Dispatch the compressed file size to Redux store
+    dispatch(
+      setField({
+        compressedFileSize: compressedFileSize,
+      })
+    );
 
     dispatch(setField({ showDownloadBtn: true }));
     downloadConvertedFile(

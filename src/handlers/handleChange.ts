@@ -1,6 +1,7 @@
 import { type Action, type Dispatch } from "@reduxjs/toolkit";
 import type { errors as _ } from "../content/content";
 import { validateFiles } from "../utils";
+import { setField } from "../store";
 
 export const handleChange = (
   e: React.ChangeEvent<HTMLInputElement>,
@@ -21,5 +22,15 @@ export const handleChange = (
 
   if (isValid) {
     setFiles(finalFiles);
+    const originalFileSize = finalFiles.reduce(
+      (total, file) => total + file.size,
+      0
+    );
+
+    dispatch(
+      setField({
+        originalFileSize,
+      })
+    );
   }
 };

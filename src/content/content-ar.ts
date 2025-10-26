@@ -61,6 +61,10 @@ export const edit_page: _edit_page = {
     placeholder: "أدخل اسم الملف",
     helperText: "سيكون هذا هو اسم ملف PDF المضغوط عند تنزيله.",
     cta: "عرض الخطط",
+    upgradeNotice: {
+      msg: "المستويات من 2.0 إلى 10.0 متاحة مع الخطة المميزة.",
+      cta: "الترقية الآن",
+    },
   },
 
   compress_pdf: [
@@ -94,6 +98,21 @@ export const downloadFile: _downloadFile = {
 
   backto: {
     "compress-pdf": "العودة إلى ضغط PDF",
+  },
+  compressionAnalyticsContent: {
+    title: "تحليلات الضغط",
+    description: "تفاصيل دقيقة لنتائج ضغط ملف PDF الخاص بك",
+    sizeComparisonTitle: "مقارنة الحجم",
+    reductionBreakdownTitle: "تفاصيل نسبة التخفيض",
+    sizeSavedLabel: "المساحة المحفوظة",
+    compressionRatioLabel: "نسبة الضغط",
+    sizeReducedLabel: "الحجم المُخفض",
+    chart: {
+      original: "الأصلي",
+      compressed: "المضغوط",
+      reduced: "المُخفض",
+      remaining: "المتبقي",
+    },
   },
 };
 

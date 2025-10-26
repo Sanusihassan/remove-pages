@@ -19,6 +19,8 @@ export interface ToolState {
   passwords: { k: string; p: string }[];
   compressPdf: compressionType;
   subscriptionStatus: boolean;
+  originalFileSize: number;
+  compressedFileSize: number;
 }
 
 const initialState: ToolState = {
@@ -35,6 +37,8 @@ const initialState: ToolState = {
   passwords: [],
   compressPdf: "recommended",
   subscriptionStatus: false,
+  compressedFileSize: 0,
+  originalFileSize: 0,
 };
 
 const toolSlice = createSlice({

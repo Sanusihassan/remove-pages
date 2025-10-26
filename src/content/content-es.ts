@@ -62,6 +62,10 @@ export const edit_page: _edit_page = {
     placeholder: "Ingrese el nombre del archivo",
     helperText: "Este será el nombre del PDF comprimido al descargarlo.",
     cta: "Ver planes",
+    upgradeNotice: {
+      msg: "Los niveles del 2.0 al 10.0 están disponibles con la versión premium.",
+      cta: "Actualizar ahora",
+    },
   },
 
   compress_pdf: [
@@ -102,6 +106,22 @@ export const downloadFile: _downloadFile = {
 
   backto: {
     "compress-pdf": "Volver a Comprimir PDF",
+  },
+  compressionAnalyticsContent: {
+    title: "Análisis de Compresión",
+    description:
+      "Desglose detallado de los resultados de la compresión de tu PDF",
+    sizeComparisonTitle: "Comparación de Tamaños",
+    reductionBreakdownTitle: "Desglose de Reducción",
+    sizeSavedLabel: "Espacio Ahorrado",
+    compressionRatioLabel: "Relación de Compresión",
+    sizeReducedLabel: "Tamaño Reducido",
+    chart: {
+      original: "Original",
+      compressed: "Comprimido",
+      reduced: "Reducido",
+      remaining: "Restante",
+    },
   },
 };
 

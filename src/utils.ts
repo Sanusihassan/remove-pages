@@ -455,10 +455,7 @@ export const validateFiles = (
     filesToValidate
       .map((file) => genericFileValidation(file, mimetype))
       .find((result) => result !== null) || null;
-
-  console.log("errorCode", errorCode);
-  console.log("files", filesToValidate);
-
+  let tid = null;
   if (errorCode) {
     dispatch(setField({ errorCode }));
     let errMsg = "";
@@ -475,13 +472,16 @@ export const validateFiles = (
       errMsg = errors.UNKNOWN_ERROR.message;
     }
 
-    toast(errMsg);
+    tid = toast(errMsg);
 
     return { isValid: false };
   }
+  if (filesToValidate.length) {
+    dispatch(setField({ showTool: false }));
+    dispatch(resetErrorMessage());
+    toast.dismiss(tid);
+    return { isValid: true };
+  }
 
-  dispatch(setField({ showTool: false }));
-  dispatch(resetErrorMessage());
-
-  return { isValid: true };
+  return { isValid: false };
 };

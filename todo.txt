@@ -1,20 +1,25 @@
-ADD LIMIT TO FILE COUNT AND FILESIZE, MAX FILE SIZE = 100MB, LIMIT 15.
+i also want to support advanced options like the ones in the https://docupub.com/pdfcompress/ website.
 
-i want an info message for all of these i.e this is an info alert for free version of our PDF Merger tool: https://www.pdfequips.com/merge-pdf
+Color Images:    	
+Compression:		
+Quality:
 
-Maximum Files to Combine: You can typically combine up to 50 individual files.
+JPEG    
+35
+ (0..100)
 
-Total Page Limit: The final, merged PDF document cannot exceed 1,500 pages.
+Gray Images:    	
+Compression:		
+Quality:
 
-Individual File Page Limit: Each separate file being merged is generally limited to 500 pages.
+JPEG    
+35
+ (0..100)
 
-File Size Limit: Each individual file you upload is usually limited to 50MB in size.
+Mono Images:    	
+Compression:		
+Quality:
 
-add a dnd in the files-list page for all apps.
-
-add new fieild for file name in the options.
-
-add rotation & password support, daily limit & limitations based on the tool.
-
-
-filename functionality.
+JBIG2 lossy
+5
+ (0..10)

@@ -47,6 +47,10 @@ export const edit_page = {
     placeholder: "Enter file name",
     helperText: "This will be the name of the compressed PDF when downloaded.",
     cta: "View Plans",
+    upgradeNotice: {
+      msg: "Levels from 2.0 to 10.0 are available with premium.",
+      cta: "Upgrade now",
+    },
   },
   compress_pdf: [
     {
@@ -85,6 +89,21 @@ export const downloadFile = {
 
   backto: {
     "compress-pdf": "Back To Compress PDF",
+  },
+  compressionAnalyticsContent: {
+    title: "Compression Analytics",
+    description: "Detailed breakdown of your PDF compression results",
+    sizeComparisonTitle: "Size Comparison",
+    reductionBreakdownTitle: "Reduction Breakdown",
+    sizeSavedLabel: "Space Saved",
+    compressionRatioLabel: "Compression Ratio",
+    sizeReducedLabel: "Size Reduced",
+    chart: {
+      original: "Original",
+      compressed: "Compressed",
+      reduced: "Reduced",
+      remaining: "Remaining",
+    },
   },
 };
 

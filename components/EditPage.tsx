@@ -103,6 +103,7 @@ const EditPage = ({
         <Options
           content={edit_page.compress_pdf}
           filenameOptions={edit_page.filenameOptions}
+          lang={lang}
         />
         <div className="hide-onsmall">
           <SubmitBtn errors={errors} k={path} edit_page={edit_page} />
