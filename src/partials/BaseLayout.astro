@@ -1,9 +1,9 @@
 ---
 const { pathname } = Astro.url;
-const { title, description, seoTitle, to } = Astro.props;
+const { seoConfig } = Astro.props;
 let lang = "en";
 let dir = "ltr";
-let locale;
+let locale = "";
 
 switch (lang) {
   case "ar":
@@ -38,47 +38,20 @@ if (pathname.startsWith("/ar")) {
   lang = "zh";
   locale = "zh_CN";
 }
-const seoConfig = {
-  title: seoTitle,
-  description: description,
-  canonical: `https://www.pdfequips.com/${to}`,
-  openGraph: {
-    url: `https://www.pdfequips.com/${to}`,
-    title: seoTitle,
-    description: description,
-    images: [
-      {
-        url: `https://www.pdfequips.com/images/${to}.png`,
-        width: 1200,
-        height: 630,
-        alt: title,
-        type: "image/png",
-      },
-    ],
-    site_name: "PDFEquips",
-    locale: locale || "en_US",
-  },
-  twitter: {
-    handle: "@pdfequips",
-    site: "@pdfequips",
-    cardType: "summary_large_image",
-  },
-};
-
-import { AstroSeo } from "@astrolib/seo";
 
 import { Schema } from "astro-seo-schema";
-import "./styles/global.css";
-import "../index.scss";
+import "../styles/global.css";
+import "../../index.scss";
 import Navbar from "pdfequips-navbar";
 import { Footer } from "pdfequips-footer/components/Footer.tsx";
-import { howToSchema } from "./how-to/how-to";
+import { howToSchema } from "../how-to/how-to";
+import AstroSeo from "./AstroSeo.astro";
 ---
 
 <!doctype html>
 <html lang={lang} dir={dir}>
   <head>
-    <AstroSeo {...seoConfig} />
+    <AstroSeo {...{ ...seoConfig, title: seoConfig.seoTitle }} />
     <Schema item={howToSchema} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -104,9 +77,9 @@ import { howToSchema } from "./how-to/how-to";
   </head>
   <body>
     <main>
-      <Navbar client:load lang={lang} path={to.replace("/", "")} />
+      <Navbar client:load lang={lang} path={seoConfig.to.replace("/", "")} />
       <slot />
-      <Footer client:load title={title} lang={lang} />
+      <Footer client:load title={seoConfig.title} lang={lang} />
     </main>
   </body>
 </html>

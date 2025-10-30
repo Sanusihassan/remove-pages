@@ -1,5 +1,5 @@
 ---
-import BaseLayout from "../../BaseLayout.astro";
+import BaseLayout from "../../partials/BaseLayout.astro";
 import {
   downloadFile,
   edit_page,
@@ -20,7 +20,7 @@ export const store = configureStore({
 });
 ---
 
-<BaseLayout title={title} description={description} seoTitle={seoTitle} to={to}>
+<BaseLayout seoConfig={tool.Compress_PDF}>
   <ReduxProvider store={store}>
     <ToolWrapper
       client:load
@@ -34,8 +34,8 @@ export const store = configureStore({
       downloadFile={downloadFile}
       features={tool.Compress_PDF.features}
       howTo={howToSchema}
-      to={to}
-      seoTitle={seoTitle}
+      to={tool.Compress_PDF.to}
+      seoTitle={tool.Compress_PDF.seoTitle}
     />
   </ReduxProvider>
 </BaseLayout>
