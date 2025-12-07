@@ -13,26 +13,25 @@ svg {
 
 $pdf-color: #fc271c;
 $color-map: (
-  "merge-pdf": $pdf-color,
-  "split-pdf": #fd7e14,
-  "compress-pdf": #28a745,
   "pdf-to-powerpoint": #c13b1b,
-  "jpg-to-pdf": #f1c40f,
   "word-to-pdf": #1b5ebe,
   "powerpoint-to-pdf": #c13b1b,
   "excel-to-pdf": #10793f,
   "web-to-pdf": #0984e3,
   "pdf-to-text": #4493e1,
   "html-to-pdf": rgb(228, 77, 38),
-  "pdf-to-jpg": #f1c40f,
   "pdf-to-word": #1b5ebe,
   "pdf-to-excel": #10793f,
   "pdf-to-pdf-a": #000000,
   "pdf-to-html": rgb(228, 77, 38),
   "pdf-to-markdown": #000000,
-  "translate-pdf": #185abc,
-  "merge-pages": #27ae60,
 );
+
+:root {
+  @each $key, $value in $color-map {
+    --#{$key}: #{$value};
+  }
+}
 
 body {
   @include ar-wrapper {
@@ -40,10 +39,12 @@ body {
   }
 
   font-family: "Raleway", sans-serif;
+  color: #2c3e50;
 }
 
 .tools-page {
   min-height: fit-content;
+  @include extend("container-fluid position-relative");
 }
 
 .h-5,
@@ -107,6 +108,7 @@ a.dropdown-item {
 
 // error element styles
 .error-element {
+  @include extend("alert alert-danger text-center mt-3");
   .hide-on-rtl {
     [dir="rtl"] &,
     [lang="ar"] & {
@@ -129,7 +131,9 @@ a.dropdown-item {
 @import "./scss/features";
 
 .how-to {
+  @include extend("row align-items-center py-3");
   .image {
+    @include extend("col-12 col-md-6 text-center");
     img {
       user-select: none;
       -webkit-user-drag: none;
@@ -137,6 +141,7 @@ a.dropdown-item {
   }
 
   .how-to-steps {
+    @include extend("col");
     @include xs {
       text-align: center;
     }
@@ -146,6 +151,9 @@ a.dropdown-item {
     }
   }
 }
+
+@import "./scss/loading";
+@import "./scss/misk";
 
 @import "pdfequips-footer/scss/footer";
 .green-slider .range-slider__thumb {

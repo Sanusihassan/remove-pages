@@ -2,7 +2,6 @@ import { Provider as ReduxProvider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import toolReducer from "../src/store";
 import { Tool as ToolComponent, type ToolProps } from "./Tool";
-import { type _howToSchema } from "../src/how-to/how-to";
 import { Features } from "./Features";
 import type { WithContext, HowTo as HowToType } from "schema-dts";
 import HowTo from "./HowTo";
@@ -32,12 +31,24 @@ export function ToolWrapper(props: ToolWrapperProps) {
     <ReduxProvider store={store}>
       <ToolComponent {...props} />
       <div className="container">
-        <Features
-          features={features as { title: string; description: string }[]}
-        />
+        <HowTo howTo={howTo} alt={seoTitle} imgSrc={to.replace("/", "")} />
       </div>
       <div className="container">
-        <HowTo howTo={howTo} alt={seoTitle} imgSrc={to.replace("/", "")} />
+        <Features
+          features={features as { title: string; description: string }[]}
+          tool={
+            to as
+              | "/pdf-to-powerpoint"
+              | "/word-to-pdf"
+              | "/powerpoint-to-pdf"
+              | "/excel-to-pdf"
+              | "/html-to-pdf"
+              | "/pdf-to-word"
+              | "/pdf-to-excel"
+              | "/pdf-to-pdf-a"
+              | "/pdf-to-text"
+          }
+        />
       </div>
     </ReduxProvider>
   );

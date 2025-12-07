@@ -12,7 +12,7 @@ export function SubmitBtn({
   k: string;
   edit_page: edit_page;
   errors: errors;
-}): JSX.Element {
+}) {
   const dispatch = useDispatch();
   const { submitBtn, files } = useFileStore();
   // state variables:
@@ -30,7 +30,7 @@ export function SubmitBtn({
   );
   return (
     <button
-      className={`submit-btn btn btn-lg text-white position-relative overflow-hidden ${k} grid-footer`}
+      className={`submit-btn ${k}`}
       onClick={() => {
         dispatch(setField({ isSubmitted: true }));
         dispatch(setField({ showOptions: false }));
@@ -45,7 +45,7 @@ export function SubmitBtn({
               errorCode: "MAX_DAILY_USAGE",
             })
           );
-          dispatch(setField({ errorMessage: errors.MAX_DAILY_USAGE.message }));
+          // dispatch(setField({ errorMessage: errors.MAX_DAILY_USAGE.message }));
           dispatch(
             setField({
               isSubmitted: false,

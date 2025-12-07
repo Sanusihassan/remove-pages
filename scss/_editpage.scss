@@ -46,15 +46,32 @@
       @include extend("w-100 placeholder-glow h-100 position-absolute");
 
       .inner-loader {
-        @include extend("placeholder col-12 fh position-absolute w-100 d-flex justify-content-center align-items-center"
+        @include extend(
+          "placeholder col-12 fh position-absolute w-100 d-flex justify-content-center align-items-center"
         );
       }
     }
 
     .gear-button {
-      @include extend("position-absolute");
-      top: 80px;
-      left: 2.535px;
+      @include extend("position-absolute btn btn-light");
+      &:not(.active) {
+        right: unset;
+        top: 80px;
+        left: 2.535px;
+        @include ar-wrapper {
+          left: unset;
+          right: 2.535px;
+        }
+      }
+      &.active {
+        right: unset;
+        left: 0;
+        @include ar-wrapper {
+          left: unset;
+          right: 0;
+        }
+        top: 0.25em;
+      }
       z-index: 15;
       display: none;
       border: 1px solid #ccc;
@@ -74,6 +91,7 @@
     @include extend("position-absolute rounded-circle");
     width: 2em;
     height: 2em;
+    z-index: 2;
 
     // what i'm trying to do is when the language is not arabic apply this style
     :not([lang="ar"]) & {
@@ -92,7 +110,8 @@
     .icon-container {
       font-size: 1.5em;
       display: flex;
-      @include extend("w-100 h-100 justify-content-center align-items-center position-absolute rounded-circle"
+      @include extend(
+        "w-100 h-100 justify-content-center align-items-center position-absolute rounded-circle"
       );
       top: 0;
       left: 0;
@@ -112,16 +131,15 @@
     }
 
     .options-container {
-      @include extend("container")
+      @include extend("container");
     }
 
     display: flex;
     min-height: 85vh;
-    max-height: 100%;
     flex-direction: column;
     justify-content: space-between;
 
-    &+.show-onsmall {
+    & + .show-onsmall {
       @include extend("d-none");
       width: 100%;
       position: fixed;
@@ -133,7 +151,6 @@
         display: block !important;
       }
     }
-
 
     transition: 0.3s;
 
@@ -204,9 +221,7 @@
       $r: red($color);
       $g: green($color);
       $b: blue($color);
-      --pulse-animation-color: #{$r},
-      #{$g},
-      #{$b};
+      --pulse-animation-color: #{$r}, #{$g}, #{$b};
       animation: pulse 2s infinite;
     }
   }

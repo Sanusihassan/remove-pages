@@ -147,7 +147,7 @@ const Tool: React.FC<ToolProps> = ({
   return (
     <>
       <div
-        className="tools-page container-fluid position-relative"
+        className="tools-page"
         {...(stateShowTool && { ...getRootProps(), onPaste: handlePaste })}
         onClick={(e) => {
           e.preventDefault();
@@ -161,8 +161,8 @@ const Tool: React.FC<ToolProps> = ({
             !(stateShowTool && errorMessage?.length > 0) ? "" : " d-flex"
           } flex-column tools ${stateShowTool ? "" : "d-none"}`}
         >
-          <h1 className="display-3">{data.title}</h1>
-          <p className="lead">{data.description}</p>
+          <h1 className="title">{data.title}</h1>
+          <p className="description">{data.description}</p>
           <FileInputForm
             lang={lang}
             data={data}
@@ -171,7 +171,7 @@ const Tool: React.FC<ToolProps> = ({
             acceptedFileTypes={acceptedFileTypes}
           />
           <p>{tools.or_drop}</p>
-          <ErrorElement cta={edit_page.filenameOptions.cta} />
+          {/* <ErrorElement cta={edit_page.filenameOptions.cta} /> */}
         </div>
         <EditPage
           extension={data.type}

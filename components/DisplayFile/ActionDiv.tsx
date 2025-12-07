@@ -1,3 +1,4 @@
+// ActionDiv.tsx
 import { RefreshIcon, TrashIcon } from "@heroicons/react/solid";
 import { Eye, EyeOff, LockKeyholeOpen } from "lucide-react";
 import type { errors as _ } from "../../src/content";
@@ -82,8 +83,8 @@ export const ActionDiv = ({
       </div>
       {needsPassword ? (
         <form>
-          <div className="password-input-row mt-5">
-            <div className="input-group px-1">
+          <div className="password-input-row">
+            <div className="input-group">
               <input
                 type={showPassword ? "text" : "password"}
                 className="form-control"
@@ -93,7 +94,7 @@ export const ActionDiv = ({
               />
               <button
                 type="button"
-                className="btn btn-outline-secondary btn-sm"
+                className="show-password"
                 onClick={togglePasswordVisibility}
                 aria-label={showPassword ? "Hide password" : "Show password"}
                 tabIndex={-1}
@@ -102,7 +103,7 @@ export const ActionDiv = ({
               </button>
               <button
                 type="submit"
-                className="btn btn-primary"
+                className="submit-btn"
                 disabled={!passwordInput.trim()}
                 onClick={handlePasswordSubmit}
               >

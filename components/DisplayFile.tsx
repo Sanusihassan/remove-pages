@@ -10,6 +10,7 @@ type propTypes = {
   errors: _;
   edit_page: edit_page;
   drop_files: string;
+  path: string;
 };
 
 const DisplayFile = ({
@@ -20,6 +21,7 @@ const DisplayFile = ({
   errors,
   edit_page,
   drop_files,
+  path,
 }: propTypes) => {
   const [toolTipSizes, setToolTipSizes] = useState<string[]>([]);
 
@@ -42,6 +44,10 @@ const DisplayFile = ({
         loader_text={edit_page.loader_text}
         fileDetailProps={[pages, page, lang]}
         drop_files={drop_files}
+        languageSelectProps={{
+          content: edit_page.languageSelectContent,
+          themeColor: `var(--${path})`,
+        }}
       />
     </>
   );

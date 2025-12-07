@@ -106,11 +106,11 @@ export const handleUpload = async (
       outputFileName: `${originalFileName}.pptx`,
     },
     "application/vnd.openxmlformats-officedocument.presentationml.presentation":
-      {
-        outputFileMimeType:
-          "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-        outputFileName: `${originalFileName}.pptx`,
-      },
+    {
+      outputFileMimeType:
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      outputFileName: `${originalFileName}.pptx`,
+    },
     "text/plain": {
       outputFileMimeType: "text/plain",
       outputFileName: `${originalFileName}.txt`,

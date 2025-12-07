@@ -1,42 +1,21 @@
 import type { edit_page } from "../../src/content";
-import { CompressPDF } from "./Options/CompressPDF";
-export const CTABtn = ({
-  cta,
-  centerItem,
-}: {
-  cta: string;
-  centerItem?: boolean;
-}) => {
-  return (
-    <div className={`mt-2${centerItem ? " row justify-content-center" : ""}`}>
-      <a
-        href="/pricing"
-        className="btn btn-primary btn-sm cta-btn"
-        target="_blank"
-        style={{ fontWeight: "500" }}
-      >
-        {cta}
-      </a>
-    </div>
-  );
-};
+// import { LanguageSelect } from "../LanguageSelect";
+import { Converter } from "./Options/Converter";
+
 export const Options = ({
-  content,
-  filenameOptions,
-  lang,
+  edit_page,
+  theme,
 }: {
-  content: edit_page["compress_pdf"];
-  filenameOptions: edit_page["filenameOptions"];
-  lang: string;
+  edit_page: edit_page;
+  theme: string;
 }) => {
+  console.log("theeme", theme);
   return (
     <>
-      <CompressPDF
-        options={content}
-        c="compress-pdf"
-        filenameOptions={filenameOptions}
-        lang={lang}
-      />
+      {theme === "var(--pdf-to-pdf-a)" ||
+      theme === "var(--pdf-to-text)" ? null : (
+        <Converter content={edit_page.converter} theme={theme} />
+      )}
     </>
   );
 };

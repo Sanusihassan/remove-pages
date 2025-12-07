@@ -99,9 +99,8 @@ export const getFileDetailsTooltipContent = async (
         if (pageCount === 2 && lang === "ar") {
           tooltipContent += " - صفحتين</bdi>";
         } else {
-          tooltipContent += ` - ${
-            lang === "ar" && pageCount === 1 ? "" : pageCount + " "
-          }${pageCount > 1 ? pages : page}</bdi>`;
+          tooltipContent += ` - ${lang === "ar" && pageCount === 1 ? "" : pageCount + " "
+            }${pageCount > 1 ? pages : page}</bdi>`;
         }
         URL.revokeObjectURL(url);
         if (!file.size) {
@@ -134,18 +133,25 @@ export async function getFirstPageAsImage(
         password: password || undefined,
       });
 
+      let tid;
+
       // Handle password requests
       loadingTask.onPassword = (updatePassword, reason) => {
         if (reason === pdfjs.PasswordResponses.NEED_PASSWORD) {
           // First time asking for password
           if (password) {
             updatePassword(password);
+            if (tid) {
+              toast.dismiss(tid);
+            }
           } else {
             dispatch(setField({ errorCode: "PASSWORD_REQUIRED" }));
+            tid = toast.error(errors.PASSWORD_REQUIRED.message);
             throw new Error("PASSWORD_REQUIRED");
           }
         } else if (reason === pdfjs.PasswordResponses.INCORRECT_PASSWORD) {
           dispatch(setField({ errorCode: "INCORRECT_PASSWORD" }));
+          tid = toast.error(errors.INCORRECT_PASSWORD.message);
           throw new Error("INCORRECT_PASSWORD");
         }
       };
@@ -479,9 +485,166 @@ export const validateFiles = (
   if (filesToValidate.length) {
     dispatch(setField({ showTool: false }));
     dispatch(resetErrorMessage());
-    toast.dismiss(tid);
+    if (tid) {
+      toast.dismiss(tid);
+    }
     return { isValid: true };
   }
 
   return { isValid: false };
 };
+
+export async function analyzePDF(pdfFile: File) {
+  try {
+    const data = await pdfFile.arrayBuffer();
+    const pdf = await pdfjs.getDocument({ data }).promise;
+
+    const totalPages = pdf.numPages;
+    let totalTextContent = '';
+    let totalImageCount = 0;
+    let totalPageArea = 0;
+    let totalImageArea = 0;
+    let pagesWithImages = 0;
+    let pagesWithMinimalText = 0;
+
+    for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+      const page = await pdf.getPage(pageNum);
+      const viewport = page.getViewport({ scale: 1.0 });
+      const pageArea = viewport.width * viewport.height;
+      totalPageArea += pageArea;
+
+      // Extract text content
+      const textContent = await page.getTextContent();
+      const pageText = textContent.items
+        .map(item => ('str' in item ? item.str : ''))
+        .join(' ');
+      totalTextContent += pageText + ' ';
+
+      // Count words on this page
+      const wordsOnPage = pageText.trim().split(/\s+/).filter(w => w.length > 0).length;
+      if (wordsOnPage < 50) {
+        pagesWithMinimalText++;
+      }
+
+      // Analyze images
+      const ops = await page.getOperatorList();
+      let pageImageCount = 0;
+      let pageImageArea = 0;
+
+      for (let i = 0; i < ops.fnArray.length; i++) {
+        if (
+          ops.fnArray[i] === pdfjs.OPS.paintImageXObject ||
+          ops.fnArray[i] === pdfjs.OPS.paintInlineImageXObject ||
+          ops.fnArray[i] === pdfjs.OPS.paintXObject
+        ) {
+          pageImageCount++;
+
+          // Get transform matrix to calculate actual image dimensions
+          for (let j = i - 1; j >= Math.max(0, i - 5); j--) {
+            if (ops.fnArray[j] === pdfjs.OPS.transform) {
+              const transform = ops.argsArray[j];
+              if (transform && transform.length >= 6) {
+                const width = Math.abs(transform[0]);
+                const height = Math.abs(transform[3]);
+                pageImageArea += width * height;
+                break;
+              }
+            }
+          }
+        }
+      }
+
+      totalImageCount += pageImageCount;
+      if (pageImageCount > 0) {
+        pagesWithImages++;
+        totalImageArea += pageImageArea;
+      }
+    }
+
+    // Analysis metrics
+    const totalWords = totalTextContent.trim().split(/\s+/).filter(w => w.length > 0).length;
+    const avgWordsPerPage = totalWords / totalPages;
+    const imageRatio = totalPageArea > 0 ? totalImageArea / totalPageArea : 0;
+    const pagesWithImagesRatio = pagesWithImages / totalPages;
+    const minimalTextRatio = pagesWithMinimalText / totalPages;
+
+    // Calculate confidence score - STRICTER LOGIC
+    let confidence = 0;
+
+    // CRITICAL: If there's substantial text, it's likely NOT a scanned document
+    // This check should come first and be a strong negative indicator
+    if (avgWordsPerPage > 100) {
+      // Documents with >100 words per page are almost certainly digital, not scanned
+      confidence = 0;
+      return {
+        scanned: false,
+        confidence: 0,
+        metrics: {
+          totalPages,
+          totalWords,
+          avgWordsPerPage,
+          totalImageCount,
+          pagesWithImages,
+          imageRatio,
+          minimalTextRatio
+        }
+      };
+    }
+
+    // Strong indicators - very little text AND lots of images
+    if (avgWordsPerPage < 20 && pagesWithImagesRatio > 0.8) {
+      confidence += 0.5;
+    }
+
+    // Images cover most of the page area (typical for scans)
+    if (imageRatio > 0.7) {
+      confidence += 0.4;
+    } else if (imageRatio > 0.5) {
+      confidence += 0.2;
+    }
+
+    // Most pages have minimal text
+    if (minimalTextRatio > 0.8) {
+      confidence += 0.3;
+    }
+
+    // Very little text overall (strong indicator)
+    if (totalWords < totalPages * 30) {
+      confidence += 0.3;
+    }
+
+    // Almost all pages have images
+    if (totalImageCount >= totalPages * 0.9 && avgWordsPerPage < 50) {
+      confidence += 0.2;
+    }
+
+    // Check for OCR artifacts (only relevant with minimal text)
+    if (avgWordsPerPage < 50) {
+      const specialCharRatio = (totalTextContent.match(/[^\w\s.,!?;:()\-'"/]/g) || []).length / Math.max(1, totalTextContent.length);
+      if (specialCharRatio > 0.15 && totalImageCount > 0) {
+        confidence += 0.2;
+      }
+    }
+
+    // Normalize confidence
+    confidence = Math.min(1, confidence);
+
+    // Higher threshold for determining if scanned
+    return {
+      scanned: confidence > 0.7,
+      confidence,
+      metrics: {
+        totalPages,
+        totalWords,
+        avgWordsPerPage,
+        totalImageCount,
+        pagesWithImages,
+        imageRatio,
+        minimalTextRatio
+      }
+    };
+  } catch (error) {
+    console.error('Error analyzing PDF:', error);
+    throw error;
+  }
+}

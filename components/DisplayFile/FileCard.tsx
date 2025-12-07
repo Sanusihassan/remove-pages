@@ -1,14 +1,14 @@
-// FileCard.tsx
 import type {
   DraggableProvided,
   DraggableStateSnapshot,
 } from "react-beautiful-dnd";
 import { ActionDiv, type ActionProps } from "./ActionDiv";
 import { Tooltip } from "react-tooltip";
-import type { errors as _ } from "../../src/content";
+import type { errors as _, edit_page } from "../../src/content";
 import { useEffect, useState, useMemo, useRef } from "react";
 import { Loader } from "./Loader";
 import {
+  analyzePDF,
   getFileDetailsTooltipContent,
   getFirstPageAsImage,
   getPlaceHoderImageUrl,
@@ -16,6 +16,7 @@ import {
 } from "../../src/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { setField, type ToolState } from "../../src/store";
+import { LanguageSelect } from "../LanguageSelect";
 
 type OmitFileName<T extends ActionProps> = Omit<T, "fileName">;
 
@@ -28,6 +29,10 @@ type CardProps = OmitFileName<ActionProps> & {
   errors: _;
   loader_text: string;
   fileDetailProps: [string, string, string];
+  languageSelectProps: {
+    content: edit_page["languageSelectContent"];
+    themeColor: string;
+  };
 };
 
 const FileCard = ({
@@ -39,11 +44,13 @@ const FileCard = ({
   extension,
   loader_text,
   fileDetailProps,
+  languageSelectProps,
 }: CardProps) => {
   const [showLoader, setShowLoader] = useState(true);
   const [imageUrl, setImageUrl] = useState("");
   const [tooltipSize, setToolTipSize] = useState("");
   const [password, setPassword] = useState<string>("");
+  const [isScanned, setIsScanned] = useState<boolean>(false);
   const dispatch = useDispatch();
   const isSubscribedRef = useRef(true);
 
@@ -70,6 +77,9 @@ const FileCard = ({
     try {
       setShowLoader(true);
       if (extension && extension === ".pdf") {
+        const result = await analyzePDF(file);
+        const { scanned } = result;
+        setIsScanned(scanned);
         if (isSubscribedRef.current) {
           const img = await getFirstPageAsImage(
             file,
@@ -163,16 +173,19 @@ const FileCard = ({
       <bdi>
         <Tooltip id={`item-tooltip-${index}`} />
       </bdi>
+      {isScanned ? (
+        <LanguageSelect {...languageSelectProps} fileName={file.name} />
+      ) : null}
       <ActionDiv
         extension={extension}
         fileName={file.name}
         setPassword={setPassword}
         needsPassword={imageUrl === "/images/locked.png"}
       />
-      <div className="card-body d-flex flex-column">
+      <div className="card-body">
         {!showLoader ? (
           <img
-            className="img-fluid-custom object-fit-contain rounded item-img"
+            className="img-fluid-custom"
             src={imageUrl}
             alt={`Selected file ${index}`}
             draggable={false}

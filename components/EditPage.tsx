@@ -66,8 +66,9 @@ const EditPage = ({
           errors={errors}
           edit_page={edit_page}
           drop_files={drop_files}
+          path={path}
         />
-        <ErrorElement cta={edit_page.filenameOptions.cta} />
+        {/* <ErrorElement cta={edit_page.filenameOptions.cta} /> */}
         <AddMoreButton
           onClick={() => {
             if (fileInput) {
@@ -79,12 +80,12 @@ const EditPage = ({
           text={edit_page.add_more_button}
         />
         <button
-          className="gear-button btn btn-light"
+          className={`gear-button btn btn-light${showOptions ? " active" : ""}`}
           onClick={() => {
             dispatch(setField({ showOptions: !showOptions }));
           }}
         >
-          <CogIcon className="w-6 h-6 me-2 gear-icon" />
+          <CogIcon className="w-6 h-6 gear-icon" />
         </button>
       </section>
       <section className={`options bg-white ${showOptions ? " expanded" : ""}`}>
@@ -100,11 +101,7 @@ const EditPage = ({
             }
           </bdi>
         </h5>
-        <Options
-          content={edit_page.compress_pdf}
-          filenameOptions={edit_page.filenameOptions}
-          lang={lang}
-        />
+        <Options edit_page={edit_page} theme={`var(--${path})`} />
         <div className="hide-onsmall">
           <SubmitBtn errors={errors} k={path} edit_page={edit_page} />
         </div>

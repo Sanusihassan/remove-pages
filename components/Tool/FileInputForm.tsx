@@ -9,6 +9,7 @@ import { useFileStore } from "../../src/file-store";
 // types
 import type { tools } from "../../src/content";
 import { getUserInfo } from "fetch-subscription-status";
+import Loading from "../Loading";
 type AcceptedFileTypes = {
   [key in ".pdf" | ".pptx" | ".docx" | ".xlsx" | ".jpg" | ".html"]: string;
 };
@@ -49,15 +50,18 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
   // file store
   const { files, setFiles, setFileInput, setDownloadBtn, setSubmitBtn } =
     useFileStore();
+
   // refs
   const fileInput = useRef<HTMLInputElement>(null);
   const submitBtn = useRef<HTMLButtonElement>(null);
   const downloadBtn = useRef<HTMLAnchorElement>(null);
   const [userId, setUserId] = useState<string | null>(null);
+  const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     (async () => {
       const user = await getUserInfo();
-      setUserId(user.id);
+      setUserId(user?.id);
+      setLoaded(true);
     })();
     setFileInput(fileInput);
     setSubmitBtn(submitBtn);
@@ -90,7 +94,7 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
       encType="multipart/form-data"
     >
       <div
-        className={`upload-btn btn btn-lg text-white position-relative overflow-hidden ${path}`}
+        className={`upload-btn ${path}${!loaded ? " border-0" : ""}`}
         onClick={(e) => {
           e.stopPropagation();
         }}
@@ -110,6 +114,7 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
             {tools.files}
           </bdi>
         )}
+        <Loading theme={data.to.replace("/", "")} show={!loaded} />
         <input
           type="file"
           name="files"
@@ -118,13 +123,14 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
           }
           multiple={path !== "split-pdf" && path !== "pdf-to-pdf-a"}
           ref={fileInput}
-          className="position-absolute file-input"
+          className={`position-absolute file-input${!loaded ? "border-0 opacity-0" : ""}`}
           onClick={(e) => {
             e.stopPropagation();
           }}
           onChange={(e) => {
             handleChange(e, dispatch, setFiles, errors, files);
           }}
+          disabled={!loaded}
         />
       </div>
       <a

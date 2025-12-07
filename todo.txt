@@ -23,3 +23,19 @@ Quality:
 JBIG2 lossy
 5
  (0..10)
+
+
+[LATER!!!]
+add loading feature to all apps.
+
+set error alert on password change
+
+fixed options layout on mobile
+
+add the rest of the content & options.
+
+
+add ocr handling for each scanned document.
+
+
+pdf to text shouldn't have rotation option.

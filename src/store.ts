@@ -4,7 +4,6 @@ type WritableDraft<T> = {
 };
 
 type k = keyof WritableDraft<ToolState>;
-export type compressionType = "recommended" | "less" | "extreme";
 export interface ToolState {
   showTool: boolean;
   isSubmitted: boolean;
@@ -17,10 +16,10 @@ export interface ToolState {
   limitationMsg: string;
   rotations: { k: string; r: number }[];
   passwords: { k: string; p: string }[];
-  compressPdf: compressionType;
   subscriptionStatus: boolean;
-  originalFileSize: number;
-  compressedFileSize: number;
+  selectedLanguages: { k: string; lang: string }[] | null;
+  converter: "free" | "premium",
+  isScanned: boolean
 }
 
 const initialState: ToolState = {
@@ -35,10 +34,10 @@ const initialState: ToolState = {
   limitationMsg: "",
   rotations: [],
   passwords: [],
-  compressPdf: "recommended",
   subscriptionStatus: false,
-  compressedFileSize: 0,
-  originalFileSize: 0,
+  selectedLanguages: null,
+  converter: "free",
+  isScanned: false
 };
 
 const toolSlice = createSlice({
