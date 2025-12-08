@@ -299,6 +299,11 @@ export const edit_page = {
     premium: "Premium",
     freeToolTip: "Basic conversion - limited formatting",
     premiumToolTip: "High-accuracy conversion with full style preservation"
+  },
+  fileNameInput: {
+    label: "Output File Name (Optional)",
+    placeholder: "Enter file name",
+    helperText: "This will be the name of the document that gets downloaded.",
   }
 };
 

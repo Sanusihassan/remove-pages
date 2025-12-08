@@ -123,8 +123,20 @@
   }
 
   .options {
-    border-left: 1px solid #dee2e6;
     flex: 1 0 25%;
+
+    .input-wrapper {
+      @include extend("mb-3");
+      .label {
+        @include extend("form-label fw-bold");
+      }
+      .input {
+        @include extend("form-control");
+      }
+      .helper-text {
+        @include extend("form-text text-muted");
+      }
+    }
 
     .body {
       padding: 0 15px;
@@ -182,8 +194,14 @@
       }
     }
 
-    @extend %border;
-    border-bottom: 0;
+    border-top: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+    border-right: 1px solid #dee2e6;
+    border-left: 0;
+    @include ar-wrapper {
+      border-left: 1px solid #dee2e6;
+      border-right: 0;
+    }
 
     flex-flow: column;
     justify-content: space-between;
@@ -194,7 +212,7 @@
       text-align: center;
 
       padding: 0.5rem;
-      margin-bottom: 1rem;
+      @include extend("my-3");
     }
 
     .option-title {

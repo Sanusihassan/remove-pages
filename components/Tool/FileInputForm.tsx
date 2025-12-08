@@ -43,8 +43,8 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
   const passwords = useSelector(
     (state: { tool: ToolState }) => state.tool.passwords
   );
-  const compressPdf = useSelector(
-    (state: { tool: ToolState }) => state.tool.compressPdf
+  const converter = useSelector(
+    (state: { tool: ToolState }) => state.tool.converter
   );
   const dispatch = useDispatch();
   // file store
@@ -83,7 +83,7 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
             fileName,
             rotations,
             userId,
-            compressPdf,
+            converter,
             passwords,
           },
           files,

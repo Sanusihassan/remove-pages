@@ -2,7 +2,7 @@ import axios from "axios";
 import { downloadConvertedFile } from "../downloadFile";
 import type { errors as _ } from "../content";
 import { type RefObject } from "react";
-import { resetErrorMessage, setField, type compressionType } from "../store";
+import { resetErrorMessage, setField } from "../store";
 import type { Action, Dispatch } from "@reduxjs/toolkit/react";
 let filesOnSubmit = [];
 let prevState = null;
@@ -23,7 +23,7 @@ export const handleUpload = async (
       p: string;
     }[];
     userId: string | null;
-    compressPdf: compressionType;
+    converter: "free" | "premium"
   },
   files: File[],
   errors: _
@@ -59,16 +59,16 @@ export const handleUpload = async (
   formData.append("passwords", JSON.stringify(state.passwords));
   formData.append("userId", state.userId);
   let url: string = "";
+  const endpoint = state.converter === "free" ? "/api/" : "/premium/";
   // @ts-ignore
   if (process.env.NODE_ENV === "development") {
-    url = `http://localhost:8000/api/compress-pdf`;
+    url = `http://localhost:8000${endpoint}${state.path}`;
   } else {
-    url = `/api/compress-pdf`;
+    url = `${endpoint}${state.path}`;
   }
   if (state.errorMessage) {
     return;
   }
-  formData.append("compress_amount", String(state.compressPdf));
   const originalFileName =
     state.fileName || files[0]?.name?.split(".").slice(0, -1).join(".");
 
