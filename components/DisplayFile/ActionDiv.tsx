@@ -1,4 +1,3 @@
-// ActionDiv.tsx
 import { RefreshIcon, TrashIcon } from "@heroicons/react/solid";
 import { Eye, EyeOff, LockKeyholeOpen } from "lucide-react";
 import type { errors as _ } from "../../src/content";
@@ -55,7 +54,6 @@ export const ActionDiv = ({
   const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (setPassword && passwordInput.trim()) {
-      console.log("Submitting password:", passwordInput);
       setPassword(passwordInput);
     }
   };
@@ -64,7 +62,7 @@ export const ActionDiv = ({
     e.preventDefault(); // Prevent form submission
     setShowPassword((prev) => !prev);
   };
-
+  // action-div
   return (
     <>
       <div

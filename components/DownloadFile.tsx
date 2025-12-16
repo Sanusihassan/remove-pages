@@ -6,7 +6,7 @@ import { Tooltip } from "react-tooltip";
 import type { downloadFile } from "../src/content";
 import { useEffect } from "react";
 import { useFileStore } from "../src/file-store";
-import { increaseDailySiteUsage } from "../src/utils";
+import { increaseDailySiteUsage } from "fetch-subscription-status";
 const DownloadFile = ({
   lang,
   downloadFile,

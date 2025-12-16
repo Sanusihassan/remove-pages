@@ -1,6 +1,8 @@
+import { useSelector } from "react-redux";
 import type { edit_page } from "../../src/content";
-// import { LanguageSelect } from "../LanguageSelect";
+import type { ToolState } from "../../src/store";
 import { Converter } from "./Options/Converter";
+import { CTABtn } from "./Options/CTABtn";
 import { OutputFileNameInput } from "./Options/OutputFileNameInput";
 
 export const Options = ({
@@ -10,7 +12,9 @@ export const Options = ({
   edit_page: edit_page;
   theme: string;
 }) => {
-  console.log("theeme", theme);
+  const limitationMsg = useSelector(
+    (state: { tool: ToolState }) => state.tool.limitationMsg
+  );
   return (
     <>
       <div className="body">
@@ -19,6 +23,12 @@ export const Options = ({
           theme === "var(--pdf-to-text)" ? null : (
             <Converter content={edit_page.converter} theme={theme} />
           )}
+          {limitationMsg ? (
+            <div className="limitation-alert" role="alert">
+              {limitationMsg}
+              <CTABtn cta={edit_page.cta} />
+            </div>
+          ) : null}
         </div>
       </div>
       <div className="footer">

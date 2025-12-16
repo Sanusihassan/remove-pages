@@ -16,6 +16,7 @@ type FileProps = {
   loader_text: string;
   fileDetailProps: [string, string, string];
   drop_files: string;
+  path: string;
   languageSelectProps: {
     content: edit_page["languageSelectContent"];
     themeColor: string;
@@ -47,9 +48,9 @@ const Files = ({
         return;
       }
       // Check limitations
-      // if (files.length === 1 && files[0].size >= 100 * 1024 * 1024) {
-      //   limitationMsg = errors.alerts.singleFileSize;
-      // }
+      if (files.length === 1 && files[0].size >= 100 * 1024 * 1024) {
+        limitationMsg = errors.alerts.singleFileSize;
+      }
       if (files.length >= 15) {
         limitationMsg = errors.alerts.maxFiles;
       } else if (files.some((file) => file.size > 50 * 1024 * 1024)) {

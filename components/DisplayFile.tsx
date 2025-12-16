@@ -44,6 +44,7 @@ const DisplayFile = ({
         loader_text={edit_page.loader_text}
         fileDetailProps={[pages, page, lang]}
         drop_files={drop_files}
+        path={path}
         languageSelectProps={{
           content: edit_page.languageSelectContent,
           themeColor: `var(--${path})`,

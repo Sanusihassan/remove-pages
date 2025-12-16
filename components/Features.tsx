@@ -61,7 +61,7 @@ export const Features = ({
       {features.map(({ title, description }, i) => {
         const Icon = icons[i];
         return (
-          <div className="feature">
+          <div className="feature" key={i}>
             <Icon
               className={`feature-icon${(tool === "/pdf-to-text" && i === 2) || (tool === "/pdf-to-pdf-a" && i === 0) ? " no-fill" : ""}`}
             />

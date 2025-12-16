@@ -9,6 +9,8 @@
 //   landing_page as _landing_page,
 // } from "../content";
 
+import type { adBlockerContentType } from "../../components/AdBlockDetector";
+
 // export const landing_page: _landing_page = {
 //   hero: {
 //     title: "عزز إنتاجيتك من خلال حل ال PDF الشامل الخاص بنا",
@@ -501,3 +503,11 @@
 //     code: "ERR_UPLOAD_COUNT",
 //   },
 // };
+
+
+export const adBlockerContent: adBlockerContentType = {
+    title: "تم اكتشاف مانع الإعلانات",
+    description: "لاحظنا أنك تستخدم مانع الإعلانات. يرجى التفكير في تعطيله أو الترقية إلى النسخة المميزة للحصول على تجربة خالية من الإعلانات!",
+    reloadPage: "إعادة تحميل الصفحة",
+    upgradeToPremium: "الترقية إلى النسخة المميزة"
+}

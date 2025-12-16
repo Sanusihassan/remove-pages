@@ -46,6 +46,9 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
   const converter = useSelector(
     (state: { tool: ToolState }) => state.tool.converter
   );
+  const selectedLanguages = useSelector(
+    (state: { tool: ToolState }) => state.tool.selectedLanguages
+  );
   const dispatch = useDispatch();
   // file store
   const { files, setFiles, setFileInput, setDownloadBtn, setSubmitBtn } =
@@ -55,14 +58,9 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
   const fileInput = useRef<HTMLInputElement>(null);
   const submitBtn = useRef<HTMLButtonElement>(null);
   const downloadBtn = useRef<HTMLAnchorElement>(null);
-  const [userId, setUserId] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
   useEffect(() => {
-    (async () => {
-      const user = await getUserInfo();
-      setUserId(user?.id);
-      setLoaded(true);
-    })();
+    setLoaded(true);
     setFileInput(fileInput);
     setSubmitBtn(submitBtn);
     setDownloadBtn(downloadBtn);
@@ -82,7 +80,7 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
             errorMessage,
             fileName,
             rotations,
-            userId,
+            selectedLanguages,
             converter,
             passwords,
           },

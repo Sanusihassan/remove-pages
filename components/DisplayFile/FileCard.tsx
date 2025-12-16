@@ -15,7 +15,7 @@ import {
   sanitizeKey,
 } from "../../src/utils";
 import { useDispatch, useSelector } from "react-redux";
-import { setField, type ToolState } from "../../src/store";
+import { selectPasswords, setField, type ToolState } from "../../src/store";
 import { LanguageSelect } from "../LanguageSelect";
 
 type OmitFileName<T extends ActionProps> = Omit<T, "fileName">;
@@ -66,20 +66,20 @@ const FileCard = ({
     if (!sanitizedKey) return null;
     return state.tool.rotations?.find((r) => r.k === sanitizedKey) || null;
   });
+
   const errorCode = useSelector(
     (state: { tool: ToolState }) => state.tool.errorCode
   );
-  const passwords = useSelector(
-    (state: { tool: ToolState }) => state.tool.passwords
-  );
+
+  // Get all passwords for updating state
+  const allPasswords = useSelector(selectPasswords);
+
+  const [needsPassword, setNeedsPassword] = useState(false);
 
   const processFile = async (currentPassword: string) => {
     try {
       setShowLoader(true);
       if (extension && extension === ".pdf") {
-        const result = await analyzePDF(file);
-        const { scanned } = result;
-        setIsScanned(scanned);
         if (isSubscribedRef.current) {
           const img = await getFirstPageAsImage(
             file,
@@ -88,22 +88,37 @@ const FileCard = ({
             currentPassword || undefined
           );
 
+          const _needsPassword = img === "/images/locked.png";
+          setNeedsPassword(_needsPassword);
+
+          // Only analyze if we have a valid image (not locked)
+          let scanned = false;
+          if (img && img !== "/images/locked.png") {
+            try {
+              const result = await analyzePDF(
+                file,
+                currentPassword || undefined
+              );
+              scanned = result.scanned;
+            } catch (analyzeError) {
+              console.error("Error analyzing PDF:", analyzeError);
+              // Don't throw - just default to not scanned
+            }
+          }
+          setIsScanned(scanned);
+
           if (isSubscribedRef.current) {
             setImageUrl(img);
 
             // Only update passwords if successfully unlocked
             if (img && img !== "/images/locked.png" && currentPassword) {
-              // Remove any existing password entry for this file to avoid duplicates
-              const filteredPasswords = passwords.filter(
+              const filteredPasswords = allPasswords.filter(
                 (p) => p.k !== sanitizedKey
               );
-
-              // Add the new password entry
               const updatedPasswords = [
                 ...filteredPasswords,
                 { k: sanitizedKey, p: currentPassword },
               ];
-
               dispatch(
                 setField({
                   passwords: updatedPasswords,
@@ -111,25 +126,10 @@ const FileCard = ({
                   errorMessage: "",
                 })
               );
-            } else if (
-              img === "/images/locked.png" &&
-              (errorCode === "PASSWORD_REQUIRED" ||
-                errorCode === "INCORRECT_PASSWORD")
-            ) {
-              // Keep error state for locked file
             } else if (img && img !== "/images/locked.png") {
-              // File unlocked without password or was never locked
               dispatch(setField({ errorCode: "", errorMessage: "" }));
             }
           }
-        }
-      } else if (extension && extension !== ".jpg") {
-        if (isSubscribedRef.current) {
-          setImageUrl(
-            !file.size
-              ? "/images/corrupted.png"
-              : getPlaceHoderImageUrl(extension)
-          );
         }
       }
     } finally {
@@ -180,7 +180,7 @@ const FileCard = ({
         extension={extension}
         fileName={file.name}
         setPassword={setPassword}
-        needsPassword={imageUrl === "/images/locked.png"}
+        needsPassword={needsPassword}
       />
       <div className="card-body">
         {!showLoader ? (

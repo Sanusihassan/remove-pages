@@ -7,7 +7,12 @@ import { FileInputForm } from "./Tool/FileInputForm";
 import DownloadFile from "./DownloadFile";
 import { useFileStore } from "../src/file-store";
 import { setField } from "../src/store";
-import { ACCEPTED, filterNewFiles, validateFiles } from "../src/utils";
+import {
+  ACCEPTED,
+  acceptedMimeTypes,
+  filterNewFiles,
+  validateFiles,
+} from "../src/utils";
 import type { edit_page } from "../src/content";
 import { fetchSubscriptionStatus } from "fetch-subscription-status";
 import { Bounce, ToastContainer } from "react-toastify";
@@ -72,7 +77,7 @@ const Tool: React.FC<ToolProps> = ({
       acceptedFiles,
       dispatch,
       errors,
-      "application/pdf"
+      acceptedMimeTypes
     );
     const newFiles = filterNewFiles(acceptedFiles, files, ACCEPTED);
     if (isValid) {

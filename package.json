@@ -14,7 +14,7 @@
     "@tailwindcss/vite": "^4.1.16",
     "astro": "^5.13.5",
     "astro-seo-schema": "^5.0.0",
-    "fetch-subscription-status": "^2.0.74",
+    "fetch-subscription-status": "^3.0.4",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.555.0",
     "pdfequips-footer": "^0.1.12",
@@ -38,7 +38,7 @@
   "devDependencies": {
     "@astrojs/react": "^4.3.0",
     "@types/js-cookie": "^3.0.6",
-    "@types/node": "^24.6.0",
+    "@types/node": "^24.10.4",
     "@types/react-beautiful-dnd": "^13.1.8",
     "sass": "^1.82.0"
   }

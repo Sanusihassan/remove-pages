@@ -4,6 +4,7 @@ import { useFileStore } from "../../src/file-store";
 import { type ToolState, setField } from "../../src/store";
 import type { edit_page, errors } from "../../src/content";
 import { canUseSiteToday } from "fetch-subscription-status";
+import { toast } from "react-toastify";
 export function SubmitBtn({
   k,
   edit_page,
@@ -28,6 +29,10 @@ export function SubmitBtn({
   const subscriptionStatus = useSelector(
     (state: { tool: ToolState }) => state.tool.subscriptionStatus
   );
+  const isAdBlocked =
+    process.env.NODE_ENV === "development"
+      ? false
+      : useSelector((state: { tool: ToolState }) => state.tool.isAdBlocked);
   return (
     <button
       className={`submit-btn ${k}`}
@@ -45,7 +50,8 @@ export function SubmitBtn({
               errorCode: "MAX_DAILY_USAGE",
             })
           );
-          // dispatch(setField({ errorMessage: errors.MAX_DAILY_USAGE.message }));
+          dispatch(setField({ errorMessage: errors.MAX_DAILY_USAGE.message }));
+          toast(errors.MAX_DAILY_USAGE.message);
           dispatch(
             setField({
               isSubmitted: false,
@@ -53,7 +59,9 @@ export function SubmitBtn({
           );
         }
       }}
-      disabled={errorMessage.length > 0 || limitationMsg.length > 0}
+      disabled={
+        errorMessage.length > 0 || limitationMsg.length > 0 || isAdBlocked
+      }
     >
       <bdi>
         {

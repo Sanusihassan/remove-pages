@@ -10,10 +10,8 @@ import {
 } from "pdfjs-dist";
 import { toast } from "react-toastify";
 
-import Cookies from "js-cookie";
-
 // @ts-ignore
-const pdfjsWorker = await import("pdfjs-dist/build/pdf.worker.min.mjs");
+await import("pdfjs-dist/build/pdf.worker.min.mjs");
 // pdfjs.GlobalWorkerOptions = pdfjs.GlobalWorkerOptions || {};
 // pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
@@ -340,27 +338,55 @@ export function sanitizeKey(input: string | number | null | undefined): string {
 
   return key;
 }
+// All accepted extensions
+export const ACCEPTED = [
+  ".pdf",
+  ".docx",
+  ".doc",
+  ".pptx",
+  ".ppt",
+  ".xlsx",
+  ".xls",
+  ".html",
+  ".htm",
+];
 
-export const ACCEPTED = ".pdf";
+// All accepted MIME types
+export const acceptedMimeTypes = [
+  "application/pdf", // .pdf
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
+  "application/msword", // .doc
+  "application/vnd.openxmlformats-officedocument.presentationml.presentation", // .pptx
+  "application/vnd.ms-powerpoint", // .ppt
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
+  "application/vnd.ms-excel", // .xls
+  "text/html", // .html
+  "application/xhtml+xml", // .html/.htm
+];
 
 // Generalized filter function for file validation
 export const filterNewFiles = (
   acceptedFiles: File[],
   existingFiles: File[],
-  allowedExtension?: string
+  allowedExtensions: string | string[]
 ): File[] => {
   return acceptedFiles.filter((newFile) => {
     const isDuplicate = existingFiles.some(
       (existingFile) =>
         existingFile.name === newFile.name && existingFile.size === newFile.size
     );
-    const hasCorrectExtension = allowedExtension
-      ? newFile.name.endsWith(allowedExtension)
-      : true;
+
+    const extensionsToCheck = Array.isArray(allowedExtensions)
+      ? allowedExtensions
+      : [allowedExtensions];
+
+    const hasCorrectExtension = extensionsToCheck.some(ext =>
+      newFile.name.toLowerCase().endsWith(ext.toLowerCase())
+    );
+
     return !isDuplicate && hasCorrectExtension;
   });
 };
-
 /**
  * Safely unpacks an ArrayBuffer into a typed object
  * @param buffer - The ArrayBuffer to unpack
@@ -380,34 +406,6 @@ export function unpackArrayBuffer<T = any>(
     return null;
   }
 }
-
-/**
- * Increases the daily site usage count by a given amount (default = 1).
- * Uses the same "dailySiteUsage" cookie structure as canUseSiteToday().
- *
- * @param amount - How much to increase today's usage by (default 1)
- * @returns The updated usage count for today
- */
-export const increaseDailySiteUsage = (amount: number = 1): number => {
-  const today = new Date().toISOString().split("T")[0];
-
-  // Read existing usage object
-  const usageData = JSON.parse(Cookies.get("dailySiteUsage") || "{}") as Record<
-    string,
-    number
-  >;
-
-  // Increment today's count
-  usageData[today] = (usageData[today] || 0) + amount;
-
-  // Save updated usage
-  Cookies.set("dailySiteUsage", JSON.stringify(usageData), {
-    expires: 1, // expires in 1 day
-    path: "/",
-  });
-
-  return usageData[today];
-};
 
 type FileValidationError =
   | "NO_FILES_SELECTED"
@@ -455,7 +453,7 @@ export const validateFiles = (
   filesToValidate: File[],
   dispatch: Dispatch<Action>,
   errors: _,
-  mimetype: "application/pdf"
+  mimetype: string | string[]
 ): { isValid: boolean } => {
   const errorCode =
     filesToValidate
@@ -494,10 +492,30 @@ export const validateFiles = (
   return { isValid: false };
 };
 
-export async function analyzePDF(pdfFile: File) {
+export async function analyzePDF(pdfFile: File, password?: string) {
   try {
     const data = await pdfFile.arrayBuffer();
-    const pdf = await pdfjs.getDocument({ data }).promise;
+
+    const loadingTask = pdfjs.getDocument({
+      data,
+      password: password || undefined
+    });
+
+    // Handle password callback like getFirstPageAsImage does
+    loadingTask.onPassword = (updatePassword, reason) => {
+      if (password && reason === pdfjs.PasswordResponses.NEED_PASSWORD) {
+        updatePassword(password);
+      } else {
+        // No password provided or incorrect - throw to be caught
+        throw new Error(
+          reason === pdfjs.PasswordResponses.INCORRECT_PASSWORD
+            ? "INCORRECT_PASSWORD"
+            : "PASSWORD_REQUIRED"
+        );
+      }
+    };
+
+    const pdf = await loadingTask.promise;
 
     const totalPages = pdf.numPages;
     let totalTextContent = '';

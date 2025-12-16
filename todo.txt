@@ -34,10 +34,24 @@ fixed options layout on mobile
 
 add the rest of the content & options.
 
-
 add ocr handling for each scanned document.
-
 
 pdf to text shouldn't have rotation option.
 
-# next integrate api
+add limitations for all tools.
+
+next integrate api
+
+add cta btn.
+
+LIMITATION ERROR!!!.
+
+integrate both servers.
+
+
+[TODO]:
+add password protection handling.
+
+needs password then add password if password added then fetch image & analizePDF.
+
+daily-usage is beign increased without hitting download.

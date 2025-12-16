@@ -22,7 +22,7 @@ export const handleUpload = async (
       k: string;
       p: string;
     }[];
-    userId: string | null;
+    selectedLanguages: { k: string[] }[] | null,
     converter: "free" | "premium"
   },
   files: File[],
@@ -57,9 +57,13 @@ export const handleUpload = async (
   }
   formData.append("rotations", JSON.stringify(state.rotations));
   formData.append("passwords", JSON.stringify(state.passwords));
-  formData.append("userId", state.userId);
+  formData.append("selectedLanguages", JSON.stringify(state.selectedLanguages));
   let url: string = "";
   const endpoint = state.converter === "free" ? "/api/" : "/premium/";
+  console.log("rotations", JSON.stringify(state.rotations));
+  console.log("passwords", JSON.stringify(state.passwords));
+  console.log("selectedLanguages", JSON.stringify(state.selectedLanguages));
+  return;
   // @ts-ignore
   if (process.env.NODE_ENV === "development") {
     url = `http://localhost:8000${endpoint}${state.path}`;

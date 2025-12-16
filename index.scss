@@ -183,3 +183,15 @@ a.dropdown-item {
   pointer-events: none;
   opacity: 1;
 }
+
+.limitation-alert {
+  @include extend("mt-3 alert alert-info mb-3");
+}
+.cta-btn {
+  width: auto !important;
+  @include extend("mt-2 btn btn-primary btn-sm");
+  font-weight: 500;
+}
+.center-item {
+  @include extend("row justify-content-center");
+}

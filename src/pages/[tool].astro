@@ -5,6 +5,7 @@ import {
   errors,
   edit_page,
   downloadFile,
+  adBlockerContent,
   type ToolType,
 } from "../content/content";
 import { howToSchemas } from "../how-to/how-to";
@@ -148,5 +149,6 @@ const seoConfig = {
     howTo={currentHowTo}
     seoTitle={item.title}
     to={currentRoute}
+    adBlockerContent={adBlockerContent}
   />
 </BaseLayout>

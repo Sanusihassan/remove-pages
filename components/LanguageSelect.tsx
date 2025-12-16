@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
-import { setField, type ToolState } from "../src/store";
+import {
+  setField,
+  selectLanguagesForFile,
+  selectSelectedLanguages,
+  type ToolState,
+} from "../src/store";
 import type { edit_page as _edit_pages } from "../src/content";
 import type {
   StylesConfig,
@@ -10,7 +15,6 @@ import type {
   GroupBase,
 } from "react-select";
 import { languages } from "../src/content/content";
-// we'll be using this function to sanitize the file-name.
 import { sanitizeKey } from "../src/utils";
 
 type OptionType = {
@@ -30,87 +34,119 @@ export const LanguageSelect: React.FC<LanguageSelectProps> = ({
   content,
 }) => {
   const dispatch = useDispatch();
-  const selectedLanguages = useSelector(
-    (state: { tool: ToolState }) => state.tool.selectedLanguages || []
-  );
 
   // Get the sanitized key for this file
-  const fileKey = sanitizeKey(fileName);
+  const fileKey = sanitizeKey(fileName.split(".")[0]);
 
-  // Find languages selected for this specific file
-  const currentFileLanguages = selectedLanguages
-    .filter((item) => item.k === fileKey)
-    .map((item) => item.lang);
+  // Use memoized selector to get languages for this file only
+  // This prevents unnecessary rerenders and Redux warnings
+  const currentFileLanguages = useSelector(
+    useMemo(() => selectLanguagesForFile(fileKey), [fileKey])
+  );
+
+  // Get all selected languages for updating state
+  const allSelectedLanguages = useSelector(selectSelectedLanguages);
 
   // Language options from the languages object
-  const languageOptions = Object.entries(languages).map(
-    ([value, language]: [string, { name: string; nativeName: string }]) => ({
-      value,
-      label: `${language.name} (${language.nativeName})`,
-    })
+  const languageOptions = useMemo(
+    () =>
+      Object.entries(languages).map(
+        ([value, language]: [
+          string,
+          { name: string; nativeName: string },
+        ]) => ({
+          value,
+          label: `${language.name} (${language.nativeName})`,
+        })
+      ),
+    []
   );
 
   // Multi-select styles with dynamic theme color
-  const multiSelectStyles: StylesConfig<OptionType, true> = {
-    option: (
-      base: CSSObjectWithLabel,
-      state: OptionProps<OptionType, true, GroupBase<OptionType>>
-    ) => ({
-      ...base,
-      backgroundColor: state.isSelected ? themeColor : "white",
-      color: state.isSelected ? "white" : "black",
-      cursor: "pointer",
-      "&:hover": {
-        backgroundColor: state.isSelected ? themeColor : "#ddd",
+  const multiSelectStyles: StylesConfig<OptionType, true> = useMemo(
+    () => ({
+      option: (
+        base: CSSObjectWithLabel,
+        state: OptionProps<OptionType, true, GroupBase<OptionType>>
+      ) => ({
+        ...base,
+        backgroundColor: state.isSelected ? themeColor : "white",
         color: state.isSelected ? "white" : "black",
-      },
+        cursor: "pointer",
+        "&:hover": {
+          backgroundColor: state.isSelected ? themeColor : "#ddd",
+          color: state.isSelected ? "white" : "black",
+        },
+      }),
+      multiValue: (base) => ({
+        ...base,
+        backgroundColor: themeColor + "20",
+      }),
+      multiValueLabel: (base) => ({
+        ...base,
+        color: themeColor,
+      }),
+      multiValueRemove: (base) => ({
+        ...base,
+        color: themeColor,
+        "&:hover": {
+          backgroundColor: themeColor,
+          color: "white",
+        },
+      }),
     }),
-    multiValue: (base) => ({
-      ...base,
-      backgroundColor: themeColor + "20",
-    }),
-    multiValueLabel: (base) => ({
-      ...base,
-      color: themeColor,
-    }),
-    multiValueRemove: (base) => ({
-      ...base,
-      color: themeColor,
-      "&:hover": {
-        backgroundColor: themeColor,
-        color: "white",
-      },
-    }),
-  };
+    [themeColor]
+  );
 
-  // Handle language selection change
+  /**
+   * Handle language selection change
+   * - Limit to max 3 languages
+   * - Update Redux state with new selections for this file
+   * - Keep other files' selections intact
+   */
   const handleLanguageSelectChange = (selectedOptions: OptionType[] | null) => {
-    if (selectedOptions && selectedOptions.length > 3) {
-      // If more than 3 options are selected, remove the last one
-      selectedOptions.pop();
+    const newLanguages = selectedOptions?.map((opt) => opt.value) || [];
+
+    // Limit to 3 languages max
+    if (newLanguages.length > 3) {
+      newLanguages.pop();
     }
 
-    // Remove existing entries for this file
-    const otherFilesLanguages = selectedLanguages.filter(
+    // Get all selections excluding this file
+    const otherFilesLanguages = allSelectedLanguages.filter(
       (item) => item.k !== fileKey
     );
 
-    // Add new entries for this file
-    const newFileLanguages = selectedOptions
-      ? selectedOptions.map((option) => ({
-          k: fileKey,
-          lang: option.value,
-        }))
-      : [];
+    // Create new entry for this file if languages are selected
+    const newEntry =
+      newLanguages.length > 0
+        ? {
+            k: fileKey,
+            langs: newLanguages,
+          }
+        : null;
 
+    // Dispatch updated state
     dispatch(
       setField({
-        selectedLanguages: [...otherFilesLanguages, ...newFileLanguages],
+        selectedLanguages: [
+          ...otherFilesLanguages,
+          ...(newEntry ? [newEntry] : []),
+        ],
       })
     );
   };
 
   const showWarning = currentFileLanguages.length === 0;
+
+  // Map current languages to Select options for display
+  const selectedOptions = useMemo(
+    () =>
+      languageOptions.filter((option) =>
+        currentFileLanguages.includes(option.value)
+      ),
+    [currentFileLanguages, languageOptions]
+  );
 
   return (
     <div className="space-y-2">
@@ -140,9 +176,7 @@ export const LanguageSelect: React.FC<LanguageSelectProps> = ({
         styles={multiSelectStyles}
         placeholder={content.placeholder}
         onChange={handleLanguageSelectChange}
-        value={languageOptions.filter((option) =>
-          currentFileLanguages.includes(option.value)
-        )}
+        value={selectedOptions}
         isDisabled={currentFileLanguages.length >= 3}
         closeMenuOnSelect={false}
       />

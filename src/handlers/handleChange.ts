@@ -1,6 +1,6 @@
 import { type Action, type Dispatch } from "@reduxjs/toolkit";
 import type { errors as _ } from "../content/content";
-import { validateFiles } from "../utils";
+import { acceptedMimeTypes, validateFiles } from "../utils";
 import { setField } from "../store";
 
 export const handleChange = (
@@ -17,9 +17,8 @@ export const handleChange = (
     finalFiles,
     dispatch,
     errors,
-    "application/pdf"
+    acceptedMimeTypes
   );
-
   if (isValid) {
     setFiles(finalFiles);
     const originalFileSize = finalFiles.reduce(

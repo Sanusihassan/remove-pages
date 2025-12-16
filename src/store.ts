@@ -1,9 +1,11 @@
-import { createSlice, type Draft, type PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createSelector, type Draft, type PayloadAction } from "@reduxjs/toolkit";
+
 type WritableDraft<T> = {
   -readonly [K in keyof T]: Draft<T[K]>;
 };
 
 type k = keyof WritableDraft<ToolState>;
+
 export interface ToolState {
   showTool: boolean;
   isSubmitted: boolean;
@@ -11,15 +13,14 @@ export interface ToolState {
   errorCode: string | null;
   showDownloadBtn: boolean;
   showOptions: boolean;
-  nav_height: number;
   fileName: string;
   limitationMsg: string;
   rotations: { k: string; r: number }[];
   passwords: { k: string; p: string }[];
   subscriptionStatus: boolean;
-  selectedLanguages: { k: string; lang: string }[] | null;
-  converter: "free" | "premium",
-  isScanned: boolean
+  selectedLanguages: { k: string; langs: string[] }[] | null;
+  converter: "free" | "premium";
+  isAdBlocked: boolean;
 }
 
 const initialState: ToolState = {
@@ -29,7 +30,6 @@ const initialState: ToolState = {
   errorCode: null,
   showDownloadBtn: false,
   showOptions: false,
-  nav_height: 0,
   fileName: "",
   limitationMsg: "",
   rotations: [],
@@ -37,7 +37,7 @@ const initialState: ToolState = {
   subscriptionStatus: false,
   selectedLanguages: null,
   converter: "free",
-  isScanned: false
+  isAdBlocked: false,
 };
 
 const toolSlice = createSlice({
@@ -51,7 +51,6 @@ const toolSlice = createSlice({
     },
     setField(state, action: PayloadAction<Partial<ToolState>>) {
       Object.keys(action.payload).forEach((key) => {
-        // Cast the key to keyof ToolState to ensure it's a valid key
         const typedKey = key as k;
         const value = action.payload[typedKey];
         if (value !== undefined) {
@@ -64,5 +63,46 @@ const toolSlice = createSlice({
 });
 
 export const { resetErrorMessage, setField } = toolSlice.actions;
+
+// ============================================
+// MEMOIZED SELECTORS (prevent unnecessary rerenders)
+// ============================================
+
+/**
+ * Select the entire tool state
+ */
+export const selectToolState = (state: { tool: ToolState }) => state.tool;
+
+/**
+ * Select all selected languages - returns empty array instead of null for consistency
+ */
+export const selectSelectedLanguages = createSelector(
+  [(state: { tool: ToolState }) => state.tool.selectedLanguages],
+  (selectedLanguages) => selectedLanguages || []
+);
+
+/**
+ * Select languages for a specific file
+ * Usage: useSelector(useMemo(() => selectLanguagesForFile(fileKey), [fileKey]))
+ */
+export const selectLanguagesForFile = (fileKey: string) =>
+  createSelector(
+    [selectSelectedLanguages],
+    (selectedLanguages) =>
+      selectedLanguages
+        .filter((item) => item.k === fileKey)
+        .flatMap((item) => item.langs)
+  );
+
+export const selectRotations = createSelector(
+  [selectToolState],
+  (state) => state.rotations
+);
+
+export const selectPasswords = createSelector(
+  [selectToolState],
+  (state) => state.passwords
+);
+
 
 export default toolSlice.reducer;
