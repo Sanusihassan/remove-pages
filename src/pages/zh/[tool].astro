@@ -6,10 +6,9 @@ import {
   edit_page,
   downloadFile,
   adBlockerContent,
-  type ToolType,
-} from "../content/content";
-import { howToSchemas } from "../how-to/how-to";
-import BaseLayout from "../partials/BaseLayout.astro";
+} from "../../content/content-zh";
+import { howToSchemas } from "../../how-to/how-to-zh";
+import BaseLayout from "../../partials/BaseLayout.astro";
 import { configureStore } from "@reduxjs/toolkit";
 
 export const routes = {
@@ -69,14 +68,15 @@ const currentHowTo = matchingKey ? howToSchemas[matchingKey] : null;
 const websiteSchema = {
   "@context": "http://schema.org",
   "@type": "WebPage",
-  name: `PDFEquips ${item.title}`,
+  name: `PDFEquips ${item.seoTitle}`,
   description: item.description,
   url: `https://www.pdfequips.com${asPath}`,
 };
 
-const lang = "en"; // Assuming English, adjust if dynamic
-import toolReducer from "../store";
-import { ToolWrapper } from "../../components/ToolWrapper";
+const lang = "zh";
+import toolReducer from "../../store";
+import { ToolWrapper } from "../../../components/ToolWrapper";
+import type { ToolType } from "../../content/content";
 export const store = configureStore({
   reducer: {
     tool: toolReducer,
@@ -93,7 +93,7 @@ const seoConfig = {
     description: item.description,
     images: [
       {
-        url: `https://www.pdfequips.com/images${item.to}.png`,
+        url: `https://www.pdfequips.com/images/zh${item.to}.png`,
         width: 1200,
         height: 630,
         alt: item.title,

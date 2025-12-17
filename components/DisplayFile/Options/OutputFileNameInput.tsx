@@ -22,7 +22,7 @@ export const OutputFileNameInput = ({
   const hasSetDefault = useRef(false);
   useEffect(() => {
     if (files.length && !fileName && !hasSetDefault.current) {
-      dispatch(setField({ fileName: files[0].name }));
+      dispatch(setField({ fileName: files[0].name.split(".")[0] }));
       hasSetDefault.current = true; // ensure we don't reset again
     }
   }, [files, fileName, dispatch]);

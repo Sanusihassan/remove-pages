@@ -299,12 +299,10 @@ export async function getNthPageAsImage(
  * @returns A sanitized key safe for both JS and Python
  */
 export function sanitizeKey(input: string | number | null | undefined): string {
-  // Handle null, undefined, or empty input
   if (input == null || input === "") {
     return "key_empty";
   }
 
-  // Convert to string
   let key = String(input);
 
   // Normalize unicode by removing diacritics

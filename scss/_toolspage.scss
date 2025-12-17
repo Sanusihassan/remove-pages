@@ -71,6 +71,7 @@
       @include extend(
         "d-flex align-items-center justify-content-between rounded-circle"
       );
+      column-gap: 5px;
     }
     .back-btn {
       display: flex;

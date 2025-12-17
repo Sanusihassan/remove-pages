@@ -22,7 +22,10 @@ export const handleUpload = async (
       k: string;
       p: string;
     }[];
-    selectedLanguages: { k: string[] }[] | null,
+    selectedLanguages: {
+      k: string;
+      langs: string[];
+    }[],
     converter: "free" | "premium"
   },
   files: File[],
@@ -60,10 +63,6 @@ export const handleUpload = async (
   formData.append("selectedLanguages", JSON.stringify(state.selectedLanguages));
   let url: string = "";
   const endpoint = state.converter === "free" ? "/api/" : "/premium/";
-  console.log("rotations", JSON.stringify(state.rotations));
-  console.log("passwords", JSON.stringify(state.passwords));
-  console.log("selectedLanguages", JSON.stringify(state.selectedLanguages));
-  return;
   // @ts-ignore
   if (process.env.NODE_ENV === "development") {
     url = `http://localhost:8000${endpoint}${state.path}`;
@@ -124,6 +123,7 @@ export const handleUpload = async (
   try {
     const response = await axios.post(url, formData, {
       responseType: "arraybuffer",
+      withCredentials: true
     });
     // const originalFileName = files[0]?.name?.split(".").slice(0, -1).join(".");
     const mimeType = response.data.type || response.headers["content-type"];

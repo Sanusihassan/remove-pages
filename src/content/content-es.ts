@@ -1,363 +1,316 @@
-import type {
-  tool as _tool,
-  web2pdftool as _web2pdftool,
-  tools as _tools,
-  edit_page as _edit_page,
-  footer as _footer,
-  errors as _errors,
-  downloadFile as _downloadFile,
-  landing_page as _landing_page,
-} from "../content";
+import type { edit_page as _edit_page, tools as _tools, downloadFile as _downloadFile, errors as _errors } from "../content";
+import type { adBlockerContentType, Tool } from "./content";
 
-export const landing_page: _landing_page = {
-  hero: {
-    title: "Mejore su productividad con nuestra solución integral de PDF",
-    description:
-      "Lleve sus flujos de trabajo PDF al siguiente nivel: desbloquee nuevas posibilidades con nuestro completo kit de herramientas.",
+export const edit_page: _edit_page = {
+  edit_page_titles: {
+    pdf_to_powerpoint: "Opciones de PDF a PowerPoint",
+    word_to_pdf: "Opciones de WORD a PDF",
+    powerpoint_to_pdf: "Opciones de POWERPOINT a PDF",
+    excel_to_pdf: "Opciones de EXCEL a PDF",
+    html_to_pdf: "Opciones de HTML a PDF",
+    pdf_to_word: "Opciones de PDF a WORD",
+    pdf_to_excel: "Opciones de PDF a EXCEL",
+    pdf_to_pdf_a: "Opciones de PDF a PDF/A",
+    pdf_to_text: "Opciones de PDF a texto",
   },
-  features: {
-    title: "Cómo PDFEquips puede simplificar tus tareas PDF",
-    description:
-      "PDFEquips te ofrece una variedad de funciones para manejar tus archivos PDF con facilidad. Ya sea que quieras fusionar, dividir, comprimir, convertir, editar o proteger tus PDF, puedes hacerlo todo con solo unos pocos clics. PDFEquips es rápido, confiable y seguro.",
+  loader_text: "Por favor espere...",
+  add_more_button: "Agregar más archivos",
+  action_buttons: {
+    pdf_to_powerpoint: "Convertir a PowerPoint",
+    word_to_pdf: "Convertir a PDF",
+    powerpoint_to_pdf: "Convertir a PDF",
+    excel_to_pdf: "Convertir a PDF",
+    html_to_pdf: "Convertir a PDF",
+    pdf_to_word: "Convertir a Word",
+    pdf_to_excel: "Convertir a Excel",
+    pdf_to_pdf_a: "Convertir a PDF/A",
+    pdf_to_text: "Convertir a Texto",
   },
-  why_us: {
-    title: "La solución PDF en la que puedes confiar",
-    description:
-      "PDFEquips es tu aplicación web definitiva para gestionar PDF con facilidad. Disfruta de todas\
-    las funciones que necesitas para trabajar eficazmente con tus documentos digitales\
-    mientras mantienes tus datos seguros y protegidos.",
+  pages: "páginas",
+  page: "página",
+  cta: "Ver Planes",
+  pdf_a_options: {
+    info: "Seleccione el formato PDF/A deseado en el menú desplegable a continuación para convertir su PDF. Esto asegurará que el documento cumpla con el estándar de archivo elegido.",
+    placeholder: "Elegir formato PDF/A"
   },
+  languageSelectContent: {
+    placeholder: "Elegir idiomas (máximo 3)",
+    warning: "Este documento está escaneado. Por favor seleccione su idioma para garantizar resultados precisos."
+  },
+  converter: {
+    free: "Gratuito",
+    premium: "Premium",
+    freeToolTip: "Conversión básica - formato limitado",
+    premiumToolTip: "Conversión de alta precisión con preservación completa de estilos"
+  },
+  fileNameInput: {
+    label: "Nombre del archivo de salida (Opcional)",
+    placeholder: "Ingresar nombre del archivo",
+    helperText: "Este será el nombre del documento que se descargará.",
+  }
 };
 
-export const tool: _tool = {
+export const tool: Tool = {
   PDF_to_Powerpoint: {
-    title: "PDF a Powerpoint",
-    seoTitle: "PDF a PowerPoint - Convertir a presentaciones editables",
-    description: "Convierte archivos PDF a presentaciones de Powerpoint editables",
+    title: "PDF a PowerPoint",
+    seoTitle: "Convertir PDF a PowerPoint - Convertidor Gratuito en Línea",
+    description: "Convertir archivos PDF a presentaciones PowerPoint editables",
     color: "#C13B1B",
     type: ".pdf",
     to: "/pdf-to-powerpoint",
     features: [
       {
         title: "Convertir PDF a PowerPoint con un solo clic",
-        description: "Convierta rápidamente documentos PDF en presentaciones de PowerPoint utilizando nuestro convertidor en línea, asegurando un fácil intercambio y almacenamiento. Mantenga el formato y diseño originales de todas las diapositivas."
+        description: "Convierte rápidamente documentos PDF a presentaciones PowerPoint usando nuestro convertidor en línea, asegurando una fácil compartición y almacenamiento. Mantén el formato y diseño original de todas las diapositivas."
       },
       {
-        title: "Convertir PDF a PowerPoint de forma rápida y gratuita",
-        description: "PDFEquips convierte archivos PDF a formato PowerPoint PPT (ppt o pptx) en solo unos segundos. Además, es una herramienta en línea completamente gratuita que no requiere ninguna instalación ni inicio de sesión, y no tiene marcas de agua."
+        title: "Convertir PDF a PowerPoint rápidamente y gratis",
+        description: "PDFEquips convierte archivos PDF a formato PowerPoint PPT (ppt o pptx) en solo unos segundos. Además, es una herramienta completamente gratuita en línea que no requiere instalación ni registro, y no agrega marcas de agua."
       },
       {
-        title: "Conversión sencilla de PDF a PowerPoint",
-        description: "Con nuestro convertidor de PDF a PowerPoint, no es necesario navegar por configuraciones ni opciones. Simplemente cargue el archivo, siéntese, relájese ¡y disfrute del espectáculo!"
+        title: "Conversión simple de PDF a PowerPoint",
+        description: "Con nuestro convertidor de PDF a PowerPoint, no tienes que navegar por configuraciones y opciones. Solo sube el archivo, relájate y ¡disfruta del espectáculo!"
       }
     ],
-    keywords: "PDF a PowerPoint, convertir PDF a PowerPoint, convertir PDF a PPT, convertir PDF a PPTX, herramientas para convertir PDF a PowerPoint, convertir documentos PDF a PowerPoint, convertir PDF a presentación, convertir PDF en línea, convertir PDF a PowerPoint gratis, convertir PDF a PPT sin registro, convertir PDF rápidamente, convertir PDF sin marcas de agua, herramientas en línea para convertir PDF a PowerPoint"
+    keywords: "PDF a PowerPoint, convertir PDF a PPT, convertidor PDF a PPT, PDF a PowerPoint gratis, PDF a PowerPoint en línea, PDF a PPTX, convertir PDF a PowerPoint en línea, PDF a PPT gratis, convertidor PDF a PPTX, herramienta PDF a PPT, convertidor PDF a PPT en línea, PDF a PowerPoint gratuito, convertir PDF a PPT gratis, PDF a PPT en línea, PDF a PPTX gratis, convertir PDF a PPT al instante, herramienta PDF a PowerPoint gratis"
   },
   WORD_to_PDF: {
     title: "WORD a PDF",
-    seoTitle: "Word a PDF - Convertir archivos de Word",
-    description: "Convierte archivos de Microsoft Word a documentos PDF",
+    seoTitle: "Convertir Word a PDF - Convertidor Gratuito en Línea",
+    description: "Convertir archivos Microsoft Word a documentos PDF",
     color: "#1B5EBE",
     type: ".docx",
     to: "/word-to-pdf",
     features: [
       {
         title: "Fácil de usar",
-        description: "Independientemente de su rol, ya sea trabajador, estudiante o profesor, nuestras herramientas de PDF son fáciles de usar. Convertir archivos WORD a documentos PDF es simple y solo requiere unos pocos clics."
+        description: "Independientemente de tu rol —ya seas trabajador, estudiante o profesor— nuestras herramientas PDF son fáciles de usar. Convertir archivos WORD a documentos PDF es simple y solo requiere unos pocos clics"
       },
       {
         title: "Conversión simple y rápida",
-        description: "Gracias a su método avanzado de preservación de diseños y estilos originales, PDFEquips garantiza conversiones fluidas de WORD a PDF. Disfrute de operaciones rápidas sin comprometer la integridad del documento."
+        description: "Gracias a su método avanzado de preservación de diseños y estilos originales, PDFEquips asegura conversiones fluidas de WORD a PDF. Disfruta de operaciones rápidas sin comprometer la integridad del documento."
       },
       {
-        title: "Convierta un archivo WORD o varios archivos WORD",
-        description: "Puede convertir fácilmente uno o varios archivos WORD sin problemas utilizando PDFEquips. Nuestras herramientas directas garantizan una conversión rápida y precisa, ahorrándole tiempo y esfuerzo."
+        title: "Convertir un archivo WORD o múltiples archivos WORD",
+        description: "Puedes convertir fácilmente un archivo WORD o varios archivos WORD sin complicaciones usando PDFEquips. Nuestras herramientas directas aseguran una conversión rápida y precisa, ahorrándote tiempo y esfuerzo"
       }
     ],
-    keywords: "WORD a PDF, convertir WORD a PDF, convertir documentos Word a PDF, convertir archivos Word a PDF, herramientas para convertir Word a PDF, convertir Word a PDF en línea, convertir Word a PDF gratis, convertir Word rápidamente, convertir Word sin registro, convertir Word a PDF sin pérdida de formato, convertir documentos Word a PDF fácilmente, convertir archivos Word a PDF sin instalación, herramientas gratuitas para convertir Word a PDF"
+    keywords: "Word a PDF, convertir Word a PDF, Word a PDF gratis, convertidor Word a PDF, Word a PDF en línea, Word a PDF gratuito, DOCX a PDF, convertidor Word a PDF en línea, herramienta Word a PDF, convertir DOCX a PDF, convertidor DOCX a PDF gratis, documento Word a PDF, convertir archivo Word a PDF, Word a PDF sin registro, herramienta Word a PDF gratis, Word a PDF en línea gratis, conversión rápida Word a PDF, Microsoft Word a PDF"
   },
   POWERPOINT_to_PDF: {
     title: "POWERPOINT a PDF",
-    seoTitle: "PowerPoint a PDF - Convertir archivos de PowerPoint",
-    description: "Convierte archivos de Microsoft Powerpoint a documentos PDF",
+    seoTitle: "Convertir PowerPoint a PDF - Convertidor Gratuito en Línea",
+    description: "Convertir archivos Microsoft PowerPoint a documentos PDF",
     color: "#C13B1B",
     type: ".pptx",
     to: "/powerpoint-to-pdf",
     features: [
       {
         title: "Convertir PowerPoint a PDF con un solo clic",
-        description: "Convierta rápidamente presentaciones de PowerPoint en documentos PDF utilizando nuestro convertidor en línea, asegurando un fácil intercambio y almacenamiento. Mantenga el formato y diseño originales de todas las diapositivas."
+        description: "Convierte rápidamente presentaciones PowerPoint a documentos PDF usando nuestro convertidor en línea, asegurando una fácil compartición y almacenamiento. Mantén el formato y diseño original de todas las diapositivas"
       },
       {
-        title: "Convertir Powerpoint a PDF de forma rápida y gratuita",
-        description: "PDFEquips convierte archivos PowerPoint PPT (ppt o pptx) a PDF en solo unos segundos. Además, es una herramienta en línea completamente gratuita que no requiere ninguna instalación ni inicio de sesión, y no tiene marcas de agua."
+        title: "Convertir PowerPoint a PDF rápidamente y gratis",
+        description: "PDFEquips convierte archivos PowerPoint PPT (ppt o pptx) a PDF en solo unos segundos. Además, es una herramienta completamente gratuita en línea que no requiere instalación ni registro, y no agrega marcas de agua"
       },
       {
-        title: "Conversión sencilla de PowerPoint a PDF",
-        description: "Con nuestro convertidor de PPT a PDF, no es necesario navegar por configuraciones ni opciones. Simplemente cargue el archivo, siéntese, relájese ¡y disfrute del espectáculo!"
+        title: "Conversión simple de PowerPoint a PDF",
+        description: "Con nuestro convertidor de PPT a PDF, no tienes que navegar por configuraciones y opciones. Solo sube el archivo, relájate y ¡disfruta del espectáculo!"
       }
     ],
-    keywords: "POWERPOINT a PDF, convertir PowerPoint a PDF, convertir documentos PowerPoint a PDF, convertir presentaciones PowerPoint a PDF, herramientas para convertir PowerPoint a PDF, convertir PowerPoint a PDF en línea, convertir PowerPoint a PDF gratis, convertir PowerPoint rápidamente, convertir PowerPoint sin registro, convertir PowerPoint a PDF sin pérdida de formato, convertir presentaciones PowerPoint a PDF fácilmente, convertir archivos PowerPoint a PDF sin instalación, herramientas gratuitas para convertir PowerPoint a PDF"
+    keywords: "PowerPoint a PDF, convertir PowerPoint a PDF, PowerPoint a PDF gratis, convertidor PPT a PDF, PowerPoint a PDF en línea, PPT a PDF gratis, convertidor PowerPoint a PDF en línea, herramienta PPT a PDF, convertir PPTX a PDF, convertidor PPT a PDF gratis, presentación PowerPoint a PDF, convertir archivo PPT a PDF, PPT a PDF sin registro, herramienta PPTX a PDF gratis, PowerPoint a PDF en línea gratis, conversión rápida PowerPoint a PDF, Microsoft PowerPoint a PDF"
   },
   EXCEL_to_PDF: {
     title: "EXCEL a PDF",
-    seoTitle: "Excel a PDF - Convertir archivos de Excel",
-    description: "Convierte archivos de Microsoft Excel a documentos PDF",
+    seoTitle: "Convertir Excel a PDF - Convertidor Gratuito en Línea",
+    description: "Convertir archivos Microsoft Excel a documentos PDF",
     color: "#10793F",
     type: ".xlsx",
     to: "/excel-to-pdf",
     features: [
       {
-        title: "Conversor fácil de usar de Excel a PDF",
-        description: "Un conversor adecuado para convertir archivos XLS, XLSX a formato PDF facilita su intercambio y almacenamiento seguro. Proteja sus datos contra cambios y disfrute del acceso a sus archivos de Excel en cualquier dispositivo, ya sea que tenga Microsoft Office o no."
+        title: "Convertidor fácil de usar de Excel a PDF",
+        description: "Un convertidor adecuado para convertir archivos XLS, XLSX a formato PDF facilita su compartición y almacenamiento seguro. Protege tus datos de cambios y disfruta del acceso a tus archivos Excel en cualquier dispositivo, tengas o no Microsoft Office"
       },
       {
-        title: "Herramienta de conversión en línea rápida y gratuita",
-        description: "PDFEquips es una herramienta en línea completamente gratuita para convertir archivos de Excel (xls o xlsx) a PDF. No se requiere instalación ni registro, y no se agregan marcas de agua. Además, convierte archivos de Excel grandes en solo unos segundos."
+        title: "Herramienta de conversión rápida y gratuita en línea",
+        description: "PDFEquips es una herramienta completamente gratuita en línea para convertir archivos Excel (xls o xlsx) a PDF. No requiere instalación ni registro, y no agrega marcas de agua. Además, convierte archivos Excel grandes en solo unos segundos"
       },
       {
         title: "Conversión segura de XLS a PDF",
-        description: "Sus archivos están protegidos con cifrado robusto TLS (Seguridad de la Capa de Transporte), y todos los archivos de Excel y PDF se eliminan automáticamente de nuestros servidores después de una hora. Para obtener más información, consulte nuestra política de privacidad."
+        description: "Tus archivos están protegidos con cifrado TLS robusto (Seguridad de Capa de Transporte), y todos los archivos Excel y PDF se eliminan automáticamente de nuestros servidores después de una hora. Para más información, consulta nuestra política de privacidad"
       }
     ],
-    keywords: "EXCEL a PDF, convertir Excel a PDF, convertir documentos Excel a PDF, convertir archivos Excel a PDF, herramientas para convertir Excel a PDF, convertir Excel a PDF en línea, convertir Excel a PDF gratis, convertir Excel rápidamente, convertir Excel sin registro, convertir Excel a PDF sin pérdida de formato, convertir hojas de cálculo Excel a PDF fácilmente, convertir archivos Excel a PDF sin instalación, herramientas gratuitas para convertir Excel a PDF"
+    keywords: "Excel a PDF, convertir Excel a PDF, Excel a PDF gratis, convertidor XLS a PDF, Excel a PDF en línea, XLSX a PDF gratis, convertidor Excel a PDF en línea, herramienta Excel a PDF, convertir XLSX a PDF, convertidor XLS a PDF gratis, hoja de cálculo Excel a PDF, convertir archivo Excel a PDF, Excel a PDF sin registro, herramienta Excel a PDF gratis, Excel a PDF en línea gratis, conversión rápida Excel a PDF, Microsoft Excel a PDF"
   },
   HTML_to_PDF: {
     title: "HTML a PDF",
-    seoTitle: "HTML a PDF - Convertir páginas web",
-    description: "Convierte páginas web HTML a documentos PDF",
+    seoTitle: "Convertir HTML a PDF - Convertidor Gratuito en Línea",
+    description: "Convertir páginas web HTML a documentos PDF",
     color: "rgb(228, 77, 38)",
     type: ".html",
     to: "/html-to-pdf",
     features: [
       {
-        title: "Convierte al instante, no se requiere registro.",
-        description: "No es necesario registrarse ni proporcionar ninguna información para convertir su HTML a PDF. Nuestro conversor es gratuito para todos y ofrece resultados rápidos."
+        title: "Conversión instantánea, sin registro requerido.",
+        description: "No necesitas registrarte ni proporcionar información para convertir tu HTML a PDF. Nuestro convertidor es gratuito para todos y ofrece resultados rápidos."
       },
       {
-        title: "Gestión de documentos segura.",
-        description: "Sus descargas y archivos PDF generados se procesan con cifrado TLS para una seguridad adicional. Tenga la seguridad de que la privacidad de sus datos está protegida. Consulte nuestra política de privacidad para obtener más información."
+        title: "Gestión segura de documentos.",
+        description: "Tus descargas y archivos PDF generados se procesan con cifrado TLS para mayor seguridad. Ten la certeza de que tu privacidad de datos está protegida. Consulta nuestra política de privacidad para más información."
       },
       {
         title: "Procesamiento basado en la nube.",
-        description: "Disfrute de la comodidad del procesamiento basado en la nube para conversiones de HTML a PDF. Nuestro servicio en línea garantiza una conversión rápida y eficiente sin ralentizar su computadora. Acceda a nuestro servicio desde cualquier lugar y en cualquier momento."
+        description: "Disfruta de la comodidad del procesamiento basado en la nube para conversiones HTML a PDF. Nuestro servicio en línea asegura una conversión rápida y eficiente sin ralentizar tu computadora. Accede a nuestro servicio desde cualquier lugar y en cualquier momento."
       }
     ],
-    keywords: "HTML a PDF, convertir HTML a PDF, convertir páginas web a PDF, convertir archivos HTML a PDF, herramientas para convertir HTML a PDF, convertir HTML a PDF en línea, convertir HTML a PDF gratis, convertir HTML rápidamente, convertir HTML sin registro, convertir páginas web a PDF sin pérdida de formato, convertir HTML a documentos PDF fácilmente, convertir archivos HTML a PDF sin instalación, herramientas gratuitas para convertir HTML a PDF"
+    keywords: "HTML a PDF, convertir HTML a PDF, HTML a PDF gratis, convertidor HTML a PDF, HTML a PDF en línea, HTML a PDF gratuito, página web a PDF, convertir página web a PDF, herramienta HTML a PDF, convertidor HTML a PDF en línea, convertidor HTML a PDF gratis, convertidor página web a PDF, convertir archivo HTML a PDF, HTML a PDF sin registro, herramienta HTML a PDF gratis, HTML a PDF en línea gratis, conversión rápida HTML a PDF, web a PDF"
   },
   PDF_to_WORD: {
     title: "PDF a WORD",
-    seoTitle: "PDF a Word - Convertir archivos PDF",
-    description: "Convierte archivos PDF a documentos de Microsoft Word",
+    seoTitle: "Convertir PDF a Word - Convertidor Gratuito en Línea",
+    description: "Convertir archivos PDF a documentos Microsoft Word",
     color: "#1B5EBE",
     type: ".pdf",
     to: "/pdf-to-word",
     features: [
       {
         title: "Conversión simple y rápida",
-        description: "Gracias a su método avanzado de preservación de diseños y estilos originales, PDFEquips garantiza conversiones fluidas de PDF a Word. Disfrute de operaciones rápidas sin comprometer la integridad del documento."
+        description: "Gracias a su método avanzado de preservación de diseños y estilos originales, PDFEquips asegura conversiones fluidas de PDF a Word. Disfruta de operaciones rápidas sin comprometer la integridad del documento."
       },
       {
         title: "Fácil de usar",
-        description: "Independientemente de su rol, ya sea trabajador, estudiante o profesor, nuestras herramientas de PDF son fáciles de usar. Convertir archivos PDF a documentos de Word es simple y solo requiere unos pocos clics."
+        description: "Independientemente de tu rol —ya seas trabajador, estudiante o profesor— nuestras herramientas PDF son fáciles de usar. Convertir archivos PDF a documentos Word es simple y solo requiere unos pocos clics"
       },
       {
-        title: "Convierta un archivo PDF o varios archivos PDF",
-        description: "Puede convertir fácilmente uno o varios archivos PDF sin problemas utilizando PDFEquips. Nuestras herramientas directas garantizan una conversión rápida y precisa, ahorrándole tiempo y esfuerzo."
+        title: "Convertir un archivo PDF o múltiples archivos PDF",
+        description: "Puedes convertir fácilmente un archivo PDF o varios archivos PDF sin complicaciones usando PDFEquips. Nuestras herramientas directas aseguran una conversión rápida y precisa, ahorrándote tiempo y esfuerzo"
       }
     ],
-    keywords: "PDF a WORD, convertir PDF a Word, convertir documentos PDF a Word, convertir archivos PDF a Word, herramientas para convertir PDF a Word, convertir PDF a Word en línea, convertir PDF a Word gratis, convertir PDF rápidamente, convertir PDF sin registro, convertir PDF a Word sin pérdida de formato, convertir documentos PDF a Word fácilmente, convertir archivos PDF a Word sin instalación, herramientas gratuitas para convertir PDF a Word"
+    keywords: "PDF a Word, convertir PDF a Word, PDF a DOCX gratis, convertidor PDF a Word, PDF a Word en línea, PDF a DOCX gratuito, convertidor PDF a DOCX en línea, herramienta PDF a Word, convertir PDF a DOC, convertidor PDF a DOC gratis, documento PDF a Word, convertir archivo PDF a Word, PDF a DOCX sin registro, herramienta PDF a Word gratis, PDF a Word en línea gratis, conversión rápida PDF a Word, PDF a Microsoft Word"
   },
   PDF_to_EXCEL: {
     title: "PDF a EXCEL",
-    seoTitle: "PDF a Excel - Convertir archivos PDF",
-    description: "Convierte archivos PDF a documentos de Microsoft Excel",
+    seoTitle: "Convertir PDF a Excel - Convertidor Gratuito en Línea",
+    description: "Convertir archivos PDF a documentos Microsoft Excel",
     color: "#10793F",
     type: ".pdf",
     to: "/pdf-to-excel",
     features: [
       {
-        title: "Herramienta de conversión en línea rápida y gratuita",
-        description: "PDFEquips es una herramienta en línea completamente gratuita para convertir archivos PDF a Excel (XLS o XLSX). No se requiere instalación ni registro, y no se agregan marcas de agua. Además, convierte archivos PDF grandes en solo unos segundos."
+        title: "Herramienta de conversión rápida y gratuita en línea",
+        description: "PDFEquips es una herramienta completamente gratuita en línea para convertir archivos PDF a Excel (XLS o XLSX). No requiere instalación ni registro, y no agrega marcas de agua. Además, convierte archivos PDF grandes en solo unos segundos."
       },
       {
-        title: "Conversor fácil de usar de PDF a Excel",
-        description: "Un conversor adecuado para convertir archivos PDF a formato XLS o XLSX facilita su intercambio y almacenamiento seguro. Proteja sus datos contra cambios y disfrute del acceso a sus archivos de Excel en cualquier dispositivo, ya sea que tenga Microsoft Office o no."
+        title: "Convertidor fácil de usar de PDF a Excel",
+        description: "Un convertidor adecuado para convertir archivos PDF a formato XLS o XLSX facilita su compartición y almacenamiento seguro. Protege tus datos de cambios y disfruta del acceso a tus archivos Excel en cualquier dispositivo, tengas o no Microsoft Office."
       },
       {
         title: "Conversión segura de PDF a XLS",
-        description: "Sus archivos están protegidos con cifrado robusto TLS (Seguridad de la Capa de Transporte), y todos los archivos PDF y Excel se eliminan automáticamente de nuestros servidores después de una hora. Para obtener más información, consulte nuestra política de privacidad."
+        description: "Tus archivos están protegidos con cifrado TLS robusto (Seguridad de Capa de Transporte), y todos los archivos PDF y Excel se eliminan automáticamente de nuestros servidores después de una hora. Para más información, consulta nuestra política de privacidad."
       }
     ],
-    keywords: "PDF a EXCEL, convertir PDF a Excel, convertir documentos PDF a Excel, convertir archivos PDF a Excel, herramientas para convertir PDF a Excel, convertir PDF a Excel en línea, convertir PDF a Excel gratis, convertir PDF rápidamente, convertir PDF sin registro, convertir PDF a Excel sin pérdida de formato, convertir tablas PDF a Excel fácilmente, convertir archivos PDF a Excel sin instalación, herramientas gratuitas para convertir PDF a Excel"
+    keywords: "PDF a Excel, convertir PDF a Excel, PDF a XLSX gratis, convertidor PDF a Excel, PDF a Excel en línea, PDF a XLS gratis, convertidor PDF a XLSX en línea, herramienta PDF a Excel, convertir PDF a XLS, convertidor PDF a Excel gratis, documento PDF a Excel, convertir archivo PDF a Excel, PDF a XLSX sin registro, herramienta PDF a Excel gratis, PDF a Excel en línea gratis, conversión rápida PDF a Excel, PDF a Microsoft Excel"
   },
   PDF_to_PDF_A: {
     title: "PDF a PDF/A",
-    seoTitle: "PDF a PDF/A - Formato de archivado a largo plazo",
-    description: "Convierte archivos PDF al formato PDF/A para archivado a largo plazo",
+    seoTitle: "Convertir PDF a PDF/A - Convertidor de Archivo Gratuito",
+    description: "Convertir archivos PDF a formato PDF/A para archivo a largo plazo",
     color: "#000000",
     type: ".pdf",
     to: "/pdf-to-pdf-a",
     features: [
       {
         title: "Mantener la integridad de los documentos",
-        description: "Convierta sus archivos PDF al formato PDF/A y asegúrese de que se preserve la integridad del documento, incluido el contenido, la estructura y la apariencia."
+        description: "Convierte tus archivos PDF al formato PDF/A y asegúrate de que la integridad del documento, incluyendo contenido, estructura y apariencia, se preserve"
       },
       {
-        title: "Cumplimiento con Normas de Archivado",
-        description: "Asegure el cumplimiento con las normas de archivo al convertir sus documentos PDF al formato PDF/A, que es adecuado para el almacenamiento a largo plazo y los requisitos legales."
+        title: "Cumplimiento con estándares de archivo",
+        description: "Asegura el cumplimiento con estándares de archivo convirtiendo tus documentos PDF al formato PDF/A, adecuado para almacenamiento a largo plazo y requisitos legales"
       },
       {
-        title: "Accesibilidad y Compatibilidad a Largo Plazo",
-        description: "Al convertir sus archivos PDF al formato PDF/A, asegura la accesibilidad y compatibilidad a largo plazo con el software y los sistemas futuros, al tiempo que minimiza el riesgo de obsolescencia del formato."
+        title: "Accesibilidad y compatibilidad a largo plazo",
+        description: "Al convertir tus archivos PDF al formato PDF/A, aseguras la accesibilidad y compatibilidad a largo plazo con software y sistemas futuros, minimizando el riesgo de obsolescencia del formato"
       }
     ],
-    keywords: "PDF a PDF/A, convertir PDF a PDF/A, convertir documentos PDF a PDF/A, convertir archivos PDF a PDF/A, herramientas para convertir PDF a PDF/A, convertir PDF a PDF/A en línea, convertir PDF a PDF/A gratis, convertir PDF rápidamente, convertir PDF sin registro, convertir PDF a PDF/A sin pérdida de formato, convertir documentos PDF a PDF/A fácilmente, convertir archivos PDF a PDF/A sin instalación, herramientas gratuitas para convertir PDF a PDF/A"
+    keywords: "PDF a PDF/A, convertir PDF a PDF/A, PDF a PDF/A gratis, convertidor PDF a PDF/A, PDF a PDF/A en línea, PDF a PDF archival, conversión PDF/A, convertir PDF a formato archival, convertidor PDF a PDF/A gratis, herramienta PDF a PDF/A, convertir PDF a PDF/A en línea, PDF a documento archival, PDF a PDF/A gratuito, convertidor PDF a PDF/A en línea, cumplimiento PDF a PDF/A, almacenamiento PDF a largo plazo, PDF a PDF/A para archivo, PDF a PDF/A en línea gratis"
   },
   PDF_to_Text: {
-    title: "PDF a texto",
-    seoTitle: "PDF a texto - Convertir a documentos de texto",
-    description: "Convertir archivos PDF en documentos de texto plano",
+    title: "PDF a Texto",
+    seoTitle: "Convertir PDF a Texto - Convertidor de Texto Plano Gratuito",
+    description: "Convertir archivos PDF a documentos de texto plano",
     color: "#4493e1",
     type: ".pdf",
     to: "/pdf-to-text",
     features: [
       {
-        title: "Conversión Robusta y Precisa",
-        description: "Benefíciese de capacidades de conversión robustas y precisas, asegurando una extracción de contenido de texto de alta calidad de documentos PDF, incluido el soporte para varios idiomas como el árabe."
+        title: "Conversión robusta y precisa",
+        description: "Benefíciate de capacidades de conversión robustas y precisas, asegurando una extracción de alta calidad del contenido de texto de documentos PDF, incluyendo soporte para varios idiomas como el árabe."
       },
       {
-        title: "Procesamiento Rápido",
-        description: "Experimente velocidades de procesamiento rápidas con nuestro conversor de PDF a texto, lo que permite una conversión rápida de archivos PDF a formato de texto sin comprometer la precisión."
+        title: "Procesamiento rápido",
+        description: "Experimenta velocidades de procesamiento rápidas con nuestro convertidor de PDF a texto, permitiendo una conversión rápida de archivos PDF a formato de texto plano sin comprometer la precisión."
       },
       {
-        title: "Preservación de la Estructura del Documento",
-        description: "Convierta archivos PDF a texto plano preservando la estructura y formato del documento, asegurando la legibilidad y usabilidad del contenido de texto extraído."
+        title: "Preservación de la estructura del documento",
+        description: "Convierte archivos PDF a texto plano mientras preservas la estructura y formato del documento, asegurando la legibilidad y usabilidad del contenido de texto extraído."
       }
     ],
-    keywords: "convertir PDF a texto, convertir PDF a documento de texto, convertir documentos PDF a texto, convertir archivos PDF a texto, herramientas para convertir PDF a texto, convertir PDF a texto en línea, convertir PDF a texto gratis, convertir PDF rápidamente, convertir PDF sin registro, convertir PDF a texto sin pérdida de formato, extraer texto de PDF fácilmente, convertir archivos PDF a texto sin instalación, herramientas gratuitas para convertir PDF a texto"
+    keywords: "PDF a texto, convertir PDF a texto, PDF a texto gratis, convertidor PDF a texto, PDF a texto en línea, PDF a texto plano, extraer texto de PDF, PDF a texto gratuito, convertidor PDF a texto en línea, herramienta PDF a texto, convertir PDF a TXT, convertidor PDF a texto gratis, documento PDF a texto, convertir archivo PDF a texto, PDF a TXT sin registro, herramienta PDF a texto gratis, PDF a texto en línea gratis, conversión rápida PDF a texto, convertidor PDF a texto plano"
   }
 }
 
-export const edit_page: _edit_page = {
-  edit_page_titles: {
-    split_pdf: "Opciones para dividir PDF",
-    compress_pdf: "Opciones para comprimir PDF",
-    pdf_to_powerpoint: "Opciones para convertir PDF a PowerPoint",
-
-    word_to_pdf: "Opciones para convertir WORD a PDF",
-    powerpoint_to_pdf: "Opciones para convertir POWERPOINT a PDF",
-    excel_to_pdf: "Opciones para convertir EXCEL a PDF",
-    html_to_pdf: "Opciones para convertir HTML a PDF",
-
-    pdf_to_word: "Opciones para convertir PDF a WORD",
-    pdf_to_excel: "Opciones para convertir PDF a EXCEL",
-    pdf_to_pdf_a: "Opciones para convertir PDF a PDF/A",
-    pdf_to_text: "Opciones de PDF a texto",
-  },
-  pdf_a_options: {
-    info: "Selecciona el formato PDF/A deseado del menú desplegable a continuación para convertir tu PDF. Esto asegurará que el documento cumpla con el estándar de archivo elegido.",
-    placeholder: "Elegir formato PDF/A"
-  },
-  loader_text: "Por favor espera...",
-  add_more_button: "Agrega más archivos",
-  action_buttons: {
-    split_pdf: "Dividir PDF",
-    compress_pdf: "Comprimir PDF",
-    pdf_to_powerpoint: "Convertir a Powerpoint",
-
-    word_to_pdf: "Convertir a PDF",
-    powerpoint_to_pdf: "Convertir a PDF",
-    excel_to_pdf: "Convertir a PDF",
-    html_to_pdf: "Convertir a PDF",
-
-    pdf_to_word: "Convertir a Word",
-    pdf_to_excel: "Convertir a Excel",
-    pdf_to_pdf_a: "Convertir a PDF/A",
-    pdf_to_text: "Convertir a texto",
-    translate_pdf: "Traducir PDF",
-  },
-  pages: "paginas",
-  page: "página",
-  compress_pdf: [
-    {
-      title: "Compresión recomendada",
-      description: "Mejor equilibrio entre tamaño y calidad",
-    },
-    {
-      title: "Menos compresión",
-      description: "Tamaño de archivo más pequeño pero calidad inferior",
-    },
-    {
-      title: "Compresión extrema",
-      description:
-        "Tamaño de archivo significativamente más pequeño pero mucha calidad inferior",
-    },
-    {
-      title: "Compresión personalizada",
-      description: "Elige tu propio nivel de compresión",
-    },
-  ],
-};
-
 export const tools: _tools = {
   select: "Seleccionar",
-  or_drop: "o soltar archivos aquí",
+  or_drop: "o suelta archivos aquí",
   files: "archivos",
-  drop_files: "Arrastra los archivos aquí",
+  drop_files: "Arrastra archivos aquí",
 };
-
 export const downloadFile: _downloadFile = {
   titles: {
-    "split-pdf": ["¡División de archivo PDF exitosa!"],
     "pdf-to-powerpoint": [
-      "¡Conversión de archivos PDF a PowerPoint exitosa!",
-      "¡Conversión de archivo PDF a PowerPoint exitosa!",
+      "¡Los archivos PDF han sido convertidos a PowerPoint!",
+      "¡El archivo PDF ha sido convertido a PowerPoint!",
     ],
-
     "word-to-pdf": [
-      "¡Conversión de archivos Word a PDF exitosa!",
-      "¡Conversión de archivo Word a PDF exitosa!",
+      "¡Los archivos Word han sido convertidos a PDF!",
+      "¡El archivo Word ha sido convertido a PDF!",
     ],
     "powerpoint-to-pdf": [
-      "¡Conversión de archivos PowerPoint a PDF exitosa!",
-      "¡Conversión de archivo PowerPoint a PDF exitosa!",
+      "¡Los archivos PowerPoint han sido convertidos a PDF!",
+      "¡El archivo PowerPoint ha sido convertido a PDF!",
     ],
     "excel-to-pdf": [
-      "¡Conversión de archivos Excel a PDF exitosa!",
-      "¡Conversión de archivo Excel a PDF exitosa!",
+      "¡Los archivos Excel han sido convertidos a PDF!",
+      "¡El archivo Excel ha sido convertido a PDF!",
     ],
     "html-to-pdf": [
-      "¡Conversión de archivos HTML a PDF exitosa!",
-      "¡Conversión de archivo HTML a PDF exitosa!",
+      "¡Los archivos HTML han sido convertidos a PDF!",
+      "¡El archivo HTML ha sido convertido a PDF!",
     ],
     "pdf-to-word": [
-      "¡Conversión de archivos PDF a Word exitosa!",
-      "¡Conversión de archivo PDF a Word exitosa!",
+      "¡Los archivos PDF han sido convertidos a Word!",
+      "¡El archivo PDF ha sido convertido a Word!",
     ],
     "pdf-to-excel": [
-      "¡Conversión de archivos PDF a Excel exitosa!",
-      "¡Conversión de archivo PDF a Excel exitosa!",
+      "¡Los archivos PDF han sido convertidos a Excel!",
+      "¡El archivo PDF ha sido convertido a Excel!",
     ],
     "pdf-to-pdf-a": [
-      "¡Conversión de archivos PDF a PDF/A exitosa!",
-      "¡Conversión de archivo PDF a PDF/A exitosa!",
+      "¡Los archivos PDF han sido convertidos a PDF/A!",
+      "¡El archivo PDF ha sido convertido a PDF/A!",
     ],
     "pdf-to-text": [
-      "¡Conversión de archivos PDF a texto exitosa!",
-      "¡Conversión de archivo PDF a texto exitosa!",
+      "¡Los archivos PDF han sido convertidos a Texto!",
+      "¡El archivo PDF ha sido convertido a Texto!",
     ],
   },
+
   btnText: {
-    "split-pdf": [
-      "Descargar archivos PDF divididos",
-      "Descargar archivo PDF dividido",
-    ],
     "pdf-to-powerpoint": [
       "Descargar archivos PowerPoint convertidos",
       "Descargar archivo PowerPoint convertido",
     ],
-
     "word-to-pdf": [
       "Descargar archivos PDF convertidos",
       "Descargar archivo PDF convertido",
@@ -387,12 +340,12 @@ export const downloadFile: _downloadFile = {
       "Descargar archivo PDF/A convertido",
     ],
     "pdf-to-text": [
-      "Descargar archivos de texto extraídos",
-      "Descargar archivo de texto extraído",
+      "Descargar archivos de texto convertidos",
+      "Descargar archivo de texto convertido",
     ],
   },
+
   backto: {
-    "split-pdf": "Volver a dividir PDF",
     "pdf-to-powerpoint": "Volver a PDF a PowerPoint",
     "word-to-pdf": "Volver a Word a PDF",
     "powerpoint-to-pdf": "Volver a PowerPoint a PDF",
@@ -400,88 +353,89 @@ export const downloadFile: _downloadFile = {
     "html-to-pdf": "Volver a HTML a PDF",
     "pdf-to-word": "Volver a PDF a Word",
     "pdf-to-excel": "Volver a PDF a Excel",
-    "pdf-to-pdf-a": "Volver a PDF a PDF-A",
+    "pdf-to-pdf-a": "Volver a PDF a PDF/A",
     "pdf-to-text": "Volver a PDF a Texto",
   },
 };
 
-export const footer: _footer = {
-  brand: "PDFEquips",
-  terms: "términos",
-  conditions: "condiciones",
-  privacy_policy: "política de privacidad",
-};
 
+// Spanish (es) – copy into errors.es.ts
 export const errors: _errors = {
   EMPTY_FILE: {
-    message: "El archivo está vacío. Por favor, elija un archivo válido.",
+    message: "El archivo está vacío. Por favor elige un archivo válido.",
     code: "ERR_EMPTY_FILE",
-  },
-  NOT_SUPPORTED_TYPE: {
-    message: "El archivo no es un tipo compatible.",
-    types: {
-      PDF: "Por favor, elija un archivo PDF válido.",
-      DOC: "Por favor, elija un archivo de documento de Word válido.",
-      DOCX: "Por favor, elija un archivo de documento de Word válido.",
-      XLS: "Por favor, elija un archivo de hoja de cálculo de Excel válido.",
-      XLSX: "Por favor, elija un archivo de hoja de cálculo de Excel válido.",
-      PPT: "Por favor, elija un archivo de presentación de PowerPoint válido.",
-      PPTX: "Por favor, elija un archivo de presentación de PowerPoint válido.",
-    },
-    code: "ERR_INVALID_FILE_TYPE",
   },
   FILE_TOO_LARGE: {
     message:
-      "El archivo es demasiado grande. Por favor, elija un archivo más pequeño o use nuestra herramienta de compresión de PDF para reducir el tamaño del archivo.",
+      "El archivo es demasiado grande. Elige un archivo más pequeño o usa nuestra herramienta compress-pdf para reducir el tamaño.",
     code: "ERR_FILE_SIZE_LIMIT_EXCEEDED",
+  },
+  NOT_SUPPORTED_TYPE: {
+    message: "El tipo de archivo no es compatible.",
+    types: {
+      PDF: "Por favor elige un archivo PDF válido.",
+      DOC: "Por favor elige un documento Word válido.",
+      DOCX: "Por favor elige un documento Word válido.",
+      XLS: "Por favor elige una hoja de cálculo Excel válida.",
+      XLSX: "Por favor elige una hoja de cálculo Excel válida.",
+      PPT: "Por favor elige una presentación PowerPoint válida.",
+      PPTX: "Por favor elige una presentación PowerPoint válida.",
+    },
+    code: "ERR_INVALID_FILE_TYPE",
   },
   FILE_CORRUPT: {
     message:
-      "El archivo estácorrupto y no se puede procesar. Por favor, elija un archivo válido.",
+      "El archivo está corrupto y no se puede procesar. Elige un archivo válido.",
     code: "ERR_FILE_CORRUPT",
   },
   MAX_FILES_EXCEEDED: {
     message:
-      "Ha excedido el número máximo de archivos permitidos. Por favor, elimine algunos archivos e intente nuevamente.",
+      "Has excedido el número máximo de archivos permitidos. Elimina algunos archivos e inténtalo de nuevo.",
     code: "ERR_MAX_FILES_EXCEEDED",
   },
   NO_FILES_SELECTED: {
-    message:
-      "No se han seleccionado archivos. Por favor, seleccione al menos un archivo.",
+    message: "No se seleccionaron archivos. Selecciona al menos uno.",
     code: "ERR_NO_FILES_SELECTED",
   },
   UNKNOWN_ERROR: {
     message:
-      "Ha ocurrido un error desconocido. Por favor, inténtelo de nuevo más tarde o contacte al soporte.",
+      "Ocurrió un error desconocido. Inténtalo de nuevo más tarde o contacta con soporte.",
     code: "ERR_UNKNOWN",
   },
   ERR_NETWORK: {
     message:
-      "Ha ocurrido un error en la red. Por favor, comprueba tu conexión a internet e inténtalo de nuevo.",
+      "Ocurrió un error de red. Verifica tu conexión a internet e inténtalo de nuevo.",
     code: "ERR_NETWORK",
   },
   ERR_UPLOAD_COUNT: {
-    message: "Por favor, suba al menos dos archivos para fusionar.",
+    message: "Por favor sube al menos dos archivos para combinarlos.",
     code: "ERR_UPLOAD_COUNT",
   },
   PASSWORD_REQUIRED: {
-    message: "El PDF requiere una contraseña.",
+    message: "El PDF requiere contraseña.",
     code: "PASSWORD_REQUIRED",
   },
-
   INCORRECT_PASSWORD: {
-    message: "La contraseña que ingresaste es incorrecta.",
+    message: "La contraseña ingresada es incorrecta.",
     code: "INCORRECT_PASSWORD",
   },
   MAX_DAILY_USAGE: {
     message:
-      "Has alcanzado tu límite de uso diario. Por favor, actualiza tu plan para seguir usando esta función sin interrupciones.",
+      "Has alcanzado tu límite diario de uso. Actualiza tu plan para continuar sin interrupciones.",
     code: "MAX_DAILY_USAGE",
   },
   alerts: {
-    maxFiles: "Máximo 50 archivos. ¡Suscríbete para más!",
-    totalPages: "Máximo 1,500 páginas. ¡Actualiza ahora!",
+    maxFiles: "Máximo 15 archivos. ¡Suscríbete para más!",
+    singleFileSize:
+      "El tamaño debe ser menor a 100 MB. ¡Actualiza para archivos más grandes!",
     perFilePages: "500 páginas por archivo. ¡Desbloquea más ahora!",
-    fileSize: "50 MB por archivo. ¡Mejora para obtener más!",
+    fileSize: "50 MB por archivo. ¡Actualiza para más!",
   },
+};
+
+export const adBlockerContent: adBlockerContentType = {
+  title: "Bloqueador de anuncios detectado",
+  description: "Notamos que usas un bloqueador de anuncios. Desactívalo o actualiza a premium para una experiencia sin anuncios.",
+  reloadPage: "Recargar página",
+  upgradeToPremium: "Actualizar a Premium"
 };

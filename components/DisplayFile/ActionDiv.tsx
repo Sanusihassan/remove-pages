@@ -7,13 +7,14 @@ import { useFileStore } from "../../src/file-store";
 import { sanitizeKey } from "../../src/utils";
 import { setField, type ToolState } from "../../src/store";
 import type { SetStateAction, Dispatch } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export type ActionProps = {
   extension: string;
   fileName: string;
   setPassword?: Dispatch<SetStateAction<string>>;
   needsPassword?: boolean;
+  noRotation?: boolean;
 };
 
 export const ActionDiv = ({
@@ -21,7 +22,11 @@ export const ActionDiv = ({
   fileName,
   setPassword,
   needsPassword,
+  noRotation,
 }: ActionProps) => {
+  useEffect(() => {
+    console.log("extension", extension);
+  }, []);
   const { files, setFiles } = useFileStore();
   const dispatch = useDispatch();
   const [passwordInput, setPasswordInput] = useState("");
@@ -75,9 +80,11 @@ export const ActionDiv = ({
         <button className="btn btn-light" onClick={(e) => handleClick(e)}>
           <TrashIcon className="icon hero-icon" />
         </button>
-        <button className="btn btn-light" onClick={handleRotate}>
-          <RefreshIcon className="hero-icon" />
-        </button>
+        {noRotation ? null : (
+          <button className="btn btn-light" onClick={handleRotate}>
+            <RefreshIcon className="hero-icon" />
+          </button>
+        )}
       </div>
       {needsPassword ? (
         <form>

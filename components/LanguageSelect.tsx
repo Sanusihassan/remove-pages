@@ -5,7 +5,6 @@ import {
   setField,
   selectLanguagesForFile,
   selectSelectedLanguages,
-  type ToolState,
 } from "../src/store";
 import type { edit_page as _edit_pages } from "../src/content";
 import type {
@@ -14,8 +13,8 @@ import type {
   OptionProps,
   GroupBase,
 } from "react-select";
-import { languages } from "../src/content/content";
 import { sanitizeKey } from "../src/utils";
+import { languages } from "../src/content/languages";
 
 type OptionType = {
   value: string;

@@ -27,11 +27,8 @@ export interface Props {
 const { title, description, openGraph, twitter } = Astro.props;
 ---
 
-<!-- Basic Meta Tags -->
 <title>{title}</title>
 <meta name="description" content={description} />
-
-<!-- Open Graph Meta Tags -->
 {
   openGraph && (
     <>
@@ -67,8 +64,6 @@ const { title, description, openGraph, twitter } = Astro.props;
     </>
   )
 }
-
-<!-- Twitter Card Meta Tags -->
 {
   twitter && (
     <>

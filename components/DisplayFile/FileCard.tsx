@@ -67,10 +67,6 @@ const FileCard = ({
     return state.tool.rotations?.find((r) => r.k === sanitizedKey) || null;
   });
 
-  const errorCode = useSelector(
-    (state: { tool: ToolState }) => state.tool.errorCode
-  );
-
   // Get all passwords for updating state
   const allPasswords = useSelector(selectPasswords);
 
@@ -181,6 +177,7 @@ const FileCard = ({
         fileName={file.name}
         setPassword={setPassword}
         needsPassword={needsPassword}
+        noRotation={languageSelectProps.themeColor.includes("pdf-to-text")}
       />
       <div className="card-body">
         {!showLoader ? (
