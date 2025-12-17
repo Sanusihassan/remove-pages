@@ -7,7 +7,7 @@ import { useFileStore } from "../../src/file-store";
 import { sanitizeKey } from "../../src/utils";
 import { setField, type ToolState } from "../../src/store";
 import type { SetStateAction, Dispatch } from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export type ActionProps = {
   extension: string;
@@ -24,9 +24,6 @@ export const ActionDiv = ({
   needsPassword,
   noRotation,
 }: ActionProps) => {
-  useEffect(() => {
-    console.log("extension", extension);
-  }, []);
   const { files, setFiles } = useFileStore();
   const dispatch = useDispatch();
   const [passwordInput, setPasswordInput] = useState("");

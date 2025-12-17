@@ -17,7 +17,7 @@ export interface ToolState {
   limitationMsg: string;
   rotations: { k: string; r: number }[];
   passwords: { k: string; p: string }[];
-  subscriptionStatus: boolean;
+  subscriptionStatus: boolean | null;
   selectedLanguages: { k: string; langs: string[] }[] | null;
   converter: "free" | "premium";
   isAdBlocked: boolean;
@@ -34,7 +34,7 @@ const initialState: ToolState = {
   limitationMsg: "",
   rotations: [],
   passwords: [],
-  subscriptionStatus: false,
+  subscriptionStatus: null,
   selectedLanguages: null,
   converter: "free",
   isAdBlocked: false,

@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import * as dropzone from "react-dropzone";
 import EditPage from "./EditPage";
-import ErrorElement from "./ErrorElement";
 import { useSelector, useDispatch } from "react-redux";
 import { FileInputForm } from "./Tool/FileInputForm";
 import DownloadFile from "./DownloadFile";
@@ -14,7 +13,7 @@ import {
   validateFiles,
 } from "../src/utils";
 import type { edit_page } from "../src/content";
-import { fetchSubscriptionStatus } from "fetch-subscription-status";
+import { getUserSubscription } from "fetch-subscription-status";
 import { Bounce, ToastContainer } from "react-toastify";
 
 export type errorType = {
@@ -119,8 +118,9 @@ const Tool: React.FC<ToolProps> = ({
 
   useEffect(() => {
     (async () => {
-      const status = await fetchSubscriptionStatus();
-      dispatch(setField({ SubscriptionStatus: status }));
+      const subscription = await getUserSubscription();
+      const status = subscription.isActive;
+      dispatch(setField({ subscriptionStatus: status }));
       if (!status) {
         const head = document.head;
 
