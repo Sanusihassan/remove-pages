@@ -425,11 +425,25 @@ export const errors: _errors = {
     code: "MAX_DAILY_USAGE",
   },
   alerts: {
+    // Frontend validation
     maxFiles: "Máximo 15 archivos. ¡Suscríbete para más!",
-    singleFileSize:
-      "El tamaño debe ser menor a 100 MB. ¡Actualiza para archivos más grandes!",
+    singleFileSize: "El archivo debe ser menor de 100 MB. ¡Actualiza para subir archivos más grandes!",
     perFilePages: "500 páginas por archivo. ¡Desbloquea más ahora!",
     fileSize: "50 MB por archivo. ¡Actualiza para más!",
+    // Backend file validation
+    fileNotUploaded: "No se subió ningún archivo. Por favor selecciona un archivo.",
+    fileEmpty: "El archivo subido está vacío. Por favor selecciona un archivo válido.",
+    fileTooLarge: "El archivo excede 200 MB. ¡Actualiza para archivos más grandes!",
+    invalidFileType: "Tipo de archivo inválido. Por favor sube un formato compatible.",
+    fileCorrupt: "El archivo parece estar dañado. Por favor intenta con otro archivo.",
+    insufficientUnits: "Unidades de conversión insuficientes. ¡Mejora tu plan!",
+    // Auth errors
+    authRequired: "Por favor inicia sesión para usar funciones premium.",
+    sessionExpired: "Tu sesión ha expirado. Por favor inicia sesión nuevamente.",
+    invalidToken: "Autenticación fallida. Por favor inicia sesión nuevamente.",
+    userNotFound: "Cuenta no encontrada. Por favor inicia sesión nuevamente.",
+    authError: "Error de autenticación. Por favor intenta de nuevo.",
+    serverError: "Error del servidor. Por favor intenta más tarde.",
   },
 };
 

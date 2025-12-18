@@ -36,7 +36,7 @@ const initialState: ToolState = {
   passwords: [],
   subscriptionStatus: null,
   selectedLanguages: null,
-  converter: "free",
+  converter: "premium",
   isAdBlocked: false,
 };
 

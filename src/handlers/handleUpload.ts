@@ -161,6 +161,40 @@ export const handleUpload = async (
       dispatch(setField({ errorMessage: errors.ERR_NETWORK.message }));
       return;
     }
+
+    // Handle server validation/auth errors
+    if (axios.isAxiosError(error) && error.response) {
+      try {
+        const decoder = new TextDecoder('utf-8');
+        const errorData = JSON.parse(decoder.decode(error.response.data));
+
+        const errorCodeMap: Record<string, string> = {
+          // File validation errors
+          'FILE_NOT_UPLOADED': errors.alerts.fileNotUploaded,
+          'FILE_EMPTY': errors.alerts.fileEmpty,
+          'FILE_TOO_LARGE': errors.alerts.fileTooLarge,
+          'INVALID_FILE_TYPE': errors.alerts.invalidFileType,
+          'FILE_CORRUPT': errors.alerts.fileCorrupt,
+          'INSUFFICIENT_CONVERSION_UNITS': errors.alerts.insufficientUnits,
+          // Auth errors
+          'AUTH_TOKEN_MISSING': errors.alerts.authRequired,
+          'AUTH_TOKEN_EXPIRED': errors.alerts.sessionExpired,
+          'AUTH_INVALID_TOKEN': errors.alerts.invalidToken,
+          'AUTH_USER_NOT_FOUND': errors.alerts.userNotFound,
+          'AUTH_SERVER_ERROR': errors.alerts.authError,
+          'SERVER_CONFIG_ERROR': errors.alerts.serverError,
+        };
+
+        const message = errorCodeMap[errorData.errorCode];
+        if (message) {
+          dispatch(setField({ limitationMsg: message }));
+          return;
+        }
+      } catch {
+        // Failed to parse error response
+      }
+    }
+
     dispatch(setField({ isSubmitted: false }));
   } finally {
     dispatch(setField({ isSubmitted: false }));

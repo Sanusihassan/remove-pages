@@ -426,11 +426,25 @@ export const errors: _ = {
         code: "MAX_DAILY_USAGE",
     },
     alerts: {
-        maxFiles: "最多 15 个文件。订阅获取更多！",
-        singleFileSize:
-            "文件大小必须小于 100 MB。升级上传更大文件！",
-        perFilePages: "每文件 500 页。现在解锁更多！",
-        fileSize: "每文件 50 MB。升级获取更多！",
+        // Frontend validation
+        maxFiles: "最多15个文件。订阅获取更多！",
+        singleFileSize: "文件大小必须小于100 MB。升级以上传更大的文件！",
+        perFilePages: "每个文件500页。立即解锁更多！",
+        fileSize: "每个文件50 MB。升级获取更多！",
+        // Backend file validation
+        fileNotUploaded: "未上传文件。请选择一个文件。",
+        fileEmpty: "上传的文件为空。请选择一个有效的文件。",
+        fileTooLarge: "文件超过200 MB限制。升级以获取更大文件！",
+        invalidFileType: "文件类型无效。请上传支持的格式。",
+        fileCorrupt: "文件似乎已损坏。请尝试其他文件。",
+        insufficientUnits: "转换单位不足。升级您的计划！",
+        // Auth errors
+        authRequired: "请登录以使用高级功能。",
+        sessionExpired: "您的会话已过期。请重新登录。",
+        invalidToken: "身份验证失败。请重新登录。",
+        userNotFound: "未找到账户。请重新登录。",
+        authError: "身份验证错误。请重试。",
+        serverError: "服务器错误。请稍后重试。",
     },
 };
 

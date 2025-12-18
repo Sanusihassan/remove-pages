@@ -426,11 +426,25 @@ export const errors: _ = {
         code: "MAX_DAILY_USAGE",
     },
     alerts: {
+        // Frontend validation
         maxFiles: "Maximum 15 fichiers. Abonnez-vous pour plus !",
-        singleFileSize:
-            "La taille doit être inférieure à 100 Mo. Passez premium pour des fichiers plus grands !",
+        singleFileSize: "Le fichier doit faire moins de 100 Mo. Passez à la version supérieure pour des fichiers plus gros !",
         perFilePages: "500 pages par fichier. Débloquez plus maintenant !",
-        fileSize: "50 Mo par fichier. Passez premium pour plus !",
+        fileSize: "50 Mo par fichier. Passez à la version supérieure pour plus !",
+        // Backend file validation
+        fileNotUploaded: "Aucun fichier téléchargé. Veuillez sélectionner un fichier.",
+        fileEmpty: "Le fichier téléchargé est vide. Veuillez sélectionner un fichier valide.",
+        fileTooLarge: "Le fichier dépasse 200 Mo. Passez à la version supérieure pour des fichiers plus gros !",
+        invalidFileType: "Type de fichier invalide. Veuillez télécharger un format pris en charge.",
+        fileCorrupt: "Le fichier semble être corrompu. Veuillez essayer un autre fichier.",
+        insufficientUnits: "Unités de conversion insuffisantes. Améliorez votre forfait !",
+        // Auth errors
+        authRequired: "Veuillez vous connecter pour utiliser les fonctionnalités premium.",
+        sessionExpired: "Votre session a expiré. Veuillez vous reconnecter.",
+        invalidToken: "Échec de l'authentification. Veuillez vous reconnecter.",
+        userNotFound: "Compte introuvable. Veuillez vous reconnecter.",
+        authError: "Erreur d'authentification. Veuillez réessayer.",
+        serverError: "Erreur du serveur. Veuillez réessayer plus tard.",
     },
 };
 

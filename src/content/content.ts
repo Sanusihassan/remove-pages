@@ -448,11 +448,25 @@ export const errors = {
     code: "MAX_DAILY_USAGE",
   },
   alerts: {
+    // Frontend validation
     maxFiles: "Max 15 files. Subscribe for more!",
-    singleFileSize:
-      "file size must be under 100 MB. Upgrade to upload bigger files!",
+    singleFileSize: "File size must be under 100 MB. Upgrade to upload bigger files!",
     perFilePages: "500 pages per file. Unlock more now!",
     fileSize: "50MB per file. Upgrade for more!",
+    // Backend file validation
+    fileNotUploaded: "No file was uploaded. Please select a file.",
+    fileEmpty: "The uploaded file is empty. Please select a valid file.",
+    fileTooLarge: "File exceeds 200MB limit. Upgrade for larger files!",
+    invalidFileType: "Invalid file type. Please upload a supported format.",
+    fileCorrupt: "File appears to be corrupted. Please try another file.",
+    insufficientUnits: "Not enough conversion units. Upgrade your plan!",
+    // Auth errors
+    authRequired: "Please log in to use premium features.",
+    sessionExpired: "Your session has expired. Please log in again.",
+    invalidToken: "Authentication failed. Please log in again.",
+    userNotFound: "Account not found. Please log in again.",
+    authError: "Authentication error. Please try again.",
+    serverError: "Server error. Please try again later.",
   },
 };
 

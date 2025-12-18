@@ -6,6 +6,7 @@ import { FileInputForm } from "./Tool/FileInputForm";
 import DownloadFile from "./DownloadFile";
 import { useFileStore } from "../src/file-store";
 import { setField } from "../src/store";
+import Cookies from "js-cookie";
 import {
   ACCEPTED,
   acceptedMimeTypes,
@@ -121,6 +122,9 @@ const Tool: React.FC<ToolProps> = ({
       const subscription = await getUserSubscription();
       const status = subscription.isActive;
       dispatch(setField({ subscriptionStatus: status }));
+      if (typeof window !== "undefined") {
+        Cookies.set("subscription", JSON.stringify(subscription.subscription));
+      }
       if (!status) {
         const head = document.head;
 

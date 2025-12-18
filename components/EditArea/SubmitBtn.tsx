@@ -40,9 +40,7 @@ export function SubmitBtn({
     <button
       className={`submit-btn ${k}`}
       onClick={() => {
-        console.log("Before dispatch");
         dispatch(setField({ isSubmitted: true }));
-        console.log("After dispatch", isSubmitted);
         dispatch(setField({ showOptions: false }));
 
         if (subscriptionStatus) {

@@ -43,3 +43,7 @@
 .mb-4 {
   @include extend("mb-4");
 }
+
+.mb-0 {
+  @include extend("mb-0");
+}
