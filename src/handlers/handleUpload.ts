@@ -185,9 +185,12 @@ export const handleUpload = async (
           'SERVER_CONFIG_ERROR': errors.alerts.serverError,
         };
 
-        const message = errorCodeMap[errorData.errorCode];
+        const errorCode = errorCodeMap.errorCode;
+
+        const message = errorCodeMap[errorCode];
         if (message) {
           dispatch(setField({ limitationMsg: message }));
+          dispatch(setField({ errorCode }));
           return;
         }
       } catch {

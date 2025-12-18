@@ -29,6 +29,7 @@ export const edit_page: _edit_page = {
   pages: "páginas",
   page: "página",
   cta: "Ver Planes",
+  rechargeCta: "Recargar Unidades",
   pdf_a_options: {
     info: "Seleccione el formato PDF/A deseado en el menú desplegable a continuación para convertir su PDF. Esto asegurará que el documento cumpla con el estándar de archivo elegido.",
     placeholder: "Elegir formato PDF/A"
@@ -436,7 +437,7 @@ export const errors: _errors = {
     fileTooLarge: "El archivo excede 200 MB. ¡Actualiza para archivos más grandes!",
     invalidFileType: "Tipo de archivo inválido. Por favor sube un formato compatible.",
     fileCorrupt: "El archivo parece estar dañado. Por favor intenta con otro archivo.",
-    insufficientUnits: "Unidades de conversión insuficientes. ¡Mejora tu plan!",
+    insufficientUnits: "Unidades de conversión insuficientes. ¡Actualiza o recarga!",
     // Auth errors
     authRequired: "Por favor inicia sesión para usar funciones premium.",
     sessionExpired: "Tu sesión ha expirado. Por favor inicia sesión nuevamente.",

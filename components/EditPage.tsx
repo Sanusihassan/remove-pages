@@ -101,7 +101,7 @@ const EditPage = ({
             }
           </bdi>
         </h5>
-        <Options edit_page={edit_page} theme={`var(--${path})`} />
+        <Options edit_page={edit_page} theme={`var(--${path})`} lang={lang} />
         <div className="hide-onsmall">
           <SubmitBtn errors={errors} k={path} edit_page={edit_page} />
         </div>

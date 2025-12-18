@@ -8,9 +8,11 @@ import { OutputFileNameInput } from "./Options/OutputFileNameInput";
 export const Options = ({
   edit_page,
   theme,
+  lang,
 }: {
   edit_page: edit_page;
   theme: string;
+  lang: string;
 }) => {
   const limitationMsg = useSelector(
     (state: { tool: ToolState }) => state.tool.limitationMsg
@@ -26,7 +28,7 @@ export const Options = ({
           {limitationMsg ? (
             <div className="limitation-alert" role="alert">
               {limitationMsg}
-              <CTABtn cta={edit_page.cta} />
+              <CTABtn cta={edit_page.cta} lang={lang} />
             </div>
           ) : null}
         </div>

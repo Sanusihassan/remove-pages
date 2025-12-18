@@ -240,6 +240,7 @@ export const edit_page: _edit_page = {
     pages: "页",
     page: "页",
     cta: "查看套餐",
+    rechargeCta: "充值单位",
     pdf_a_options: {
         info: "从下方下拉菜单中选择所需的 PDF/A 格式来转换您的 PDF。这将确保文档符合所选的归档标准。",
         placeholder: "选择 PDF/A 格式"
@@ -437,7 +438,7 @@ export const errors: _ = {
         fileTooLarge: "文件超过200 MB限制。升级以获取更大文件！",
         invalidFileType: "文件类型无效。请上传支持的格式。",
         fileCorrupt: "文件似乎已损坏。请尝试其他文件。",
-        insufficientUnits: "转换单位不足。升级您的计划！",
+        insufficientUnits: "转换单位不足。升级或充值！",
         // Auth errors
         authRequired: "请登录以使用高级功能。",
         sessionExpired: "您的会话已过期。请重新登录。",

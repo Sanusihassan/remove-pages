@@ -262,6 +262,7 @@ export const edit_page = {
   pages: "pages",
   page: "page",
   cta: "View Plans",
+  rechargeCta: "Recharge Units",
   pdf_a_options: {
     info: "Select the desired PDF/A format from the dropdown menu below to convert your PDF. This will ensure the document complies with the chosen archival standard.",
     placeholder: "Choose PDF/A Format"
@@ -459,7 +460,7 @@ export const errors = {
     fileTooLarge: "File exceeds 200MB limit. Upgrade for larger files!",
     invalidFileType: "Invalid file type. Please upload a supported format.",
     fileCorrupt: "File appears to be corrupted. Please try another file.",
-    insufficientUnits: "Not enough conversion units. Upgrade your plan!",
+    insufficientUnits: "Not enough conversion units. Upgrade or recharge!",
     // Auth errors
     authRequired: "Please log in to use premium features.",
     sessionExpired: "Your session has expired. Please log in again.",
