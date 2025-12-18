@@ -73,11 +73,32 @@ const Files = ({
       setFiles([...files, ...newFiles]);
     }
   };
+  const MIME_TYPE_MAP: Record<string, string> = {
+    ".pdf": "application/pdf",
+    ".docx":
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ".doc": "application/msword",
+    ".xlsx":
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    ".xls": "application/vnd.ms-excel",
+    ".pptx":
+      "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    ".ppt": "application/vnd.ms-powerpoint",
+    ".html": "text/html",
+    ".htm": "text/html",
+    ".jpg": "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".png": "image/png",
+    ".txt": "text/plain",
+  };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: extension ? { [extension]: [] } : undefined,
-    noClick: files.length > 0, // Disable click when files are present
+    accept:
+      extension && MIME_TYPE_MAP[extension]
+        ? { [MIME_TYPE_MAP[extension]]: [extension] }
+        : undefined,
+    noClick: files.length > 0,
     noKeyboard: files.length > 0,
   });
 

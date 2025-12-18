@@ -15,7 +15,7 @@ export function SubmitBtn({
   errors: errors;
 }) {
   const dispatch = useDispatch();
-  const { submitBtn, files } = useFileStore();
+  const { submitBtn } = useFileStore();
   // state variables:
   const errorMessage = useSelector(
     (state: { tool: ToolState }) => state.tool.errorMessage
@@ -29,15 +29,20 @@ export function SubmitBtn({
   const subscriptionStatus = useSelector(
     (state: { tool: ToolState }) => state.tool.subscriptionStatus
   );
+  // ✅ Always call the hook, then use the condition
+  const isAdBlockedState = useSelector(
+    (state: { tool: ToolState }) => state.tool.isAdBlocked
+  );
   const isAdBlocked =
-    process.env.NODE_ENV === "development"
-      ? false
-      : useSelector((state: { tool: ToolState }) => state.tool.isAdBlocked);
+    process.env.NODE_ENV === "development" ? false : isAdBlockedState;
+
   return (
     <button
       className={`submit-btn ${k}`}
       onClick={() => {
+        console.log("Before dispatch");
         dispatch(setField({ isSubmitted: true }));
+        console.log("After dispatch", isSubmitted);
         dispatch(setField({ showOptions: false }));
 
         if (subscriptionStatus) {

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-
 import { useDispatch, useSelector } from "react-redux";
 // store
 import type { ToolState } from "../../src/store";
@@ -8,7 +7,6 @@ import { handleChange } from "../../src/handlers/handleChange";
 import { useFileStore } from "../../src/file-store";
 // types
 import type { tools } from "../../src/content";
-import { getUserInfo } from "fetch-subscription-status";
 import Loading from "../Loading";
 type AcceptedFileTypes = {
   [key in ".pdf" | ".pptx" | ".docx" | ".xlsx" | ".jpg" | ".html"]: string;
@@ -60,6 +58,9 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
   const downloadBtn = useRef<HTMLAnchorElement>(null);
   const [loaded, setLoaded] = useState(false);
   useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
     setLoaded(true);
     setFileInput(fileInput);
     setSubmitBtn(submitBtn);

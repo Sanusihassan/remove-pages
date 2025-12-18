@@ -11,7 +11,7 @@ import {
 import { howToSchemas } from "../how-to/how-to";
 import BaseLayout from "../partials/BaseLayout.astro";
 import { configureStore } from "@reduxjs/toolkit";
-
+// possible dynamic routes being matched: src/pages/[tool].astro.
 export const routes = {
   "/pdf-to-powerpoint": { item: tool["PDF_to_Powerpoint"] },
   "/word-to-pdf": { item: tool["WORD_to_PDF"] },
@@ -75,14 +75,7 @@ const websiteSchema = {
 };
 
 const lang = "en"; // Assuming English, adjust if dynamic
-import toolReducer from "../store";
 import { ToolWrapper } from "../../components/ToolWrapper";
-export const store = configureStore({
-  reducer: {
-    tool: toolReducer,
-  },
-});
-
 const seoConfig = {
   title: item.seoTitle,
   description: item.description,

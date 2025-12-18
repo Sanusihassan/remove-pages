@@ -57,3 +57,5 @@ needs password then add password if password added then fetch image & analizePDF
 daily-usage is beign increased without hitting download.
 
 transalte the how-tos.
+
+looks like store is not configured correctly.

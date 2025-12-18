@@ -8,11 +8,18 @@ import HowTo from "./HowTo";
 import AdBlockDetector from "./AdBlockDetector";
 import type { adBlockerContentType } from "../src/content/content";
 
-export const store = configureStore({
-  reducer: {
-    tool: toolReducer,
-  },
-});
+let store: ReturnType<typeof configureStore> | null = null;
+
+function getStore() {
+  if (!store) {
+    store = configureStore({
+      reducer: {
+        tool: toolReducer,
+      },
+    });
+  }
+  return store;
+}
 
 type ToolWrapperProps = ToolProps & {
   features: {
@@ -30,8 +37,9 @@ export type AppDispatch = typeof store.dispatch;
 
 export function ToolWrapper(props: ToolWrapperProps) {
   const { features, seoTitle, to, howTo, adBlockerContent, lang } = props;
+  const reduxStore = getStore();
   return (
-    <ReduxProvider store={store}>
+    <ReduxProvider store={reduxStore}>
       <ToolComponent {...props} />
       <div className="container">
         <HowTo howTo={howTo} alt={seoTitle} imgSrc={to.replace("/", "")} />
