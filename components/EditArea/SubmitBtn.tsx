@@ -1,10 +1,15 @@
 import { Spinner } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useFileStore } from "../../src/file-store";
-import { type ToolState, setField } from "../../src/store";
+import {
+  type ToolState,
+  selectSelectedLanguages,
+  setField,
+} from "../../src/store";
 import type { edit_page, errors } from "../../src/content";
 import { canUseSiteToday } from "fetch-subscription-status";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
 export function SubmitBtn({
   k,
   edit_page,
@@ -29,13 +34,19 @@ export function SubmitBtn({
   const subscriptionStatus = useSelector(
     (state: { tool: ToolState }) => state.tool.subscriptionStatus
   );
+  const allSelectedLanguages = useSelector(selectSelectedLanguages);
+  const ocr_warning = useSelector(
+    (state: { tool: ToolState }) => state.tool.ocr_warning
+  );
   // ✅ Always call the hook, then use the condition
   const isAdBlockedState = useSelector(
     (state: { tool: ToolState }) => state.tool.isAdBlocked
   );
   const isAdBlocked =
     process.env.NODE_ENV === "development" ? false : isAdBlockedState;
-
+  useEffect(() => {
+    console.log("k", k);
+  }, []);
   return (
     <button
       className={`submit-btn ${k}`}
@@ -63,7 +74,13 @@ export function SubmitBtn({
         }
       }}
       disabled={
-        errorMessage.length > 0 || limitationMsg.length > 0 || isAdBlocked
+        errorMessage.length > 0 ||
+        limitationMsg.length > 0 ||
+        isAdBlocked ||
+        (allSelectedLanguages &&
+          allSelectedLanguages.length === 0 &&
+          ocr_warning !== "" &&
+          k === "pdf-to-text")
       }
     >
       <bdi>

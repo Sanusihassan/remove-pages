@@ -177,9 +177,6 @@ export const handleUpload = async (
     // Handle server validation/auth errors
     if (axios.isAxiosError(error) && error.response) {
       try {
-        const decoder = new TextDecoder('utf-8');
-        const errorData = JSON.parse(decoder.decode(error.response.data));
-
         const errorCodeMap: Record<string, string> = {
           // File validation errors
           'FILE_NOT_UPLOADED': errors.alerts.fileNotUploaded,
@@ -195,6 +192,7 @@ export const handleUpload = async (
           'AUTH_USER_NOT_FOUND': errors.alerts.userNotFound,
           'AUTH_SERVER_ERROR': errors.alerts.authError,
           'SERVER_CONFIG_ERROR': errors.alerts.serverError,
+          'MAX_PAGES_EXCEEDED': errors.MAX_PAGES_EXCEEDED.message,
         };
 
         const errorCode = errorCodeMap.errorCode;

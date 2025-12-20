@@ -1,11 +1,14 @@
 import { useSelector } from "react-redux";
+import { selectSelectedLanguages } from "../src/store";
 
 export const WarningAlert = () => {
-  const warning_alert = useSelector(
+  const ocr_warning = useSelector(
     (state: { tool: any }) => state.tool.ocr_warning
   );
 
-  if (!warning_alert) {
+  const allSelectedLanguages = useSelector(selectSelectedLanguages);
+
+  if (allSelectedLanguages && allSelectedLanguages.length !== 0) {
     return null;
   }
   return (
@@ -13,7 +16,7 @@ export const WarningAlert = () => {
       className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-2 text-center"
       role="alert"
     >
-      {warning_alert}
+      {ocr_warning}
     </div>
   );
 };
