@@ -132,6 +132,14 @@ const FileCard = ({
             }
           }
         }
+      } else {
+        if (isSubscribedRef.current) {
+          setImageUrl(
+            !file.size
+              ? "/images/corrupted.png"
+              : getPlaceHoderImageUrl(extension)
+          );
+        }
       }
     } finally {
       if (isSubscribedRef.current) {

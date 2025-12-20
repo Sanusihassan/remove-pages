@@ -68,5 +68,3 @@ for mobile show an info alert to alert those who don't have a premium account th
 translate the newly-added error entry.
 
 show info alert for documents that needs ocr.
-
-git add .; git commit -m "fixed legacy convert-tools apis"; git push origin master
