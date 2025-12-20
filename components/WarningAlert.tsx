@@ -8,11 +8,9 @@ export const WarningAlert = () => {
 
   const allSelectedLanguages = useSelector(selectSelectedLanguages);
 
-  if (
-    allSelectedLanguages &&
-    allSelectedLanguages.length !== 0 &&
-    ocr_warning === ""
-  ) {
+  if (ocr_warning === "") return null;
+
+  if (allSelectedLanguages && allSelectedLanguages.length !== 0) {
     return null;
   }
   return (
