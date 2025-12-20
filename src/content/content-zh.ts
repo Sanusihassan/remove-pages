@@ -247,7 +247,8 @@ export const edit_page: _edit_page = {
     },
     languageSelectContent: {
         placeholder: "选择语言（最多 3 种）",
-        warning: "此文档为扫描件。请选其语言以确保结果准确。"
+        warning: "此文档为扫描件。请选其语言以确保结果准确。",
+        ocr_warning: "添加文档语言以获得更准确的结果。",
     },
     converter: {
         free: "免费",
@@ -425,6 +426,10 @@ export const errors: _ = {
         message:
             "您已达到每日使用上限。请升级套餐，继续无中断使用此功能。",
         code: "MAX_DAILY_USAGE",
+    },
+    MAX_PAGES_EXCEEDED: {
+        message: "PDF 超过最大页数限制 50 页。",
+        code: "ERR_MAX_PAGES_EXCEEDED",
     },
     alerts: {
         // Frontend validation

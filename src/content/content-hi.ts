@@ -246,7 +246,8 @@ export const edit_page: _edit_page = {
     },
     languageSelectContent: {
         placeholder: "भाषाएं चुनें (अधिकतम 3)",
-        warning: "यह दस्तावेज़ स्कैन किया गया है। सटीक परिणामों के लिए कृपया इसकी भाषा चुनें।"
+        warning: "यह दस्तावेज़ स्कैन किया गया है। सटीक परिणामों के लिए कृपया इसकी भाषा चुनें।",
+        ocr_warning: "दस्तावेज़ की भाषा जोड़ें ताकि अधिक सटीक परिणाम मिलें।",
     },
     converter: {
         free: "मुफ्त",
@@ -426,6 +427,10 @@ export const errors: _ = {
         message:
             "आपने अपनी दैनिक उपयोग सीमा पूरी कर ली है। बिना रुकावट के जारी रखने के लिए प्लान अपग्रेड करें।",
         code: "MAX_DAILY_USAGE",
+    },
+    MAX_PAGES_EXCEEDED: {
+        message: "PDF अधिकतम 50 पृष्ठों की सीमा से अधिक है।",
+        code: "ERR_MAX_PAGES_EXCEEDED",
     },
     alerts: {
         // Frontend validation

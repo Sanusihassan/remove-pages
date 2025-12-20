@@ -16,6 +16,7 @@ import {
 import type { edit_page } from "../src/content";
 import { getUserSubscription } from "fetch-subscription-status";
 import { Bounce, ToastContainer } from "react-toastify";
+import ErrorElement from "./ErrorElement";
 
 export type errorType = {
   response: {
@@ -180,7 +181,7 @@ const Tool: React.FC<ToolProps> = ({
             acceptedFileTypes={acceptedFileTypes}
           />
           <p>{tools.or_drop}</p>
-          {/* <ErrorElement cta={edit_page.filenameOptions.cta} /> */}
+          <ErrorElement cta={edit_page.cta} />
         </div>
         <EditPage
           extension={data.type}

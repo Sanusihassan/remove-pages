@@ -10,6 +10,7 @@ import { useFileStore } from "../src/file-store";
 import AddMoreButton from "./EditArea/AddMoreButton";
 import { SubmitBtn } from "./EditArea/SubmitBtn";
 import { Options } from "./DisplayFile/Options";
+import { WarningAlert } from "./WarningAlert";
 
 type editPageProps = {
   extension: string;
@@ -68,7 +69,8 @@ const EditPage = ({
           drop_files={drop_files}
           path={path}
         />
-        {/* <ErrorElement cta={edit_page.filenameOptions.cta} /> */}
+        <ErrorElement cta={edit_page.cta} />
+        <WarningAlert />
         <AddMoreButton
           onClick={() => {
             if (fileInput) {

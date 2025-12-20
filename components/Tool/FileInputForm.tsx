@@ -47,6 +47,9 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
   const selectedLanguages = useSelector(
     (state: { tool: ToolState }) => state.tool.selectedLanguages
   );
+  const pdf_a_format = useSelector(
+    (state: { tool: ToolState }) => state.tool.pdf_a_format
+  );
   const dispatch = useDispatch();
   // file store
   const { files, setFiles, setFileInput, setDownloadBtn, setSubmitBtn } =
@@ -84,6 +87,7 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
             selectedLanguages,
             converter,
             passwords,
+            pdf_a_format,
           },
           files,
           errors

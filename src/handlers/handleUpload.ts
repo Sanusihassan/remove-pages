@@ -2,7 +2,7 @@ import axios from "axios";
 import { downloadConvertedFile } from "../downloadFile";
 import type { errors as _ } from "../content";
 import { type RefObject } from "react";
-import { resetErrorMessage, setField } from "../store";
+import { resetErrorMessage, setField, type ToolState } from "../store";
 import type { Action, Dispatch } from "@reduxjs/toolkit/react";
 let filesOnSubmit = [];
 let prevState = null;
@@ -26,7 +26,8 @@ export const handleUpload = async (
       k: string;
       langs: string[];
     }[],
-    converter: "free" | "premium"
+    converter: "free" | "premium",
+    pdf_a_format: ToolState["pdf_a_format"]
   },
   files: File[],
   errors: _
@@ -61,8 +62,19 @@ export const handleUpload = async (
   formData.append("rotations", JSON.stringify(state.rotations));
   formData.append("passwords", JSON.stringify(state.passwords));
   formData.append("selectedLanguages", JSON.stringify(state.selectedLanguages));
+  formData.append("pdf_a_format", String(state?.pdf_a_format));
   let url: string = "";
-  const endpoint = state.converter === "free" ? "/api/" : "/premium/";
+  let endpoint = state.converter === "free" ? "/api/" : "/premium/";
+  if (
+    state.path === "pdf-to-pdf-a" ||
+    state.path === "pdf-to-text" ||
+    state.path === "word-to-pdf" ||
+    state.path === "powerpoint-to-pdf" ||
+    state.path === "html-to-pdf"
+  ) {
+    endpoint = "/api/";
+  }
+
   // @ts-ignore
   if (process.env.NODE_ENV === "development") {
     url = `http://localhost:8000${endpoint}${state.path}`;
@@ -145,7 +157,7 @@ export const handleUpload = async (
     downloadConvertedFile(
       response,
       outputFileMimeType,
-      outputFileName,
+      outputFileName || state.fileName,
       downloadBtn
     );
     filesOnSubmit = files.map((f) => f.name);

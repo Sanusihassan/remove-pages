@@ -246,7 +246,8 @@ export const edit_page: _edit_page = {
     },
     languageSelectContent: {
         placeholder: "اختر اللغات (حد أقصى 3)",
-        warning: "هذا المستند ممسوح ضوئيًا. يرجى اختيار لغته لضمان نتائج دقيقة."
+        warning: "هذا المستند ممسوح ضوئيًا. يرجى اختيار لغته لضمان نتائج دقيقة.",
+        ocr_warning: "أضف لغة المستند للحصول على نتائج أكثر دقة.",
     },
     converter: {
         free: "مجاني",
@@ -423,6 +424,10 @@ export const errors: _errors = {
         message:
             "لقد وصلت إلى الحد اليومي للاستخدام. يرجى ترقية خطتك لمواصلة استخدام الميزة بدون انقطاع.",
         code: "MAX_DAILY_USAGE",
+    },
+    MAX_PAGES_EXCEEDED: {
+        message: "يتجاوز ملف PDF الحد الأقصى لعدد الصفحات وهو 50 صفحة.",
+        code: "ERR_MAX_PAGES_EXCEEDED",
     },
     alerts: {
         // Frontend validation

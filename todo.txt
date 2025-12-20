@@ -59,3 +59,14 @@ daily-usage is beign increased without hitting download.
 transalte the how-tos.
 
 looks like store is not configured correctly.
+
+[NEXT]:
+    FIX LEGACY API.
+
+for mobile show an info alert to alert those who don't have a premium account that they can't use our premium converter.
+
+translate the newly-added error entry.
+
+show info alert for documents that needs ocr.
+
+git add .; git commit -m "fixed legacy convert-tools apis"; git push origin master

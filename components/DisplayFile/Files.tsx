@@ -6,7 +6,12 @@ import { useFileStore } from "../../src/file-store";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSubscriptionStatus } from "fetch-subscription-status";
 import { setField, type ToolState } from "../../src/store";
-import { ACCEPTED, filterNewFiles, validateFiles } from "../../src/utils";
+import {
+  ACCEPTED,
+  calculatePages,
+  filterNewFiles,
+  validateFiles,
+} from "../../src/utils";
 
 type FileProps = {
   errors: _;
@@ -55,6 +60,13 @@ const Files = ({
         limitationMsg = errors.alerts.maxFiles;
       } else if (files.some((file) => file.size > 50 * 1024 * 1024)) {
         limitationMsg = errors.alerts.fileSize;
+      }
+      const pagesPerFile = await Promise.all(
+        files.map((file) => calculatePages(file))
+      );
+
+      if (pagesPerFile.some((pages) => pages >= 50)) {
+        limitationMsg = errors.MAX_PAGES_EXCEEDED.message;
       }
       // Dispatch the message
       dispatch(setField({ limitationMsg }));

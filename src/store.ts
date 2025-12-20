@@ -1,4 +1,5 @@
 import { createSlice, createSelector, type Draft, type PayloadAction } from "@reduxjs/toolkit";
+import type { PDFAFormatValue } from "../components/DisplayFile/Options/PDF_A_Options";
 
 type WritableDraft<T> = {
   -readonly [K in keyof T]: Draft<T[K]>;
@@ -21,6 +22,8 @@ export interface ToolState {
   selectedLanguages: { k: string; langs: string[] }[] | null;
   converter: "free" | "premium";
   isAdBlocked: boolean;
+  pdf_a_format: PDFAFormatValue;
+  ocr_warning: string;
 }
 
 const initialState: ToolState = {
@@ -38,6 +41,8 @@ const initialState: ToolState = {
   selectedLanguages: null,
   converter: "premium",
   isAdBlocked: false,
+  pdf_a_format: "PDF/A-1a",
+  ocr_warning: "",
 };
 
 const toolSlice = createSlice({

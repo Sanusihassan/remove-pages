@@ -246,7 +246,8 @@ export const edit_page: _edit_page = {
     },
     languageSelectContent: {
         placeholder: "Choisir les langues (maximum 3)",
-        warning: "Ce document est numérisé. Veuillez sélectionner sa langue pour garantir des résultats précis."
+        warning: "Ce document est numérisé. Veuillez sélectionner sa langue pour garantir des résultats précis.",
+        ocr_warning: "Ajoutez la langue du document pour obtenir des résultats plus précis.",
     },
     converter: {
         free: "Gratuit",
@@ -425,6 +426,10 @@ export const errors: _ = {
         message:
             "Vous avez atteint votre limite d'utilisation quotidienne. Mettez à jour votre plan pour continuer sans interruption.",
         code: "MAX_DAILY_USAGE",
+    },
+    MAX_PAGES_EXCEEDED: {
+        message: "Le PDF dépasse la limite maximale de 50 pages.",
+        code: "ERR_MAX_PAGES_EXCEEDED",
     },
     alerts: {
         // Frontend validation

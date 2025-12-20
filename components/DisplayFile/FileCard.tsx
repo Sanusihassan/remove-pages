@@ -101,6 +101,11 @@ const FileCard = ({
               // Don't throw - just default to not scanned
             }
           }
+          if (scanned) {
+            dispatch(
+              setField({ ocr_warning: languageSelectProps.content.ocr_warning })
+            );
+          }
           setIsScanned(scanned);
 
           if (isSubscribedRef.current) {
