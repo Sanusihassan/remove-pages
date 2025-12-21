@@ -250,7 +250,7 @@ export const edit_page: _edit_page = {
         ocr_warning: "أضف لغة المستند للحصول على نتائج أكثر دقة.",
     },
     converter: {
-        free: "مجاني",
+        free: "أساسي",
         premium: "بريميوم",
         freeToolTip: "تحويل أساسي - تنسيق محدود",
         premiumToolTip: "تحويل عالي الدقة مع الحفاظ الكامل على الأنماط"

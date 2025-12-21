@@ -250,7 +250,7 @@ export const edit_page: _edit_page = {
         ocr_warning: "दस्तावेज़ की भाषा जोड़ें ताकि अधिक सटीक परिणाम मिलें।",
     },
     converter: {
-        free: "मुफ्त",
+        free: "बेसिक",
         premium: "प्रीमियम",
         freeToolTip: "बेसिक कन्वर्शन - सीमित फ़ॉर्मेटिंग",
         premiumToolTip: "उच्च सटीकता वाला कन्वर्शन पूर्ण स्टाइल संरक्षण के साथ"

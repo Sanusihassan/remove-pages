@@ -4,6 +4,7 @@ import type { errors as _ } from "../content";
 import { type RefObject } from "react";
 import { resetErrorMessage, setField, type ToolState } from "../store";
 import type { Action, Dispatch } from "@reduxjs/toolkit/react";
+import { parseErrorResponse } from "../utils";
 let filesOnSubmit = [];
 let prevState = null;
 export const handleUpload = async (
@@ -195,9 +196,11 @@ export const handleUpload = async (
           'MAX_PAGES_EXCEEDED': errors.MAX_PAGES_EXCEEDED.message,
         };
 
-        const errorCode = errorCodeMap.errorCode;
+        const { errorCode } = parseErrorResponse(error);
 
         const message = errorCodeMap[errorCode];
+
+        console.log("Parsed error response:", { errorCode, message });
         if (message) {
           dispatch(setField({ limitationMsg: message }));
           dispatch(setField({ errorCode }));

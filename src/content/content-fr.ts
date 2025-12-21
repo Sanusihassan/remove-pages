@@ -250,7 +250,7 @@ export const edit_page: _edit_page = {
         ocr_warning: "Ajoutez la langue du document pour obtenir des résultats plus précis.",
     },
     converter: {
-        free: "Gratuit",
+        free: "Basique",
         premium: "Premium",
         freeToolTip: "Conversion de base - formatage limité",
         premiumToolTip: "Conversion haute précision avec préservation complète des styles"

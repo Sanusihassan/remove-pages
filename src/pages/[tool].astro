@@ -10,7 +10,6 @@ import {
 } from "../content/content";
 import { howToSchemas } from "../how-to/how-to";
 import BaseLayout from "../partials/BaseLayout.astro";
-import { configureStore } from "@reduxjs/toolkit";
 // possible dynamic routes being matched: src/pages/[tool].astro.
 export const routes = {
   "/pdf-to-powerpoint": { item: tool["PDF_to_Powerpoint"] },
@@ -33,7 +32,7 @@ export const routesMap = {
   PDFtoWordHOWTO: "/pdf-to-word", // [DONE]
   PDFtoExcelHOWTO: "/pdf-to-excel", // [DONE]
   PDFtoPDFAHOWTO: "/pdf-to-pdf-a", // [DONE]
-  PDFtoTextHOWTO: "/pdf-to-text",
+  PDFtoTextHOWTO: "/pdf-to-text", // [DONE]
 };
 
 export async function getStaticPaths() {

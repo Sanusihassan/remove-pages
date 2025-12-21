@@ -251,7 +251,7 @@ export const edit_page: _edit_page = {
         ocr_warning: "添加文档语言以获得更准确的结果。",
     },
     converter: {
-        free: "免费",
+        free: "基础版",
         premium: "高级",
         freeToolTip: "基础转换 - 格式有限",
         premiumToolTip: "高精度转换，完全保留样式"

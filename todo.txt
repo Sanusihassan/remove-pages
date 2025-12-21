@@ -68,3 +68,9 @@ for mobile show an info alert to alert those who don't have a premium account th
 translate the newly-added error entry.
 
 show info alert for documents that needs ocr.
+
+add filename shortner using css.
+
+changed locales (should change in all tools).
+
+add "layout looks messy? try our premium converter for more accurate results" message.

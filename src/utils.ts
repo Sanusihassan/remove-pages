@@ -3,6 +3,7 @@ import { type Action, type Dispatch } from "@reduxjs/toolkit";
 import type { errors as _ } from "./content";
 import { resetErrorMessage, setField } from "./store";
 import * as pdfjs from "pdfjs-dist";
+import axios from "axios";
 import {
   type PDFDocumentProxy,
   type PageViewport,
@@ -385,25 +386,43 @@ export const filterNewFiles = (
     return !isDuplicate && hasCorrectExtension;
   });
 };
-/**
- * Safely unpacks an ArrayBuffer into a typed object
- * @param buffer - The ArrayBuffer to unpack
- * @param encoding - Character encoding (default: 'utf-8')
- * @returns The parsed JSON object or null if parsing fails
- */
-export function unpackArrayBuffer<T = any>(
-  buffer: ArrayBuffer,
-  encoding: string = "utf-8"
-): T | null {
-  try {
-    const decoder = new TextDecoder(encoding);
-    const jsonString = decoder.decode(buffer);
-    return JSON.parse(jsonString) as T;
-  } catch (error) {
-    console.error("Failed to unpack ArrayBuffer:", error);
-    return null;
-  }
+interface ParsedError {
+  errorCode: string | undefined;
+  message: string | undefined;
 }
+
+export const parseErrorResponse = (error: unknown): ParsedError => {
+  if (!axios.isAxiosError(error) || !error.response?.data) {
+    return { errorCode: undefined, message: undefined };
+  }
+
+  try {
+    // If responseType is arraybuffer, data will be ArrayBuffer even for errors
+    const data = error.response.data;
+
+    if (data instanceof ArrayBuffer) {
+      const decoder = new TextDecoder('utf-8');
+      const jsonString = decoder.decode(data);
+      const parsed = JSON.parse(jsonString);
+      return {
+        errorCode: parsed.errorCode,
+        message: parsed.message
+      };
+    }
+
+    // If it's already an object
+    if (typeof data === 'object') {
+      return {
+        errorCode: data.errorCode,
+        message: data.message
+      };
+    }
+  } catch {
+    // JSON parse failed
+  }
+
+  return { errorCode: undefined, message: undefined };
+};
 
 type FileValidationError =
   | "NO_FILES_SELECTED"
@@ -663,4 +682,19 @@ export async function analyzePDF(pdfFile: File, password?: string) {
     console.error('Error analyzing PDF:', error);
     throw error;
   }
+}
+
+export function shortenFileName(name: string, maxLength = 20) {
+  if (name.length <= maxLength) return name;
+
+  const dotIndex = name.lastIndexOf(".");
+  const ext = dotIndex !== -1 ? name.slice(dotIndex) : "";
+  const base = dotIndex !== -1 ? name.slice(0, dotIndex) : name;
+
+  const shortenedBase =
+    base.length > maxLength
+      ? base.slice(0, maxLength / 2) + "..." + base.slice(-maxLength / 2)
+      : base;
+
+  return shortenedBase + ext;
 }

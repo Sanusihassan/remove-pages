@@ -273,7 +273,7 @@ export const edit_page = {
     ocr_warning: "Add the document's language to get more accurate results.",
   },
   converter: {
-    free: "Free",
+    free: "Basic",
     premium: "Premium",
     freeToolTip: "Basic conversion - limited formatting",
     premiumToolTip: "High-accuracy conversion with full style preservation"
