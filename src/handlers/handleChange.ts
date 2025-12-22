@@ -1,6 +1,6 @@
 import { type Action, type Dispatch } from "@reduxjs/toolkit";
-import type { errors as _ } from "../content/content";
-import { acceptedMimeTypes, validateFiles } from "../utils";
+import type { errors as _, Paths } from "../content/content";
+import { acceptedMimeTypes, getAllMimeTypes, validateFiles } from "../utils";
 import { setField } from "../store";
 
 export const handleChange = (
@@ -8,7 +8,8 @@ export const handleChange = (
   dispatch: Dispatch<Action>,
   setFiles: (files: FileList | File[]) => void,
   errors: typeof _,
-  files: File[]
+  files: File[],
+  path: Paths
 ) => {
   const _files = (e.target?.files as FileList) || null;
   const finalFiles = [...files, ...Array.from(!_files ? [] : _files)];
@@ -17,7 +18,7 @@ export const handleChange = (
     finalFiles,
     dispatch,
     errors,
-    acceptedMimeTypes
+    getAllMimeTypes(path)
   );
   if (isValid) {
     setFiles(finalFiles);

@@ -11,6 +11,7 @@ import AddMoreButton from "./EditArea/AddMoreButton";
 import { SubmitBtn } from "./EditArea/SubmitBtn";
 import { Options } from "./DisplayFile/Options";
 import { WarningAlert } from "./WarningAlert";
+import type { Paths } from "../src/content/content";
 
 type editPageProps = {
   extension: string;
@@ -19,7 +20,7 @@ type editPageProps = {
   page: string;
   lang: string;
   errors: _;
-  path: string;
+  path: Paths;
   drop_files: string;
 };
 

@@ -12,6 +12,16 @@ export type ToolType = {
   }[]
 };
 
+export type Paths = "pdf-to-powerpoint" |
+  "word-to-pdf" |
+  "powerpoint-to-pdf" |
+  "excel-to-pdf" |
+  "html-to-pdf" |
+  "pdf-to-word" |
+  "pdf-to-excel" |
+  "pdf-to-pdf-a" |
+  "pdf-to-text";
+
 export type Tool = {
   PDF_to_Powerpoint: ToolType;
   WORD_to_PDF: ToolType;

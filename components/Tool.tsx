@@ -9,14 +9,15 @@ import { setField } from "../src/store";
 import Cookies from "js-cookie";
 import {
   ACCEPTED,
-  acceptedMimeTypes,
   filterNewFiles,
+  getAllMimeTypes,
   validateFiles,
 } from "../src/utils";
 import type { edit_page } from "../src/content";
 import { getUserSubscription } from "fetch-subscription-status";
 import { Bounce, ToastContainer } from "react-toastify";
 import ErrorElement from "./ErrorElement";
+import type { Paths } from "../src/content/content";
 
 export type errorType = {
   response: {
@@ -56,7 +57,7 @@ const Tool: React.FC<ToolProps> = ({
   page,
   downloadFile,
 }) => {
-  const path = data.to.replace("/", "");
+  const path = data.to.replace("/", "") as Paths;
   const stateShowTool = useSelector(
     (state: { tool: any }) => state.tool.showTool
   );
@@ -78,7 +79,7 @@ const Tool: React.FC<ToolProps> = ({
       acceptedFiles,
       dispatch,
       errors,
-      acceptedMimeTypes
+      getAllMimeTypes(path)
     );
     const newFiles = filterNewFiles(acceptedFiles, files, ACCEPTED);
     if (isValid) {

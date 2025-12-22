@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "react-tooltip/dist/react-tooltip.css";
 import type { errors as _, edit_page } from "../src/content";
 import Files from "./DisplayFile/Files";
+import type { Paths } from "../src/content/content";
 type propTypes = {
   extension: string;
   pages: string;
@@ -10,7 +11,7 @@ type propTypes = {
   errors: _;
   edit_page: edit_page;
   drop_files: string;
-  path: string;
+  path: Paths;
 };
 
 const DisplayFile = ({

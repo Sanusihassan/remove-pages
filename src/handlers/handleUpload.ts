@@ -200,7 +200,6 @@ export const handleUpload = async (
 
         const message = errorCodeMap[errorCode];
 
-        console.log("Parsed error response:", { errorCode, message });
         if (message) {
           dispatch(setField({ limitationMsg: message }));
           dispatch(setField({ errorCode }));

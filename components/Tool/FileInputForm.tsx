@@ -8,6 +8,7 @@ import { useFileStore } from "../../src/file-store";
 // types
 import type { tools } from "../../src/content";
 import Loading from "../Loading";
+import type { Paths } from "../../src/content/content";
 type AcceptedFileTypes = {
   [key in ".pdf" | ".pptx" | ".docx" | ".xlsx" | ".jpg" | ".html"]: string;
 };
@@ -28,7 +29,7 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
   lang,
   tools,
 }) => {
-  const path = data.to.replace("/", "");
+  const path = data.to.replace("/", "") as Paths;
   const errorMessage = useSelector(
     (state: { tool: ToolState }) => state.tool.errorMessage
   );
@@ -124,14 +125,14 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
           accept={
             acceptedFileTypes[data.type as keyof typeof acceptedFileTypes]
           }
-          multiple={path !== "split-pdf" && path !== "pdf-to-pdf-a"}
+          multiple
           ref={fileInput}
           className={`position-absolute file-input${!loaded ? "border-0 opacity-0" : ""}`}
           onClick={(e) => {
             e.stopPropagation();
           }}
           onChange={(e) => {
-            handleChange(e, dispatch, setFiles, errors, files);
+            handleChange(e, dispatch, setFiles, errors, files, path);
           }}
           disabled={!loaded}
         />

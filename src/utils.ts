@@ -10,6 +10,7 @@ import {
   type RenderTask,
 } from "pdfjs-dist";
 import { toast } from "react-toastify";
+import type { Paths } from "./content/content";
 
 // @ts-ignore
 await import("pdfjs-dist/build/pdf.worker.min.mjs");
@@ -337,6 +338,79 @@ export function sanitizeKey(input: string | number | null | undefined): string {
 
   return key;
 }
+
+// Add this outside the component (after imports)
+export const PATH_ACCEPTED_FILES: Record<string, Record<string, string[]>> = {
+  // PDF to other formats - accept PDF only
+  "pdf-to-word": { "application/pdf": [".pdf"] },
+  "pdf-to-powerpoint": { "application/pdf": [".pdf"] },
+  "pdf-to-excel": { "application/pdf": [".pdf"] },
+  "pdf-to-pdf-a": { "application/pdf": [".pdf"] },
+  "pdf-to-text": { "application/pdf": [".pdf"] },
+  "pdf-to-jpg": { "application/pdf": [".pdf"] },
+  "pdf-to-png": { "application/pdf": [".pdf"] },
+  "pdf-to-gif": { "application/pdf": [".pdf"] },
+  "pdf-to-tiff": { "application/pdf": [".pdf"] },
+  "pdf-to-bmp": { "application/pdf": [".pdf"] },
+  "pdf-to-webp": { "application/pdf": [".pdf"] },
+  "pdf-to-svg": { "application/pdf": [".pdf"] },
+  "pdf-to-heif-heic": { "application/pdf": [".pdf"] },
+  "pdf-to-image": { "application/pdf": [".pdf"] },
+
+  // Office to PDF
+  "word-to-pdf": {
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"],
+    "application/msword": [".doc"],
+  },
+  "powerpoint-to-pdf": {
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation": [".pptx"],
+    "application/vnd.ms-powerpoint": [".ppt"],
+  },
+  "excel-to-pdf": {
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+    "application/vnd.ms-excel": [".xls"],
+  },
+
+  // HTML to PDF
+  "html-to-pdf": {
+    "text/html": [".html", ".htm"],
+  },
+
+  // Image to PDF
+  "jpg-to-pdf": { "image/jpeg": [".jpg", ".jpeg"] },
+  "png-to-pdf": { "image/png": [".png"] },
+  "gif-to-pdf": { "image/gif": [".gif"] },
+  "tiff-to-pdf": { "image/tiff": [".tiff", ".tif"] },
+  "bmp-to-pdf": { "image/bmp": [".bmp"] },
+  "webp-to-pdf": { "image/webp": [".webp"] },
+  "svg-to-pdf": { "image/svg+xml": [".svg"] },
+  "heif-heic-to-pdf": { "image/heic": [".heic", ".heif"] },
+  "image-to-pdf": {
+    "image/jpeg": [".jpg", ".jpeg"],
+    "image/png": [".png"],
+    "image/gif": [".gif"],
+    "image/tiff": [".tiff", ".tif"],
+    "image/bmp": [".bmp"],
+    "image/webp": [".webp"],
+    "image/svg+xml": [".svg"],
+    "image/heic": [".heic", ".heif"],
+  },
+};
+
+// Helper to get the primary MIME type for validation
+export const getValidationMimeType = (path: Paths): string | undefined => {
+  const accepted = PATH_ACCEPTED_FILES[path];
+  if (!accepted) return undefined;
+  return Object.keys(accepted)[0];
+};
+
+// If validateFiles needs all MIME types for a path
+export const getAllMimeTypes = (path: Paths): string[] => {
+  const accepted = PATH_ACCEPTED_FILES[path];
+  return accepted ? Object.keys(accepted) : [];
+};
+
+
 // All accepted extensions
 export const ACCEPTED = [
   ".pdf",

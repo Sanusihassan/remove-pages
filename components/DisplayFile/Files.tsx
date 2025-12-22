@@ -1,3 +1,7 @@
+// type Paths = "pdf-to-powerpoint" | "word-to-pdf" | "powerpoint-to-pdf" | "excel-to-pdf" | "html-to-pdf" | "pdf-to-word" | "pdf-to-excel" | "pdf-to-pdf-a" | "pdf-to-text"
+// each path should allow it's allowed files not all files should allow all types right?
+// for example pdf-to-* paths should only accept PDF files. and so on.
+// please just give me the part to update.
 import { type Dispatch, type SetStateAction, useEffect } from "react";
 import type { errors as _, edit_page } from "../../src/content";
 import FileCard from "./FileCard";
@@ -10,8 +14,11 @@ import {
   ACCEPTED,
   calculatePages,
   filterNewFiles,
+  getAllMimeTypes,
+  PATH_ACCEPTED_FILES,
   validateFiles,
 } from "../../src/utils";
+import type { Paths } from "../../src/content/content";
 
 type FileProps = {
   errors: _;
@@ -21,7 +28,7 @@ type FileProps = {
   loader_text: string;
   fileDetailProps: [string, string, string];
   drop_files: string;
-  path: string;
+  path: Paths;
   languageSelectProps: {
     content: edit_page["languageSelectContent"];
     themeColor: string;
@@ -35,6 +42,7 @@ const Files = ({
   fileDetailProps,
   drop_files,
   languageSelectProps,
+  path,
 }: FileProps) => {
   const { files, setFiles } = useFileStore();
   const dispatch = useDispatch();
@@ -74,12 +82,14 @@ const Files = ({
   }, [files]);
 
   const onDrop = (acceptedFiles: File[]) => {
+    // Usage in onDrop:
     const { isValid } = validateFiles(
       acceptedFiles,
       dispatch,
       errors,
-      "application/pdf"
+      getAllMimeTypes(path)
     );
+
     const newFiles = filterNewFiles(acceptedFiles, files, ACCEPTED);
     if (isValid) {
       setFiles([...files, ...newFiles]);
@@ -106,10 +116,7 @@ const Files = ({
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept:
-      extension && MIME_TYPE_MAP[extension]
-        ? { [MIME_TYPE_MAP[extension]]: [extension] }
-        : undefined,
+    accept: PATH_ACCEPTED_FILES[path],
     noClick: files.length > 0,
     noKeyboard: files.length > 0,
   });
