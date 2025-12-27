@@ -112,14 +112,14 @@ a.dropdown-item {
   .hide-on-rtl {
     [dir="rtl"] &,
     [lang="ar"] & {
-      display: none !important;
+      display: none;
     }
   }
 
-  .hide-on-rtl {
+  .hide-on-ltr {
     [dir="ltr"] &,
     :not([lang="ar"]) & {
-      display: none !important;
+      display: none;
     }
   }
 }

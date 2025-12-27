@@ -74,3 +74,5 @@ add filename shortner using css.
 changed locales (should change in all tools).
 
 add "layout looks messy? try our premium converter for more accurate results" message.
+
+add partytown for analytics & adsense.
