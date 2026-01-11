@@ -49,37 +49,57 @@ const Files = ({
   const subscriptionStatus = useSelector(
     (state: { tool: ToolState }) => state.tool.subscriptionStatus
   );
+  // useEffect(() => {
+  //   const timeoutId = setTimeout(() => {
+  //     let limitationMsg = "";
+  //     (async () => {
+  //       const isSubscribed =
+  //         subscriptionStatus === null
+  //           ? await fetchSubscriptionStatus()
+  //           : subscriptionStatus;
+  //       if (isSubscribed) {
+  //         return;
+  //       }
 
-  useEffect(() => {
-    let limitationMsg = "";
-    (async () => {
-      const isSubscribed =
-        subscriptionStatus === null
-          ? await fetchSubscriptionStatus()
-          : subscriptionStatus;
-      if (isSubscribed) {
-        return;
-      }
-      // Check limitations
-      if (files.length === 1 && files[0].size >= 100 * 1024 * 1024) {
-        limitationMsg = errors.alerts.singleFileSize;
-      }
-      if (files.length >= 15) {
-        limitationMsg = errors.alerts.maxFiles;
-      } else if (files.some((file) => file.size > 50 * 1024 * 1024)) {
-        limitationMsg = errors.alerts.fileSize;
-      }
-      const pagesPerFile = await Promise.all(
-        files.map((file) => calculatePages(file))
-      );
+  //       // Check size limitations first (cheap checks)
+  //       if (files.length === 1 && files[0].size >= 100 * 1024 * 1024) {
+  //         limitationMsg = errors.alerts.singleFileSize;
+  //         dispatch(setField({ limitationMsg }));
+  //         return;
+  //       }
+  //       if (files.length >= 15) {
+  //         limitationMsg = errors.alerts.maxFiles;
+  //         dispatch(setField({ limitationMsg }));
+  //         return;
+  //       }
+  //       if (files.some((file) => file.size > 50 * 1024 * 1024)) {
+  //         limitationMsg = errors.alerts.fileSize;
+  //         dispatch(setField({ limitationMsg }));
+  //         return;
+  //       }
 
-      if (pagesPerFile.some((pages) => pages >= 50)) {
-        limitationMsg = errors.MAX_PAGES_EXCEEDED.message;
-      }
-      // Dispatch the message
-      dispatch(setField({ limitationMsg }));
-    })();
-  }, [files]);
+  //       // Check pages one by one - EXIT EARLY if any exceeds limit
+  //       for (const file of files) {
+  //         try {
+  //           const pageCount = await calculatePages(file);
+  //           if (pageCount >= 50) {
+  //             limitationMsg = errors.MAX_PAGES_EXCEEDED.message;
+  //             dispatch(setField({ limitationMsg }));
+  //             return; // Exit immediately when limit exceeded
+  //           }
+  //         } catch (error) {
+  //           console.error("Error calculating pages:", error);
+  //           // Continue checking other files if one fails
+  //         }
+  //       }
+
+  //       // All checks passed
+  //       dispatch(setField({ limitationMsg: "" }));
+  //     })();
+  //   }, 500);
+
+  //   return () => clearTimeout(timeoutId);
+  // }, [files, subscriptionStatus]);
 
   const onDrop = (acceptedFiles: File[]) => {
     // Usage in onDrop:

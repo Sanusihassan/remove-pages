@@ -247,7 +247,7 @@ export const edit_page: _edit_page = {
     languageSelectContent: {
         placeholder: "Choisir les langues (maximum 3)",
         warning: "Ce document est numérisé. Veuillez sélectionner sa langue pour garantir des résultats précis.",
-        ocr_warning: "Ajoutez la langue du document pour obtenir des résultats plus précis.",
+        ocr_warning: "Document numérisé détecté. Pour de meilleurs résultats, utilisez notre outil OCR PDF avec détection avancée de langue et précision supérieure. Vous pouvez également définir la langue ici pour un traitement de base.",
     },
     converter: {
         free: "Basique",

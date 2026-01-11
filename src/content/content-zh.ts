@@ -248,7 +248,7 @@ export const edit_page: _edit_page = {
     languageSelectContent: {
         placeholder: "选择语言（最多 3 种）",
         warning: "此文档为扫描件。请选其语言以确保结果准确。",
-        ocr_warning: "添加文档语言以获得更准确的结果。",
+        ocr_warning: "检测到扫描文档。为获得最佳效果，请使用我们的 OCR PDF 工具，具有高级语言检测和更高精度。您也可以在此处设置语言进行基本处理。",
     },
     converter: {
         free: "基础版",

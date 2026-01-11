@@ -11,11 +11,13 @@ import {
 } from "pdfjs-dist";
 import { toast } from "react-toastify";
 import type { Paths } from "./content/content";
+import { renderQueue } from "./RenderQueue";
 
-// @ts-ignore
-await import("pdfjs-dist/build/pdf.worker.min.mjs");
-// pdfjs.GlobalWorkerOptions = pdfjs.GlobalWorkerOptions || {};
-// pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker;
+// Proper worker configuration - do this ONCE at module level
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.mjs',
+  import.meta.url
+).toString();
 
 export function useLoadedImage(src: string): HTMLImageElement | null {
   const [loadedImage, setLoadedImage] = useState<HTMLImageElement | null>(null);
@@ -116,17 +118,20 @@ export const getFileDetailsTooltipContent = async (
 
   return tooltipContent;
 };
-
 export async function getFirstPageAsImage(
   file: File,
   dispatch: Dispatch<Action>,
   errors: _,
   password?: string
 ): Promise<string> {
-  const fileUrl = URL.createObjectURL(file);
-  if (!file.size) {
-    return emptyPDFHandler(dispatch, errors);
-  } else {
+  // Wrap the entire operation in the queue
+  return renderQueue.add(async () => {
+    const fileUrl = URL.createObjectURL(file);
+
+    if (!file.size) {
+      return emptyPDFHandler(dispatch, errors);
+    }
+
     try {
       const loadingTask = pdfjs.getDocument({
         url: fileUrl,
@@ -135,10 +140,8 @@ export async function getFirstPageAsImage(
 
       let tid;
 
-      // Handle password requests
       loadingTask.onPassword = (updatePassword, reason) => {
         if (reason === pdfjs.PasswordResponses.NEED_PASSWORD) {
-          // First time asking for password
           if (password) {
             updatePassword(password);
             if (tid) {
@@ -157,58 +160,135 @@ export async function getFirstPageAsImage(
       };
 
       const pdf: PDFDocumentProxy = await loadingTask.promise;
-      const page = await pdf.getPage(1); // Get the first page
+      const page = await pdf.getPage(1);
 
       const scale = 1.5;
       const viewport: PageViewport = page.getViewport({ scale });
 
-      const canvas = document.createElement("canvas");
+      // Try OffscreenCanvas for better performance (if available)
+      const canvas = typeof OffscreenCanvas !== 'undefined'
+        ? new OffscreenCanvas(viewport.width, viewport.height)
+        : document.createElement("canvas");
+
+      if (canvas instanceof HTMLCanvasElement) {
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+      }
+
       const context = canvas.getContext("2d");
       if (!context) {
         throw new Error("Canvas context not available.");
       }
-      canvas.height = viewport.height;
-      canvas.width = viewport.width;
 
       const renderTask: RenderTask = page.render({
-        canvasContext: context,
+        canvasContext: context as any,
         viewport: viewport,
       });
 
       await renderTask.promise;
 
-      // Clean up the object URL
+      // Convert to data URL
+      let dataUrl: string;
+      if (canvas instanceof OffscreenCanvas) {
+        const blob = await canvas.convertToBlob({ type: 'image/png' });
+        dataUrl = await blobToDataURL(blob);
+      } else {
+        dataUrl = canvas.toDataURL();
+      }
+
+      URL.revokeObjectURL(fileUrl);
+      return dataUrl;
+
+    } catch (error: any) {
       URL.revokeObjectURL(fileUrl);
 
-      return canvas.toDataURL();
-    } catch (error) {
-      // Clean up the object URL on error
-      URL.revokeObjectURL(fileUrl);
-
-      // Check if it's not password-related error
       if (!error.code) {
         dispatch(setField({ errorMessage: errors.FILE_CORRUPT.message }));
         return DEFAULT_PDF_IMAGE;
+      }
+
+      const { code } = error;
+      if (code === pdfjs.PasswordResponses.NEED_PASSWORD) {
+        dispatch(setField({ errorMessage: errors.PASSWORD_REQUIRED.message }));
+        return "/images/locked.png";
       } else {
-        const { code } = error;
-        if (code === pdfjs.PasswordResponses.NEED_PASSWORD) {
-          dispatch(
-            setField({
-              errorMessage: errors.PASSWORD_REQUIRED.message,
-            })
-          );
-          return "/images/locked.png";
-        } else {
-          dispatch(
-            setField({
-              errorMessage: errors.INCORRECT_PASSWORD.message,
-            })
-          );
-          return "/images/locked.png";
-        }
+        dispatch(setField({ errorMessage: errors.INCORRECT_PASSWORD.message }));
+        return "/images/locked.png";
       }
     }
-  }
+  });
+}
+
+export async function getNthPageAsImage(
+  file: File,
+  dispatch: Dispatch<Action>,
+  errors: _,
+  pageNumber: number
+): Promise<string> {
+  return renderQueue.add(async () => {
+    const fileUrl = URL.createObjectURL(file);
+
+    if (!file.size) {
+      return emptyPDFHandler(dispatch, errors);
+    }
+
+    try {
+      const loadingTask = pdfjs.getDocument(fileUrl);
+      const pdf: PDFDocumentProxy = await loadingTask.promise;
+      const page = await pdf.getPage(pageNumber);
+
+      const scale = 1.5;
+      const viewport: PageViewport = page.getViewport({ scale });
+
+      // Try OffscreenCanvas for better performance
+      const canvas = typeof OffscreenCanvas !== 'undefined'
+        ? new OffscreenCanvas(viewport.width, viewport.height)
+        : document.createElement("canvas");
+
+      if (canvas instanceof HTMLCanvasElement) {
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+      }
+
+      const context = canvas.getContext("2d");
+      if (!context) {
+        throw new Error("Canvas context not available.");
+      }
+
+      const renderTask: RenderTask = page.render({
+        canvasContext: context as any,
+        viewport: viewport,
+      });
+
+      await renderTask.promise;
+
+      // Convert to data URL
+      let dataUrl: string;
+      if (canvas instanceof OffscreenCanvas) {
+        const blob = await canvas.convertToBlob({ type: 'image/png' });
+        dataUrl = await blobToDataURL(blob);
+      } else {
+        dataUrl = canvas.toDataURL();
+      }
+
+      URL.revokeObjectURL(fileUrl);
+      return dataUrl;
+
+    } catch (error) {
+      URL.revokeObjectURL(fileUrl);
+      return DEFAULT_PDF_IMAGE;
+    }
+  });
+}
+
+// Helper function for OffscreenCanvas
+function blobToDataURL(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
 }
 export const getPlaceHoderImageUrl = (extension: string) => {
   switch (extension) {
@@ -234,63 +314,45 @@ interface PDFFile extends Blob {
   name: string;
 }
 
+let pdfWorker: Worker | null = null;
+
 export async function calculatePages(file: PDFFile): Promise<number> {
-  const reader = new FileReader();
-  reader.readAsArrayBuffer(file);
+  // Initialize worker if needed
+  if (!pdfWorker) {
+    pdfWorker = new Worker(new URL('./pdfWorker.ts', import.meta.url), {
+      type: 'module'
+    });
+  }
+
   return new Promise<number>((resolve, reject) => {
+    const reader = new FileReader();
+
     reader.onload = async (event) => {
-      try {
-        const typedArray = new Uint8Array(event.target?.result as ArrayBuffer);
-        const pdf = await pdfjs.getDocument(typedArray).promise;
-        resolve(pdf.numPages);
-      } catch (error) {
-        reject(error);
-      }
+      const arrayBuffer = event.target?.result as ArrayBuffer;
+
+      pdfWorker!.postMessage({
+        type: 'calculatePages',
+        data: { fileData: arrayBuffer }
+      });
+
+      const handleMessage = (e: MessageEvent) => {
+        if (e.data.type === 'success') {
+          pdfWorker!.removeEventListener('message', handleMessage);
+          resolve(e.data.pageCount);
+        } else if (e.data.type === 'error') {
+          pdfWorker!.removeEventListener('message', handleMessage);
+          reject(new Error(e.data.error));
+        }
+      };
+
+      pdfWorker!.addEventListener('message', handleMessage);
     };
+
+    reader.onerror = () => reject(new Error('Failed to read file'));
+    reader.readAsArrayBuffer(file);
   });
 }
 
-export async function getNthPageAsImage(
-  file: File,
-  dispatch: Dispatch<Action>,
-  errors: _,
-  pageNumber: number
-): Promise<string> {
-  const fileUrl = URL.createObjectURL(file);
-  if (!file.size) {
-    return emptyPDFHandler(dispatch, errors);
-  } else {
-    try {
-      const loadingTask = pdfjs.getDocument(fileUrl);
-      const pdf: PDFDocumentProxy = await loadingTask.promise;
-      const page = await pdf.getPage(pageNumber); // Get the Nth page
-
-      const scale = 1.5;
-      const viewport: PageViewport = page.getViewport({ scale });
-
-      const canvas = document.createElement("canvas");
-      const context = canvas.getContext("2d");
-      if (!context) {
-        throw new Error("Canvas context not available.");
-      }
-      canvas.height = viewport.height;
-      canvas.width = viewport.width;
-
-      const renderTask: RenderTask = page.render({
-        canvasContext: context,
-        viewport: viewport,
-      });
-
-      await renderTask.promise;
-
-      return canvas.toDataURL();
-    } catch (error) {
-      // dispatch(setField({ errorMessage: errors.FILE_CORRUPT.message}));
-
-      return DEFAULT_PDF_IMAGE; // Return the placeholder image URL when an error occurs
-    }
-  }
-}
 
 /**
  * Sanitizes a string to be a valid key for both JavaScript objects and Python dictionaries.
@@ -582,181 +644,67 @@ export const validateFiles = (
 
   return { isValid: false };
 };
+// Create worker instance (singleton)
+let analysisWorker: Worker | null = null;
 
-export async function analyzePDF(pdfFile: File, password?: string) {
+function getAnalysisWorker(): Worker {
+  if (!analysisWorker) {
+    analysisWorker = new Worker(
+      new URL('./pdfAnalysisWorker.ts', import.meta.url),
+      { type: 'module' }
+    );
+  }
+  return analysisWorker;
+}
+
+export async function analyzePDF(
+  pdfFile: File,
+  password?: string,
+  onProgress?: (current: number, total: number) => void
+) {
   try {
     const data = await pdfFile.arrayBuffer();
+    const worker = getAnalysisWorker();
 
-    const loadingTask = pdfjs.getDocument({
-      data,
-      password: password || undefined
-    });
-
-    // Handle password callback like getFirstPageAsImage does
-    loadingTask.onPassword = (updatePassword, reason) => {
-      if (password && reason === pdfjs.PasswordResponses.NEED_PASSWORD) {
-        updatePassword(password);
-      } else {
-        // No password provided or incorrect - throw to be caught
-        throw new Error(
-          reason === pdfjs.PasswordResponses.INCORRECT_PASSWORD
-            ? "INCORRECT_PASSWORD"
-            : "PASSWORD_REQUIRED"
-        );
-      }
-    };
-
-    const pdf = await loadingTask.promise;
-
-    const totalPages = pdf.numPages;
-    let totalTextContent = '';
-    let totalImageCount = 0;
-    let totalPageArea = 0;
-    let totalImageArea = 0;
-    let pagesWithImages = 0;
-    let pagesWithMinimalText = 0;
-
-    for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
-      const page = await pdf.getPage(pageNum);
-      const viewport = page.getViewport({ scale: 1.0 });
-      const pageArea = viewport.width * viewport.height;
-      totalPageArea += pageArea;
-
-      // Extract text content
-      const textContent = await page.getTextContent();
-      const pageText = textContent.items
-        .map(item => ('str' in item ? item.str : ''))
-        .join(' ');
-      totalTextContent += pageText + ' ';
-
-      // Count words on this page
-      const wordsOnPage = pageText.trim().split(/\s+/).filter(w => w.length > 0).length;
-      if (wordsOnPage < 50) {
-        pagesWithMinimalText++;
-      }
-
-      // Analyze images
-      const ops = await page.getOperatorList();
-      let pageImageCount = 0;
-      let pageImageArea = 0;
-
-      for (let i = 0; i < ops.fnArray.length; i++) {
-        if (
-          ops.fnArray[i] === pdfjs.OPS.paintImageXObject ||
-          ops.fnArray[i] === pdfjs.OPS.paintInlineImageXObject ||
-          ops.fnArray[i] === pdfjs.OPS.paintXObject
-        ) {
-          pageImageCount++;
-
-          // Get transform matrix to calculate actual image dimensions
-          for (let j = i - 1; j >= Math.max(0, i - 5); j--) {
-            if (ops.fnArray[j] === pdfjs.OPS.transform) {
-              const transform = ops.argsArray[j];
-              if (transform && transform.length >= 6) {
-                const width = Math.abs(transform[0]);
-                const height = Math.abs(transform[3]);
-                pageImageArea += width * height;
-                break;
-              }
-            }
-          }
-        }
-      }
-
-      totalImageCount += pageImageCount;
-      if (pageImageCount > 0) {
-        pagesWithImages++;
-        totalImageArea += pageImageArea;
-      }
-    }
-
-    // Analysis metrics
-    const totalWords = totalTextContent.trim().split(/\s+/).filter(w => w.length > 0).length;
-    const avgWordsPerPage = totalWords / totalPages;
-    const imageRatio = totalPageArea > 0 ? totalImageArea / totalPageArea : 0;
-    const pagesWithImagesRatio = pagesWithImages / totalPages;
-    const minimalTextRatio = pagesWithMinimalText / totalPages;
-
-    // Calculate confidence score - STRICTER LOGIC
-    let confidence = 0;
-
-    // CRITICAL: If there's substantial text, it's likely NOT a scanned document
-    // This check should come first and be a strong negative indicator
-    if (avgWordsPerPage > 100) {
-      // Documents with >100 words per page are almost certainly digital, not scanned
-      confidence = 0;
-      return {
-        scanned: false,
-        confidence: 0,
-        metrics: {
-          totalPages,
-          totalWords,
-          avgWordsPerPage,
-          totalImageCount,
-          pagesWithImages,
-          imageRatio,
-          minimalTextRatio
+    return new Promise<{
+      scanned: boolean;
+      confidence: number;
+      metrics: any;
+    }>((resolve, reject) => {
+      const handleMessage = (e: MessageEvent) => {
+        if (e.data.type === 'progress' && onProgress) {
+          onProgress(e.data.current, e.data.total);
+        } else if (e.data.type === 'success') {
+          worker.removeEventListener('message', handleMessage);
+          resolve(e.data.result);
+        } else if (e.data.type === 'error') {
+          worker.removeEventListener('message', handleMessage);
+          reject(new Error(e.data.error));
         }
       };
-    }
 
-    // Strong indicators - very little text AND lots of images
-    if (avgWordsPerPage < 20 && pagesWithImagesRatio > 0.8) {
-      confidence += 0.5;
-    }
+      worker.addEventListener('message', handleMessage);
 
-    // Images cover most of the page area (typical for scans)
-    if (imageRatio > 0.7) {
-      confidence += 0.4;
-    } else if (imageRatio > 0.5) {
-      confidence += 0.2;
-    }
-
-    // Most pages have minimal text
-    if (minimalTextRatio > 0.8) {
-      confidence += 0.3;
-    }
-
-    // Very little text overall (strong indicator)
-    if (totalWords < totalPages * 30) {
-      confidence += 0.3;
-    }
-
-    // Almost all pages have images
-    if (totalImageCount >= totalPages * 0.9 && avgWordsPerPage < 50) {
-      confidence += 0.2;
-    }
-
-    // Check for OCR artifacts (only relevant with minimal text)
-    if (avgWordsPerPage < 50) {
-      const specialCharRatio = (totalTextContent.match(/[^\w\s.,!?;:()\-'"/]/g) || []).length / Math.max(1, totalTextContent.length);
-      if (specialCharRatio > 0.15 && totalImageCount > 0) {
-        confidence += 0.2;
-      }
-    }
-
-    // Normalize confidence
-    confidence = Math.min(1, confidence);
-
-    // Higher threshold for determining if scanned
-    return {
-      scanned: confidence > 0.7,
-      confidence,
-      metrics: {
-        totalPages,
-        totalWords,
-        avgWordsPerPage,
-        totalImageCount,
-        pagesWithImages,
-        imageRatio,
-        minimalTextRatio
-      }
-    };
+      worker.postMessage({
+        type: 'analyze',
+        fileData: data,
+        password: password || undefined
+      });
+    });
   } catch (error) {
     console.error('Error analyzing PDF:', error);
     throw error;
   }
 }
+
+// Optional: Clean up worker when done
+export function terminateAnalysisWorker() {
+  if (analysisWorker) {
+    analysisWorker.terminate();
+    analysisWorker = null;
+  }
+}
+
 
 export function shortenFileName(name: string, maxLength = 20) {
   if (name.length <= maxLength) return name;

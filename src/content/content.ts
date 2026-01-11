@@ -280,7 +280,7 @@ export const edit_page = {
   languageSelectContent: {
     placeholder: "Choose languages (maximum 3)",
     warning: "This document is scanned. Please select its language to ensure accurate results.",
-    ocr_warning: "Add the document's language to get more accurate results.",
+    ocr_warning: "Scanned document detected. For best results, use our OCR PDF tool with advanced language detection and higher accuracy. You can also set the language here for basic processing.",
   },
   converter: {
     free: "Basic",

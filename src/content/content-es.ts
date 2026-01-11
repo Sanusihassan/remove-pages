@@ -37,7 +37,7 @@ export const edit_page: _edit_page = {
   languageSelectContent: {
     placeholder: "Elegir idiomas (máximo 3)",
     warning: "Este documento está escaneado. Por favor seleccione su idioma para garantizar resultados precisos.",
-    ocr_warning: "Añade el idioma del documento para obtener resultados más precisos.",
+    ocr_warning: "Documento escaneado detectado. Para obtener los mejores resultados, utilice nuestra herramienta OCR PDF con detección avanzada de idioma y mayor precisión. También puede configurar el idioma aquí para procesamiento básico.",
   },
   converter: {
     free: "Básico",

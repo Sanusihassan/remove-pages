@@ -5,7 +5,7 @@ import type {
 import { ActionDiv, type ActionProps } from "./ActionDiv";
 import { Tooltip } from "react-tooltip";
 import type { errors as _, edit_page } from "../../src/content";
-import { useEffect, useState, useMemo, useRef } from "react";
+import { useEffect, useState, useMemo, useRef, useCallback } from "react";
 import { Loader } from "./Loader";
 import {
   analyzePDF,
@@ -54,101 +54,134 @@ const FileCard = ({
   const [isScanned, setIsScanned] = useState<boolean>(false);
   const dispatch = useDispatch();
   const isSubscribedRef = useRef(true);
+  const hasProcessedRef = useRef(false);
 
-  // Memoize the sanitized key to avoid recalculating
   const sanitizedKey = useMemo(
     () => (file.name ? sanitizeKey(file.name.split(".")[0]) : null),
     [file.name]
   );
 
-  // Use a specific selector that only subscribes to THIS file's rotation
-  // This prevents re-renders when other files' rotations change
   const rotation = useSelector((state: { tool: ToolState }) => {
     if (!sanitizedKey) return null;
     return state.tool.rotations?.find((r) => r.k === sanitizedKey) || null;
   });
 
-  // Get all passwords for updating state
-  const allPasswords = useSelector(selectPasswords);
+  // CRITICAL FIX: Use a ref to store the selector function
+  // This prevents the circular dependency
+  const getPasswordsRef = useRef(() => {
+    // This will be called inside processFile to get fresh passwords
+    return selectPasswords({ tool: {} as ToolState } as any);
+  });
 
   const [needsPassword, setNeedsPassword] = useState(false);
 
-  const processFile = async (currentPassword: string) => {
-    try {
-      setShowLoader(true);
-      if (extension && extension === ".pdf") {
-        if (isSubscribedRef.current) {
-          const img = await getFirstPageAsImage(
-            file,
-            dispatch,
-            errors,
-            currentPassword || undefined
-          );
+  const processFile = useCallback(
+    async (currentPassword: string) => {
+      // PREVENT DUPLICATE PROCESSING
+      if (hasProcessedRef.current && !currentPassword) {
+        return;
+      }
+      hasProcessedRef.current = true;
 
-          const _needsPassword = img === "/images/locked.png";
-          setNeedsPassword(_needsPassword);
-
-          // Only analyze if we have a valid image (not locked)
-          let scanned = false;
-          if (img && img !== "/images/locked.png") {
-            try {
-              const result = await analyzePDF(
-                file,
-                currentPassword || undefined
-              );
-              scanned = result.scanned;
-            } catch (analyzeError) {
-              console.error("Error analyzing PDF:", analyzeError);
-              // Don't throw - just default to not scanned
-            }
-          }
-          if (scanned) {
-            dispatch(
-              setField({ ocr_warning: languageSelectProps.content.ocr_warning })
-            );
-          }
-          setIsScanned(scanned);
-
+      try {
+        setShowLoader(true);
+        if (extension && extension === ".pdf") {
           if (isSubscribedRef.current) {
-            setImageUrl(img);
+            const img = await getFirstPageAsImage(
+              file,
+              dispatch,
+              errors,
+              currentPassword || undefined
+            );
 
-            // Only update passwords if successfully unlocked
-            if (img && img !== "/images/locked.png" && currentPassword) {
-              const filteredPasswords = allPasswords.filter(
-                (p) => p.k !== sanitizedKey
-              );
-              const updatedPasswords = [
-                ...filteredPasswords,
-                { k: sanitizedKey, p: currentPassword },
-              ];
+            const _needsPassword = img === "/images/locked.png";
+            setNeedsPassword(_needsPassword);
+
+            // Only analyze if we have a valid image (not locked)
+            let scanned = false;
+            if (img && img !== "/images/locked.png") {
+              try {
+                const result = await analyzePDF(
+                  file,
+                  currentPassword || undefined
+                );
+                // DEBUG: Log the metrics to see what's happening
+                console.log("PDF Analysis:", {
+                  scanned: result.scanned,
+                  confidence: result.confidence,
+                  metrics: result.metrics,
+                });
+
+                scanned = result.scanned;
+              } catch (analyzeError) {
+                console.error("Error analyzing PDF:", analyzeError);
+              }
+            }
+            if (scanned) {
               dispatch(
                 setField({
-                  passwords: updatedPasswords,
-                  errorCode: "",
-                  errorMessage: "",
+                  ocr_warning: languageSelectProps.content.ocr_warning,
                 })
               );
-            } else if (img && img !== "/images/locked.png") {
-              dispatch(setField({ errorCode: "", errorMessage: "" }));
+            }
+            setIsScanned(scanned);
+
+            if (isSubscribedRef.current) {
+              setImageUrl(img);
+
+              // Only dispatch password updates if needed
+              if (img && img !== "/images/locked.png" && currentPassword) {
+                // Read passwords at dispatch time, not at callback creation time
+                const currentPasswords = selectPasswords({
+                  tool: (window as any).__REDUX_STORE__?.getState().tool || {},
+                } as any);
+
+                const filteredPasswords = currentPasswords.filter(
+                  (p) => p.k !== sanitizedKey
+                );
+                const updatedPasswords = [
+                  ...filteredPasswords,
+                  { k: sanitizedKey, p: currentPassword },
+                ];
+                dispatch(
+                  setField({
+                    passwords: updatedPasswords,
+                    errorCode: "",
+                    errorMessage: "",
+                  })
+                );
+              } else if (img && img !== "/images/locked.png") {
+                dispatch(setField({ errorCode: "", errorMessage: "" }));
+              }
             }
           }
+        } else {
+          if (isSubscribedRef.current) {
+            setImageUrl(
+              !file.size
+                ? "/images/corrupted.png"
+                : getPlaceHoderImageUrl(extension)
+            );
+          }
         }
-      } else {
+      } finally {
         if (isSubscribedRef.current) {
-          setImageUrl(
-            !file.size
-              ? "/images/corrupted.png"
-              : getPlaceHoderImageUrl(extension)
-          );
+          setShowLoader(false);
         }
       }
-    } finally {
-      if (isSubscribedRef.current) {
-        setShowLoader(false);
-      }
-    }
-  };
+    },
+    [
+      extension,
+      file,
+      dispatch,
+      errors,
+      sanitizedKey,
+      languageSelectProps,
+      // REMOVED allPasswords - this was causing the loop!
+    ]
+  );
 
+  // Initial mount effect - run once
   useEffect(() => {
     isSubscribedRef.current = true;
 
@@ -164,12 +197,20 @@ const FileCard = ({
       }
     })();
 
-    processFile(password);
-
     return () => {
       isSubscribedRef.current = false;
     };
-  }, [extension, file, password]);
+  }, []);
+
+  // Process file effect - runs on mount and password changes
+  useEffect(() => {
+    if (password) {
+      hasProcessedRef.current = false; // Allow reprocessing with new password
+      processFile(password);
+    } else if (!hasProcessedRef.current) {
+      processFile("");
+    }
+  }, [password, processFile]);
 
   return (
     <div
