@@ -1,7 +1,3 @@
-// type Paths = "pdf-to-powerpoint" | "word-to-pdf" | "powerpoint-to-pdf" | "excel-to-pdf" | "html-to-pdf" | "pdf-to-word" | "pdf-to-excel" | "pdf-to-pdf-a" | "pdf-to-text"
-// each path should allow it's allowed files not all files should allow all types right?
-// for example pdf-to-* paths should only accept PDF files. and so on.
-// please just give me the part to update.
 import { type Dispatch, type SetStateAction, useEffect } from "react";
 import type { errors as _, edit_page } from "../../src/content";
 import FileCard from "./FileCard";
@@ -49,57 +45,57 @@ const Files = ({
   const subscriptionStatus = useSelector(
     (state: { tool: ToolState }) => state.tool.subscriptionStatus
   );
-  // useEffect(() => {
-  //   const timeoutId = setTimeout(() => {
-  //     let limitationMsg = "";
-  //     (async () => {
-  //       const isSubscribed =
-  //         subscriptionStatus === null
-  //           ? await fetchSubscriptionStatus()
-  //           : subscriptionStatus;
-  //       if (isSubscribed) {
-  //         return;
-  //       }
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      let limitationMsg = "";
+      (async () => {
+        const isSubscribed =
+          subscriptionStatus === null
+            ? await fetchSubscriptionStatus()
+            : subscriptionStatus;
+        if (isSubscribed) {
+          return;
+        }
 
-  //       // Check size limitations first (cheap checks)
-  //       if (files.length === 1 && files[0].size >= 100 * 1024 * 1024) {
-  //         limitationMsg = errors.alerts.singleFileSize;
-  //         dispatch(setField({ limitationMsg }));
-  //         return;
-  //       }
-  //       if (files.length >= 15) {
-  //         limitationMsg = errors.alerts.maxFiles;
-  //         dispatch(setField({ limitationMsg }));
-  //         return;
-  //       }
-  //       if (files.some((file) => file.size > 50 * 1024 * 1024)) {
-  //         limitationMsg = errors.alerts.fileSize;
-  //         dispatch(setField({ limitationMsg }));
-  //         return;
-  //       }
+        // Check size limitations first (cheap checks)
+        if (files.length === 1 && files[0].size >= 100 * 1024 * 1024) {
+          limitationMsg = errors.alerts.singleFileSize;
+          dispatch(setField({ limitationMsg }));
+          return;
+        }
+        if (files.length >= 15) {
+          limitationMsg = errors.alerts.maxFiles;
+          dispatch(setField({ limitationMsg }));
+          return;
+        }
+        if (files.some((file) => file.size > 50 * 1024 * 1024)) {
+          limitationMsg = errors.alerts.fileSize;
+          dispatch(setField({ limitationMsg }));
+          return;
+        }
 
-  //       // Check pages one by one - EXIT EARLY if any exceeds limit
-  //       for (const file of files) {
-  //         try {
-  //           const pageCount = await calculatePages(file);
-  //           if (pageCount >= 50) {
-  //             limitationMsg = errors.MAX_PAGES_EXCEEDED.message;
-  //             dispatch(setField({ limitationMsg }));
-  //             return; // Exit immediately when limit exceeded
-  //           }
-  //         } catch (error) {
-  //           console.error("Error calculating pages:", error);
-  //           // Continue checking other files if one fails
-  //         }
-  //       }
+        // Check pages one by one - EXIT EARLY if any exceeds limit
+        for (const file of files) {
+          try {
+            const pageCount = await calculatePages(file);
+            if (pageCount >= 50) {
+              limitationMsg = errors.MAX_PAGES_EXCEEDED.message;
+              dispatch(setField({ limitationMsg }));
+              return; // Exit immediately when limit exceeded
+            }
+          } catch (error) {
+            console.error("Error calculating pages:", error);
+            // Continue checking other files if one fails
+          }
+        }
 
-  //       // All checks passed
-  //       dispatch(setField({ limitationMsg: "" }));
-  //     })();
-  //   }, 500);
+        // All checks passed
+        dispatch(setField({ limitationMsg: "" }));
+      })();
+    }, 500);
 
-  //   return () => clearTimeout(timeoutId);
-  // }, [files, subscriptionStatus]);
+    return () => clearTimeout(timeoutId);
+  }, [files, subscriptionStatus]);
 
   const onDrop = (acceptedFiles: File[]) => {
     // Usage in onDrop:
