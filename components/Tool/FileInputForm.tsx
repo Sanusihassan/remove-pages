@@ -31,25 +31,19 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
 }) => {
   const path = data.to.replace("/", "") as Paths;
   const errorMessage = useSelector(
-    (state: { tool: ToolState }) => state.tool.errorMessage
+    (state: { tool: ToolState }) => state.tool.errorMessage,
   );
   const fileName = useSelector(
-    (state: { tool: ToolState }) => state.tool.fileName
+    (state: { tool: ToolState }) => state.tool.fileName,
   );
   const rotations = useSelector(
-    (state: { tool: ToolState }) => state.tool.rotations
+    (state: { tool: ToolState }) => state.tool.rotations,
   );
   const passwords = useSelector(
-    (state: { tool: ToolState }) => state.tool.passwords
+    (state: { tool: ToolState }) => state.tool.passwords,
   );
-  const converter = useSelector(
-    (state: { tool: ToolState }) => state.tool.converter
-  );
-  const selectedLanguages = useSelector(
-    (state: { tool: ToolState }) => state.tool.selectedLanguages
-  );
-  const pdf_a_format = useSelector(
-    (state: { tool: ToolState }) => state.tool.pdf_a_format
+  const password = useSelector(
+    (state: { tool: ToolState }) => state.tool.password,
   );
   const dispatch = useDispatch();
   // file store
@@ -85,13 +79,11 @@ export const FileInputForm: React.FC<FileInputFormProps> = ({
             errorMessage,
             fileName,
             rotations,
-            selectedLanguages,
-            converter,
             passwords,
-            pdf_a_format,
+            password,
           },
           files,
-          errors
+          errors,
         )
       }
       method="POST"

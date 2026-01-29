@@ -9,8 +9,8 @@ import { type ToolState, resetErrorMessage, setField } from "../src/store";
 import { useFileStore } from "../src/file-store";
 import AddMoreButton from "./EditArea/AddMoreButton";
 import { SubmitBtn } from "./EditArea/SubmitBtn";
-import { Options } from "./DisplayFile/Options";
-import { WarningAlert } from "./WarningAlert";
+import Options from "./DisplayFile/Options";
+// import { WarningAlert } from "./WarningAlert";
 import type { Paths } from "../src/content/content";
 
 type editPageProps = {
@@ -36,16 +36,16 @@ const EditPage = ({
 }: editPageProps) => {
   // state variables
   const errorCode = useSelector(
-    (state: { tool: ToolState }) => state.tool.errorCode
+    (state: { tool: ToolState }) => state.tool.errorCode,
   );
   const showTool = useSelector(
-    (state: { tool: ToolState }) => state.tool.showTool
+    (state: { tool: ToolState }) => state.tool.showTool,
   );
   const showDownloadBtn = useSelector(
-    (state: { tool: ToolState }) => state.tool.showDownloadBtn
+    (state: { tool: ToolState }) => state.tool.showDownloadBtn,
   );
   const showOptions = useSelector(
-    (state: { tool: ToolState }) => state.tool.showOptions
+    (state: { tool: ToolState }) => state.tool.showOptions,
   );
   const dispatch = useDispatch();
   // actual files;
@@ -70,8 +70,8 @@ const EditPage = ({
           drop_files={drop_files}
           path={path}
         />
-        <ErrorElement cta={edit_page.cta} />
-        <WarningAlert />
+        <ErrorElement cta={edit_page.filenameOptions.cta} lang={lang} />
+        {/* <WarningAlert /> */}
         <AddMoreButton
           onClick={() => {
             if (fileInput) {
@@ -98,13 +98,16 @@ const EditPage = ({
               edit_page.edit_page_titles[
                 path.replace(
                   /-/g,
-                  "_"
+                  "_",
                 ) as keyof typeof edit_page.edit_page_titles
               ]
             }
           </bdi>
         </h5>
-        <Options edit_page={edit_page} theme={`var(--${path})`} lang={lang} />
+        <Options
+          edit_page={edit_page}
+          layout={path as "lock-pdf" | "unlock-pdf"}
+        />
         <div className="hide-onsmall">
           <SubmitBtn errors={errors} k={path} edit_page={edit_page} />
         </div>

@@ -59,10 +59,10 @@ const Tool: React.FC<ToolProps> = ({
 }) => {
   const path = data.to.replace("/", "") as Paths;
   const stateShowTool = useSelector(
-    (state: { tool: any }) => state.tool.showTool
+    (state: { tool: any }) => state.tool.showTool,
   );
   const errorMessage = useSelector(
-    (state: { tool: any }) => state.tool.errorMessage
+    (state: { tool: any }) => state.tool.errorMessage,
   );
   const { setFiles, files } = useFileStore();
   const dispatch = useDispatch();
@@ -79,7 +79,7 @@ const Tool: React.FC<ToolProps> = ({
       acceptedFiles,
       dispatch,
       errors,
-      getAllMimeTypes(path)
+      getAllMimeTypes(path),
     );
     const newFiles = filterNewFiles(acceptedFiles, files, ACCEPTED);
     if (isValid) {
@@ -105,7 +105,7 @@ const Tool: React.FC<ToolProps> = ({
         }
       }
     },
-    []
+    [],
   );
 
   const { getRootProps, isDragActive } = dropzone.useDropzone({ onDrop });
@@ -141,7 +141,7 @@ const Tool: React.FC<ToolProps> = ({
         // Check if script tag already exists to avoid duplicates
         if (
           !head.querySelector(
-            'script[src*="adsbygoogle.js?client=ca-pub-7801483217621867"]'
+            'script[src*="adsbygoogle.js?client=ca-pub-7801483217621867"]',
           )
         ) {
           const scriptTag = document.createElement("script");
@@ -182,7 +182,7 @@ const Tool: React.FC<ToolProps> = ({
             acceptedFileTypes={acceptedFileTypes}
           />
           <p>{tools.or_drop}</p>
-          <ErrorElement cta={edit_page.cta} />
+          <ErrorElement cta={edit_page.filenameOptions.cta} lang={lang} />
         </div>
         <EditPage
           extension={data.type}

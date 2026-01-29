@@ -7,32 +7,12 @@ import {
   downloadFile,
   adBlockerContent,
 } from "../../content/content-fr";
-import { howToSchemas } from "../../how-to/how-to-fr";
 import BaseLayout from "../../partials/BaseLayout.astro";
 import { configureStore } from "@reduxjs/toolkit";
 
 export const routes = {
-  "/pdf-to-powerpoint": { item: tool["PDF_to_Powerpoint"] },
-  "/word-to-pdf": { item: tool["WORD_to_PDF"] },
-  "/powerpoint-to-pdf": { item: tool["POWERPOINT_to_PDF"] },
-  "/excel-to-pdf": { item: tool["EXCEL_to_PDF"] },
-  "/html-to-pdf": { item: tool["HTML_to_PDF"] },
-  "/pdf-to-word": { item: tool["PDF_to_WORD"] },
-  "/pdf-to-excel": { item: tool["PDF_to_EXCEL"] },
-  "/pdf-to-pdf-a": { item: tool["PDF_to_PDF_A"] },
-  "/pdf-to-text": { item: tool["PDF_to_Text"] },
-};
-
-export const routesMap = {
-  PDFtoPowerpointHOWTO: "/pdf-to-powerpoint",
-  WordToPDFHOWTO: "/word-to-pdf",
-  PowerpointToPDFHOWTO: "/powerpoint-to-pdf",
-  ExcelToPDFHOWTO: "/excel-to-pdf",
-  HTMLToPDFHOWTO: "/html-to-pdf",
-  PDFtoWordHOWTO: "/pdf-to-word",
-  PDFtoExcelHOWTO: "/pdf-to-excel",
-  PDFtoPDFAHOWTO: "/pdf-to-pdf-a",
-  PDFtoTextHOWTO: "/pdf-to-text",
+  "/lock-pdf": { item: tool["Lock_PDF"] },
+  "/unlock-pdf": { item: tool["Unlock_PDF"] },
 };
 
 export async function getStaticPaths() {
@@ -57,12 +37,12 @@ const { item, currentRoute } = Astro.props;
 // Construct the current path using the tool parameter
 const asPath = `${currentRoute}`;
 
-// Find matching how-to content
-const matchingKey = Object.keys(routesMap).find(
-  (key) => routesMap[key] === asPath
-);
+const howToMap = {
+  "/lock-pdf": LockPDFHOWTO_fr,
+  "/unlock-pdf": UnlockPDFHOWTO_fr,
+};
 
-const currentHowTo = matchingKey ? howToSchemas[matchingKey] : null;
+const currentHowTo = howToMap[asPath] ?? null;
 
 // Website schema for SEO
 const websiteSchema = {
@@ -77,6 +57,7 @@ const lang = "fr";
 import toolReducer from "../../store";
 import { ToolWrapper } from "../../../components/ToolWrapper";
 import type { ToolType } from "../../content/content";
+import { LockPDFHOWTO_fr, UnlockPDFHOWTO_fr } from "../../how-to";
 export const store = configureStore({
   reducer: {
     tool: toolReducer,

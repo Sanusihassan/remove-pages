@@ -1,11 +1,7 @@
 import { Spinner } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useFileStore } from "../../src/file-store";
-import {
-  type ToolState,
-  selectSelectedLanguages,
-  setField,
-} from "../../src/store";
+import { type ToolState, setField } from "../../src/store";
 import type { edit_page, errors } from "../../src/content";
 import { canUseSiteToday } from "fetch-subscription-status";
 import { toast } from "react-toastify";
@@ -23,27 +19,30 @@ export function SubmitBtn({
   const { submitBtn } = useFileStore();
   // state variables:
   const errorMessage = useSelector(
-    (state: { tool: ToolState }) => state.tool.errorMessage
+    (state: { tool: ToolState }) => state.tool.errorMessage,
   );
   const isSubmitted = useSelector(
-    (state: { tool: ToolState }) => state.tool.isSubmitted
+    (state: { tool: ToolState }) => state.tool.isSubmitted,
   );
   const limitationMsg = useSelector(
-    (state: { tool: ToolState }) => state.tool.limitationMsg
+    (state: { tool: ToolState }) => state.tool.limitationMsg,
   );
   const subscriptionStatus = useSelector(
-    (state: { tool: ToolState }) => state.tool.subscriptionStatus
+    (state: { tool: ToolState }) => state.tool.subscriptionStatus,
   );
-  const allSelectedLanguages = useSelector(selectSelectedLanguages);
-  const ocr_warning = useSelector(
-    (state: { tool: ToolState }) => state.tool.ocr_warning
+  const filesNotPasswordProtected = useSelector(
+    (state: { tool: ToolState }) => state.tool.filesNotPasswordProtected,
   );
   // ✅ Always call the hook, then use the condition
   const isAdBlockedState = useSelector(
-    (state: { tool: ToolState }) => state.tool.isAdBlocked
+    (state: { tool: ToolState }) => state.tool.isAdBlocked,
   );
   const isAdBlocked =
     process.env.NODE_ENV === "development" ? false : isAdBlockedState;
+  useEffect(() => {
+    console.log("errorMessage", errorMessage);
+    console.log("filesNotPasswordProtected", filesNotPasswordProtected);
+  }, []);
   return (
     <button
       className={`submit-btn ${k}`}
@@ -59,14 +58,14 @@ export function SubmitBtn({
           dispatch(
             setField({
               errorCode: "MAX_DAILY_USAGE",
-            })
+            }),
           );
           dispatch(setField({ errorMessage: errors.MAX_DAILY_USAGE.message }));
           toast(errors.MAX_DAILY_USAGE.message);
           dispatch(
             setField({
               isSubmitted: false,
-            })
+            }),
           );
         }
       }}
@@ -74,10 +73,7 @@ export function SubmitBtn({
         errorMessage.length > 0 ||
         limitationMsg.length > 0 ||
         isAdBlocked ||
-        (allSelectedLanguages &&
-          allSelectedLanguages.length === 0 &&
-          ocr_warning !== "" &&
-          k === "pdf-to-text")
+        filesNotPasswordProtected
       }
     >
       <bdi>

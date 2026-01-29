@@ -1,5 +1,5 @@
+// Updated code with selectedLanguages and its related selectors removed
 import { createSlice, createSelector, type Draft, type PayloadAction } from "@reduxjs/toolkit";
-import type { PDFAFormatValue } from "../components/DisplayFile/Options/PDF_A_Options";
 
 type WritableDraft<T> = {
   -readonly [K in keyof T]: Draft<T[K]>;
@@ -18,12 +18,11 @@ export interface ToolState {
   limitationMsg: string;
   rotations: { k: string; r: number }[];
   passwords: { k: string; p: string }[];
+  password: string;
   subscriptionStatus: boolean | null;
-  selectedLanguages: { k: string; langs: string[] }[] | null;
-  converter: "free" | "premium";
   isAdBlocked: boolean;
-  pdf_a_format: PDFAFormatValue;
   ocr_warning: string;
+  filesNotPasswordProtected: boolean;
 }
 
 const initialState: ToolState = {
@@ -38,11 +37,10 @@ const initialState: ToolState = {
   rotations: [],
   passwords: [],
   subscriptionStatus: null,
-  selectedLanguages: null,
-  converter: "premium",
   isAdBlocked: false,
-  pdf_a_format: "PDF/A-1a",
   ocr_warning: "",
+  password: "",
+  filesNotPasswordProtected: false
 };
 
 const toolSlice = createSlice({
@@ -77,27 +75,6 @@ export const { resetErrorMessage, setField } = toolSlice.actions;
  * Select the entire tool state
  */
 export const selectToolState = (state: { tool: ToolState }) => state.tool;
-
-/**
- * Select all selected languages - returns empty array instead of null for consistency
- */
-export const selectSelectedLanguages = createSelector(
-  [(state: { tool: ToolState }) => state.tool.selectedLanguages],
-  (selectedLanguages) => selectedLanguages || []
-);
-
-/**
- * Select languages for a specific file
- * Usage: useSelector(useMemo(() => selectLanguagesForFile(fileKey), [fileKey]))
- */
-export const selectLanguagesForFile = (fileKey: string) =>
-  createSelector(
-    [selectSelectedLanguages],
-    (selectedLanguages) =>
-      selectedLanguages
-        .filter((item) => item.k === fileKey)
-        .flatMap((item) => item.langs)
-  );
 
 export const selectRotations = createSelector(
   [selectToolState],

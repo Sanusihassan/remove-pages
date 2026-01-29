@@ -1,3 +1,4 @@
+// FileCard.tsx
 import type {
   DraggableProvided,
   DraggableStateSnapshot,
@@ -8,7 +9,6 @@ import type { errors as _, edit_page } from "../../src/content";
 import { useEffect, useState, useMemo, useRef, useCallback } from "react";
 import { Loader } from "./Loader";
 import {
-  analyzePDF,
   getFileDetailsTooltipContent,
   getFirstPageAsImage,
   getPlaceHoderImageUrl,
@@ -17,7 +17,6 @@ import {
 } from "../../src/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPasswords, setField, type ToolState } from "../../src/store";
-import { LanguageSelect } from "../LanguageSelect";
 
 type OmitFileName<T extends ActionProps> = Omit<T, "fileName">;
 
@@ -34,6 +33,7 @@ type CardProps = OmitFileName<ActionProps> & {
     content: edit_page["languageSelectContent"];
     themeColor: string;
   };
+  path: "lock-pdf" | "unlock-pdf";
 };
 
 const FileCard = ({
@@ -46,19 +46,19 @@ const FileCard = ({
   loader_text,
   fileDetailProps,
   languageSelectProps,
+  path,
 }: CardProps) => {
   const [showLoader, setShowLoader] = useState(true);
   const [imageUrl, setImageUrl] = useState("");
   const [tooltipSize, setToolTipSize] = useState("");
   const [password, setPassword] = useState<string>("");
-  const [isScanned, setIsScanned] = useState<boolean>(false);
   const dispatch = useDispatch();
   const isSubscribedRef = useRef(true);
   const hasProcessedRef = useRef(false);
 
   const sanitizedKey = useMemo(
     () => (file.name ? sanitizeKey(file.name.split(".")[0]) : null),
-    [file.name]
+    [file.name],
   );
 
   const rotation = useSelector((state: { tool: ToolState }) => {
@@ -91,40 +91,11 @@ const FileCard = ({
               file,
               dispatch,
               errors,
-              currentPassword || undefined
+              currentPassword || undefined,
             );
 
             const _needsPassword = img === "/images/locked.png";
             setNeedsPassword(_needsPassword);
-
-            // Only analyze if we have a valid image (not locked)
-            let scanned = false;
-            if (img && img !== "/images/locked.png") {
-              try {
-                const result = await analyzePDF(
-                  file,
-                  currentPassword || undefined
-                );
-                // DEBUG: Log the metrics to see what's happening
-                console.log("PDF Analysis:", {
-                  scanned: result.scanned,
-                  confidence: result.confidence,
-                  metrics: result.metrics,
-                });
-
-                scanned = result.scanned;
-              } catch (analyzeError) {
-                console.error("Error analyzing PDF:", analyzeError);
-              }
-            }
-            if (scanned) {
-              dispatch(
-                setField({
-                  ocr_warning: languageSelectProps.content.ocr_warning,
-                })
-              );
-            }
-            setIsScanned(scanned);
 
             if (isSubscribedRef.current) {
               setImageUrl(img);
@@ -137,7 +108,7 @@ const FileCard = ({
                 } as any);
 
                 const filteredPasswords = currentPasswords.filter(
-                  (p) => p.k !== sanitizedKey
+                  (p) => p.k !== sanitizedKey,
                 );
                 const updatedPasswords = [
                   ...filteredPasswords,
@@ -148,7 +119,7 @@ const FileCard = ({
                     passwords: updatedPasswords,
                     errorCode: "",
                     errorMessage: "",
-                  })
+                  }),
                 );
               } else if (img && img !== "/images/locked.png") {
                 dispatch(setField({ errorCode: "", errorMessage: "" }));
@@ -160,7 +131,7 @@ const FileCard = ({
             setImageUrl(
               !file.size
                 ? "/images/corrupted.png"
-                : getPlaceHoderImageUrl(extension)
+                : getPlaceHoderImageUrl(extension),
             );
           }
         }
@@ -178,7 +149,7 @@ const FileCard = ({
       sanitizedKey,
       languageSelectProps,
       // REMOVED allPasswords - this was causing the loop!
-    ]
+    ],
   );
 
   // Initial mount effect - run once
@@ -190,7 +161,7 @@ const FileCard = ({
         file,
         ...fileDetailProps,
         dispatch,
-        errors
+        errors,
       );
       if (isSubscribedRef.current) {
         setToolTipSize(size);
@@ -224,9 +195,6 @@ const FileCard = ({
       <bdi>
         <Tooltip id={`item-tooltip-${index}`} />
       </bdi>
-      {isScanned ? (
-        <LanguageSelect {...languageSelectProps} fileName={file.name} />
-      ) : null}
       <ActionDiv
         extension={extension}
         fileName={file.name}

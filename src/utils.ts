@@ -118,6 +118,7 @@ export const getFileDetailsTooltipContent = async (
 
   return tooltipContent;
 };
+// if the password is correct then we need to dispatch(setField({ errorCode: null,errorMessage: "" })); & not show any error
 export async function getFirstPageAsImage(
   file: File,
   dispatch: Dispatch<Action>,
@@ -158,6 +159,8 @@ export async function getFirstPageAsImage(
           throw new Error("INCORRECT_PASSWORD");
         }
       };
+      dispatch(setField({ errorCode: null }));
+      dispatch(setField({ errorMessage: "" }));
 
       const pdf: PDFDocumentProxy = await loadingTask.promise;
       const page = await pdf.getPage(1);
@@ -404,59 +407,8 @@ export function sanitizeKey(input: string | number | null | undefined): string {
 // Add this outside the component (after imports)
 export const PATH_ACCEPTED_FILES: Record<string, Record<string, string[]>> = {
   // PDF to other formats - accept PDF only
-  "pdf-to-word": { "application/pdf": [".pdf"] },
-  "pdf-to-powerpoint": { "application/pdf": [".pdf"] },
-  "pdf-to-excel": { "application/pdf": [".pdf"] },
-  "pdf-to-pdf-a": { "application/pdf": [".pdf"] },
-  "pdf-to-text": { "application/pdf": [".pdf"] },
-  "pdf-to-jpg": { "application/pdf": [".pdf"] },
-  "pdf-to-png": { "application/pdf": [".pdf"] },
-  "pdf-to-gif": { "application/pdf": [".pdf"] },
-  "pdf-to-tiff": { "application/pdf": [".pdf"] },
-  "pdf-to-bmp": { "application/pdf": [".pdf"] },
-  "pdf-to-webp": { "application/pdf": [".pdf"] },
-  "pdf-to-svg": { "application/pdf": [".pdf"] },
-  "pdf-to-heif-heic": { "application/pdf": [".pdf"] },
-  "pdf-to-image": { "application/pdf": [".pdf"] },
-
-  // Office to PDF
-  "word-to-pdf": {
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"],
-    "application/msword": [".doc"],
-  },
-  "powerpoint-to-pdf": {
-    "application/vnd.openxmlformats-officedocument.presentationml.presentation": [".pptx"],
-    "application/vnd.ms-powerpoint": [".ppt"],
-  },
-  "excel-to-pdf": {
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
-    "application/vnd.ms-excel": [".xls"],
-  },
-
-  // HTML to PDF
-  "html-to-pdf": {
-    "text/html": [".html", ".htm"],
-  },
-
-  // Image to PDF
-  "jpg-to-pdf": { "image/jpeg": [".jpg", ".jpeg"] },
-  "png-to-pdf": { "image/png": [".png"] },
-  "gif-to-pdf": { "image/gif": [".gif"] },
-  "tiff-to-pdf": { "image/tiff": [".tiff", ".tif"] },
-  "bmp-to-pdf": { "image/bmp": [".bmp"] },
-  "webp-to-pdf": { "image/webp": [".webp"] },
-  "svg-to-pdf": { "image/svg+xml": [".svg"] },
-  "heif-heic-to-pdf": { "image/heic": [".heic", ".heif"] },
-  "image-to-pdf": {
-    "image/jpeg": [".jpg", ".jpeg"],
-    "image/png": [".png"],
-    "image/gif": [".gif"],
-    "image/tiff": [".tiff", ".tif"],
-    "image/bmp": [".bmp"],
-    "image/webp": [".webp"],
-    "image/svg+xml": [".svg"],
-    "image/heic": [".heic", ".heif"],
-  },
+  "lock-pdf": { "application/pdf": [".pdf"] },
+  "unlock-pdf": { "application/pdf": [".pdf"] },
 };
 
 // Helper to get the primary MIME type for validation
@@ -476,27 +428,11 @@ export const getAllMimeTypes = (path: Paths): string[] => {
 // All accepted extensions
 export const ACCEPTED = [
   ".pdf",
-  ".docx",
-  ".doc",
-  ".pptx",
-  ".ppt",
-  ".xlsx",
-  ".xls",
-  ".html",
-  ".htm",
 ];
 
 // All accepted MIME types
 export const acceptedMimeTypes = [
   "application/pdf", // .pdf
-  "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
-  "application/msword", // .doc
-  "application/vnd.openxmlformats-officedocument.presentationml.presentation", // .pptx
-  "application/vnd.ms-powerpoint", // .ppt
-  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
-  "application/vnd.ms-excel", // .xls
-  "text/html", // .html
-  "application/xhtml+xml", // .html/.htm
 ];
 
 // Generalized filter function for file validation
@@ -655,46 +591,6 @@ function getAnalysisWorker(): Worker {
     );
   }
   return analysisWorker;
-}
-
-export async function analyzePDF(
-  pdfFile: File,
-  password?: string,
-  onProgress?: (current: number, total: number) => void
-) {
-  try {
-    const data = await pdfFile.arrayBuffer();
-    const worker = getAnalysisWorker();
-
-    return new Promise<{
-      scanned: boolean;
-      confidence: number;
-      metrics: any;
-    }>((resolve, reject) => {
-      const handleMessage = (e: MessageEvent) => {
-        if (e.data.type === 'progress' && onProgress) {
-          onProgress(e.data.current, e.data.total);
-        } else if (e.data.type === 'success') {
-          worker.removeEventListener('message', handleMessage);
-          resolve(e.data.result);
-        } else if (e.data.type === 'error') {
-          worker.removeEventListener('message', handleMessage);
-          reject(new Error(e.data.error));
-        }
-      };
-
-      worker.addEventListener('message', handleMessage);
-
-      worker.postMessage({
-        type: 'analyze',
-        fileData: data,
-        password: password || undefined
-      });
-    });
-  } catch (error) {
-    console.error('Error analyzing PDF:', error);
-    throw error;
-  }
 }
 
 // Optional: Clean up worker when done

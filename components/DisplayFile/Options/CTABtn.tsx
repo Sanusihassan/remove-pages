@@ -1,7 +1,5 @@
 import { useSelector } from "react-redux";
-import { edit_page } from "../../../src/content/content";
 import type { ToolState } from "../../../src/store";
-import { useEffect } from "react";
 export const CTABtn = ({
   cta,
   centerItem,
@@ -12,7 +10,7 @@ export const CTABtn = ({
   lang: string;
 }) => {
   const errorCode = useSelector(
-    (state: { tool: ToolState }) => state.tool.errorCode
+    (state: { tool: ToolState }) => state.tool.errorCode,
   );
 
   return (
@@ -29,18 +27,10 @@ export const CTABtn = ({
         href={`${lang !== "en" ? "/" + lang : ""}/pricing`}
         className="cta-btn"
         target="_blank"
+        onClick={(e) => e.stopPropagation()}
       >
         {cta}
       </a>
-      {errorCode === "INSUFFICIENT_CONVERSION_UNITS" ? (
-        <a
-          href={`${lang !== "en" ? "/" + lang : ""}/recharge/premium-conversions/`}
-          className="cta-btn"
-          target="_blank"
-        >
-          {edit_page.rechargeCta}
-        </a>
-      ) : null}
     </div>
   );
 };

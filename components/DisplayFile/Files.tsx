@@ -6,6 +6,7 @@ import { useFileStore } from "../../src/file-store";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSubscriptionStatus } from "fetch-subscription-status";
 import { setField, type ToolState } from "../../src/store";
+import * as pdfjsLib from "pdfjs-dist";
 import {
   ACCEPTED,
   calculatePages,
@@ -15,6 +16,7 @@ import {
   validateFiles,
 } from "../../src/utils";
 import type { Paths } from "../../src/content/content";
+import { toast } from "react-toastify";
 
 type FileProps = {
   errors: _;
@@ -43,7 +45,7 @@ const Files = ({
   const { files, setFiles } = useFileStore();
   const dispatch = useDispatch();
   const subscriptionStatus = useSelector(
-    (state: { tool: ToolState }) => state.tool.subscriptionStatus
+    (state: { tool: ToolState }) => state.tool.subscriptionStatus,
   );
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -94,8 +96,50 @@ const Files = ({
       })();
     }, 500);
 
+    // Check if any file is not password protected
+    if (path === "unlock-pdf") {
+      (async () => {
+        let hasUnprotectedFile = false;
+
+        for (const file of files) {
+          try {
+            const arrayBuffer = await file.arrayBuffer();
+            const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+
+            try {
+              await loadingTask.promise;
+              // If we reach here, the PDF is NOT password protected
+              hasUnprotectedFile = true;
+              break; // Exit the loop immediately
+            } catch (error: any) {
+              // Check if it's a password error
+              if (error.name === "PasswordException") {
+                // This is expected - the file IS password protected
+                continue;
+              }
+              // Other errors - log and continue
+              console.error("Error checking PDF:", error);
+            }
+          } catch (error) {
+            console.error("Error reading file:", error);
+          }
+        }
+        // Set state once after checking all files
+        if (files.length) {
+          dispatch(
+            setField({
+              filesNotPasswordProtected: hasUnprotectedFile,
+            }),
+          );
+          if (hasUnprotectedFile) {
+            toast.error(errors.alerts.notPasswordProtected);
+          }
+        }
+      })();
+    }
+
     return () => clearTimeout(timeoutId);
-  }, [files, subscriptionStatus]);
+  }, [files, subscriptionStatus, path]);
 
   const onDrop = (acceptedFiles: File[]) => {
     // Usage in onDrop:
@@ -103,31 +147,13 @@ const Files = ({
       acceptedFiles,
       dispatch,
       errors,
-      getAllMimeTypes(path)
+      getAllMimeTypes(path),
     );
 
     const newFiles = filterNewFiles(acceptedFiles, files, ACCEPTED);
     if (isValid) {
       setFiles([...files, ...newFiles]);
     }
-  };
-  const MIME_TYPE_MAP: Record<string, string> = {
-    ".pdf": "application/pdf",
-    ".docx":
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    ".doc": "application/msword",
-    ".xlsx":
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    ".xls": "application/vnd.ms-excel",
-    ".pptx":
-      "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-    ".ppt": "application/vnd.ms-powerpoint",
-    ".html": "text/html",
-    ".htm": "text/html",
-    ".jpg": "image/jpeg",
-    ".jpeg": "image/jpeg",
-    ".png": "image/png",
-    ".txt": "text/plain",
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -159,6 +185,7 @@ const Files = ({
             loader_text={loader_text}
             fileDetailProps={fileDetailProps}
             languageSelectProps={languageSelectProps}
+            path={path}
           />
         </div>
       ))}

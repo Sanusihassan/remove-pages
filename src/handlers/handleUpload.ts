@@ -23,12 +23,7 @@ export const handleUpload = async (
       k: string;
       p: string;
     }[];
-    selectedLanguages: {
-      k: string;
-      langs: string[];
-    }[],
-    converter: "free" | "premium",
-    pdf_a_format: ToolState["pdf_a_format"]
+    password: string;
   },
   files: File[],
   errors: _
@@ -55,26 +50,16 @@ export const handleUpload = async (
     return;
   }
   prevState = strState;
-
+  // this is what i'm sending:
   const formData = new FormData();
   for (let i = 0; i < files.length; i++) {
     formData.append("files", files[i]);
   }
   formData.append("rotations", JSON.stringify(state.rotations));
   formData.append("passwords", JSON.stringify(state.passwords));
-  formData.append("selectedLanguages", JSON.stringify(state.selectedLanguages));
-  formData.append("pdf_a_format", String(state?.pdf_a_format));
+  formData.append("password", state.password); // The password to lock with
   let url: string = "";
-  let endpoint = state.converter === "free" ? "/api/" : "/premium/";
-  if (
-    state.path === "pdf-to-pdf-a" ||
-    state.path === "pdf-to-text" ||
-    state.path === "word-to-pdf" ||
-    state.path === "powerpoint-to-pdf" ||
-    state.path === "html-to-pdf"
-  ) {
-    endpoint = "/api/";
-  }
+  let endpoint = "/api/";
 
   // @ts-ignore
   if (process.env.NODE_ENV === "development") {
@@ -98,38 +83,6 @@ export const handleUpload = async (
     "application/pdf": {
       outputFileMimeType: "application/pdf",
       outputFileName: `${originalFileName}.pdf`,
-    },
-    "application/msword": {
-      outputFileMimeType: "application/msword",
-      outputFileName: `${originalFileName}.docx`,
-    },
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": {
-      outputFileMimeType:
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      outputFileName: `${originalFileName}.docx`,
-    },
-    "application/vnd.ms-excel": {
-      outputFileMimeType: "application/vnd.ms-excel",
-      outputFileName: `${originalFileName}.xlsx`,
-    },
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": {
-      outputFileMimeType:
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      outputFileName: `${originalFileName}.xlsx`,
-    },
-    "application/vnd.ms-powerpoint": {
-      outputFileMimeType: "application/vnd.ms-powerpoint",
-      outputFileName: `${originalFileName}.pptx`,
-    },
-    "application/vnd.openxmlformats-officedocument.presentationml.presentation":
-    {
-      outputFileMimeType:
-        "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-      outputFileName: `${originalFileName}.pptx`,
-    },
-    "text/plain": {
-      outputFileMimeType: "text/plain",
-      outputFileName: `${originalFileName}.txt`,
     },
   };
 

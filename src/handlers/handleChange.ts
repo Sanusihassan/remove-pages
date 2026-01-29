@@ -1,6 +1,6 @@
 import { type Action, type Dispatch } from "@reduxjs/toolkit";
 import type { errors as _, Paths } from "../content/content";
-import { acceptedMimeTypes, getAllMimeTypes, validateFiles } from "../utils";
+import { getAllMimeTypes, validateFiles } from "../utils";
 import { setField } from "../store";
 
 export const handleChange = (

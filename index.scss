@@ -13,18 +13,8 @@ svg {
 
 $pdf-color: #fc271c;
 $color-map: (
-  "pdf-to-powerpoint": #c13b1b,
-  "word-to-pdf": #1b5ebe,
-  "powerpoint-to-pdf": #c13b1b,
-  "excel-to-pdf": #10793f,
-  "web-to-pdf": #0984e3,
-  "pdf-to-text": #4493e1,
-  "html-to-pdf": rgb(228, 77, 38),
-  "pdf-to-word": #1b5ebe,
-  "pdf-to-excel": #10793f,
-  "pdf-to-pdf-a": #000000,
-  "pdf-to-html": rgb(228, 77, 38),
-  "pdf-to-markdown": #000000,
+  "lock-pdf": #2980b9,
+  "unlock-pdf": #3498db,
 );
 
 :root {
@@ -112,14 +102,14 @@ a.dropdown-item {
   .hide-on-rtl {
     [dir="rtl"] &,
     [lang="ar"] & {
-      display: none;
+      display: none !important;
     }
   }
 
   .hide-on-ltr {
     [dir="ltr"] &,
     :not([lang="ar"]) & {
-      display: none;
+      display: none !important;
     }
   }
 }

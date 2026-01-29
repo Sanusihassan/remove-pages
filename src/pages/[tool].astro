@@ -8,36 +8,21 @@ import {
   adBlockerContent,
   type ToolType,
 } from "../content/content";
-import { howToSchemas } from "../how-to/how-to";
+
+// replaced howToSchemas usage with explicit imports
+import { LockPDFHOWTO, UnlockPDFHOWTO } from "../how-to";
 import BaseLayout from "../partials/BaseLayout.astro";
-// possible dynamic routes being matched: src/pages/[tool].astro.
+
+// Only two routes for this app: lock-pdf and unlock-pdf
 export const routes = {
-  "/pdf-to-powerpoint": { item: tool["PDF_to_Powerpoint"] },
-  "/word-to-pdf": { item: tool["WORD_to_PDF"] },
-  "/powerpoint-to-pdf": { item: tool["POWERPOINT_to_PDF"] },
-  "/excel-to-pdf": { item: tool["EXCEL_to_PDF"] },
-  "/html-to-pdf": { item: tool["HTML_to_PDF"] },
-  "/pdf-to-word": { item: tool["PDF_to_WORD"] },
-  "/pdf-to-excel": { item: tool["PDF_to_EXCEL"] },
-  "/pdf-to-pdf-a": { item: tool["PDF_to_PDF_A"] },
-  "/pdf-to-text": { item: tool["PDF_to_Text"] },
+  "/lock-pdf": { item: tool["Lock_PDF"] },
+  "/unlock-pdf": { item: tool["Unlock_PDF"] },
 };
 
-export const routesMap = {
-  PDFtoPowerpointHOWTO: "/pdf-to-powerpoint",
-  WordToPDFHOWTO: "/word-to-pdf",
-  PowerpointToPDFHOWTO: "/powerpoint-to-pdf",
-  ExcelToPDFHOWTO: "/excel-to-pdf", // [DONE]
-  HTMLToPDFHOWTO: "/html-to-pdf", // [DONE]
-  PDFtoWordHOWTO: "/pdf-to-word", // [DONE]
-  PDFtoExcelHOWTO: "/pdf-to-excel", // [DONE]
-  PDFtoPDFAHOWTO: "/pdf-to-pdf-a", // [DONE]
-  PDFtoTextHOWTO: "/pdf-to-text", // [DONE]
-};
-
+// getStaticPaths builds the static pages for the two routes above
 export async function getStaticPaths() {
   const paths = Object.keys(routes).map((route) => {
-    const toolSlug = route.substring(1); // Remove leading slash
+    const toolSlug = route.substring(1); // remove leading slash
     return {
       params: { tool: toolSlug },
       props: {
@@ -57,12 +42,13 @@ const { item, currentRoute } = Astro.props;
 // Construct the current path using the tool parameter
 const asPath = `${currentRoute}`;
 
-// Find matching how-to content
-const matchingKey = Object.keys(routesMap).find(
-  (key) => routesMap[key] === asPath
-);
+// Map paths directly to their HOWTO JSON-LD objects
+const howToMap = {
+  "/lock-pdf": LockPDFHOWTO,
+  "/unlock-pdf": UnlockPDFHOWTO,
+};
 
-const currentHowTo = matchingKey ? howToSchemas[matchingKey] : null;
+const currentHowTo = howToMap[asPath] ?? null;
 
 // Website schema for SEO
 const websiteSchema = {
@@ -73,7 +59,7 @@ const websiteSchema = {
   url: `https://www.pdfequips.com${asPath}`,
 };
 
-const lang = "en"; // Assuming English, adjust if dynamic
+const lang = "en"; // adjust if dynamic
 import { ToolWrapper } from "../../components/ToolWrapper";
 const seoConfig = {
   title: item.seoTitle,

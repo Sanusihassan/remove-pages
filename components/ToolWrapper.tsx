@@ -47,6 +47,7 @@ export function ToolWrapper(props: ToolWrapperProps) {
       <div className="container">
         <Features
           features={features as { title: string; description: string }[]}
+          // @ts-ignore
           tool={
             to as
               | "/pdf-to-powerpoint"

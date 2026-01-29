@@ -17,5 +17,5 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   integrations: [react()],
-  base: isProd ? "/convert-tools" : "/",
+  base: isProd ? "/lock-unlock-pdf" : "/",
 });

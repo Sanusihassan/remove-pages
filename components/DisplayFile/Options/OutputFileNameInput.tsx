@@ -8,12 +8,12 @@ import { useFileStore } from "../../../src/file-store";
 export const OutputFileNameInput = ({
   content,
 }: {
-  content: edit_page["fileNameInput"];
+  content: edit_page["filenameOptions"];
 }) => {
   const dispatch = useDispatch();
   const { files } = useFileStore();
   const fileName = useSelector(
-    (state: { tool: ToolState }) => state.tool.fileName
+    (state: { tool: ToolState }) => state.tool.fileName,
   );
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setField({ fileName: e.target.value }));
