@@ -118,7 +118,7 @@ export const getFileDetailsTooltipContent = async (
 
   return tooltipContent;
 };
-// if the password is correct then we need to dispatch(setField({ errorCode: null,errorMessage: "" })); & not show any error
+
 export async function getFirstPageAsImage(
   file: File,
   dispatch: Dispatch<Action>,

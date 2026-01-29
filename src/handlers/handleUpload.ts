@@ -57,7 +57,9 @@ export const handleUpload = async (
   }
   formData.append("rotations", JSON.stringify(state.rotations));
   formData.append("passwords", JSON.stringify(state.passwords));
-  formData.append("password", state.password); // The password to lock with
+  if (state.path === "lock-pdf") {
+    formData.append("password", state.password); // The password to lock with
+  }
   let url: string = "";
   let endpoint = "/api/";
 

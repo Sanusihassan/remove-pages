@@ -1,4 +1,3 @@
-// FileCard.tsx
 import type {
   DraggableProvided,
   DraggableStateSnapshot,
@@ -16,7 +15,7 @@ import {
   shortenFileName,
 } from "../../src/utils";
 import { useDispatch, useSelector } from "react-redux";
-import { selectPasswords, setField, type ToolState } from "../../src/store";
+import { setField, type ToolState } from "../../src/store";
 
 type OmitFileName<T extends ActionProps> = Omit<T, "fileName">;
 
@@ -66,12 +65,10 @@ const FileCard = ({
     return state.tool.rotations?.find((r) => r.k === sanitizedKey) || null;
   });
 
-  // CRITICAL FIX: Use a ref to store the selector function
-  // This prevents the circular dependency
-  const getPasswordsRef = useRef(() => {
-    // This will be called inside processFile to get fresh passwords
-    return selectPasswords({ tool: {} as ToolState } as any);
-  });
+  // Get current passwords from Redux store
+  const allPasswords = useSelector(
+    (state: { tool: ToolState }) => state.tool.passwords || [],
+  );
 
   const [needsPassword, setNeedsPassword] = useState(false);
 
@@ -100,20 +97,19 @@ const FileCard = ({
             if (isSubscribedRef.current) {
               setImageUrl(img);
 
-              // Only dispatch password updates if needed
+              // Only dispatch password updates if successfully unlocked
               if (img && img !== "/images/locked.png" && currentPassword) {
-                // Read passwords at dispatch time, not at callback creation time
-                const currentPasswords = selectPasswords({
-                  tool: (window as any).__REDUX_STORE__?.getState().tool || {},
-                } as any);
-
-                const filteredPasswords = currentPasswords.filter(
+                // Filter out old password for this file
+                const filteredPasswords = allPasswords.filter(
                   (p) => p.k !== sanitizedKey,
                 );
+
+                // Add new password for this file
                 const updatedPasswords = [
                   ...filteredPasswords,
                   { k: sanitizedKey, p: currentPassword },
                 ];
+
                 dispatch(
                   setField({
                     passwords: updatedPasswords,
@@ -147,8 +143,7 @@ const FileCard = ({
       dispatch,
       errors,
       sanitizedKey,
-      languageSelectProps,
-      // REMOVED allPasswords - this was causing the loop!
+      allPasswords, // Include allPasswords in dependencies
     ],
   );
 
@@ -171,7 +166,7 @@ const FileCard = ({
     return () => {
       isSubscribedRef.current = false;
     };
-  }, []);
+  }, [file, fileDetailProps, dispatch, errors]);
 
   // Process file effect - runs on mount and password changes
   useEffect(() => {

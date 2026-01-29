@@ -29,7 +29,7 @@ export const ActionDiv = ({
   const [passwordInput, setPasswordInput] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const rotations = useSelector(
-    (state: { tool: ToolState }) => state.tool.rotations
+    (state: { tool: ToolState }) => state.tool.rotations,
   );
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -49,7 +49,7 @@ export const ActionDiv = ({
           ...rotations.filter((r) => r.k !== k),
           { k, r: newRotation % 360 },
         ],
-      })
+      }),
     );
   };
 
