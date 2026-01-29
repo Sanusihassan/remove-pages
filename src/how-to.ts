@@ -1,5 +1,5 @@
 export const LockPDFHOWTO = {
-  "@context": "http://schema.org",
+  "@context": "https://schema.org",
   "@type": "HowTo",
   name: "How to Lock PDF Files with Passwords",
   description:
@@ -40,7 +40,7 @@ export const LockPDFHOWTO = {
 };
 
 export const LockPDFHOWTO_ar = {
-  "@context": "http://schema.org",
+  "@context": "https://schema.org",
   "@type": "HowTo",
   name: "كيفية قفل ملفات PDF بكلمات مرور",
   description:
@@ -77,7 +77,7 @@ export const LockPDFHOWTO_ar = {
 };
 
 export const LockPDFHOWTO_es = {
-  "@context": "http://schema.org",
+  "@context": "https://schema.org",
   "@type": "HowTo",
   name: "Cómo Bloquear Archivos PDF con Contraseñas",
   description:
@@ -120,7 +120,7 @@ export const LockPDFHOWTO_es = {
 };
 
 export const LockPDFHOWTO_fr = {
-  "@context": "http://schema.org",
+  "@context": "https://schema.org",
   "@type": "HowTo",
   name: "Comment Verrouiller des Fichiers PDF avec des Mots de Passe",
   description:
@@ -163,7 +163,7 @@ export const LockPDFHOWTO_fr = {
 };
 
 export const LockPDFHOWTO_hi = {
-  "@context": "http://schema.org",
+  "@context": "https://schema.org",
   "@type": "HowTo",
   name: "PDF फ़ाइलों में पासवर्ड लगाने का तरीका",
   description:
@@ -204,7 +204,7 @@ export const LockPDFHOWTO_hi = {
 };
 
 export const LockPDFHOWTO_zh = {
-  "@context": "http://schema.org",
+  "@context": "https://schema.org",
   "@type": "HowTo",
   name: "如何给PDF文件添加密码",
   description: "使用PDF文件锁定工具向PDF文件添加密码的逐步指南。",
@@ -237,7 +237,7 @@ export const LockPDFHOWTO_zh = {
 };
 
 export const UnlockPDFHOWTO = {
-  "@context": "http://schema.org",
+  "@context": "https://schema.org",
   "@type": "HowTo",
   name: "How to Remove Passwords from PDF Files",
   description:
@@ -275,7 +275,7 @@ export const UnlockPDFHOWTO = {
 };
 
 export const UnlockPDFHOWTO_ar = {
-  "@context": "http://schema.org",
+  "@context": "https://schema.org",
   "@type": "HowTo",
   name: "كيفية إزالة كلمات المرور من ملفات PDF",
   description:
@@ -313,7 +313,7 @@ export const UnlockPDFHOWTO_ar = {
 };
 
 export const UnlockPDFHOWTO_es = {
-  "@context": "http://schema.org",
+  "@context": "https://schema.org",
   "@type": "HowTo",
   name: "Cómo Eliminar Contraseñas de Archivos PDF",
   description:
@@ -355,7 +355,7 @@ export const UnlockPDFHOWTO_es = {
 };
 
 export const UnlockPDFHOWTO_fr = {
-  "@context": "http://schema.org",
+  "@context": "https://schema.org",
   "@type": "HowTo",
   name: "Comment Supprimer les Mots de Passe des Fichiers PDF",
   description:
@@ -397,7 +397,7 @@ export const UnlockPDFHOWTO_fr = {
 };
 
 export const UnlockPDFHOWTO_hi = {
-  "@context": "http://schema.org",
+  "@context": "https://schema.org",
   "@type": "HowTo",
   name: "PDF फ़ाइलों से पासवर्ड हटाने का तरीका",
   description:
@@ -437,7 +437,7 @@ export const UnlockPDFHOWTO_hi = {
 };
 
 export const UnlockPDFHOWTO_zh = {
-  "@context": "http://schema.org",
+  "@context": "https://schema.org",
   "@type": "HowTo",
   name: "如何解除PDF文件的密码保护",
   description: "使用解锁PDF工具逐步删除PDF文件的密码保护。",
