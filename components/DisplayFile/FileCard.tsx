@@ -137,14 +137,7 @@ const FileCard = ({
         }
       }
     },
-    [
-      extension,
-      file,
-      dispatch,
-      errors,
-      sanitizedKey,
-      allPasswords, // Include allPasswords in dependencies
-    ],
+    [extension, file, dispatch, errors, sanitizedKey],
   );
 
   // Initial mount effect - run once
