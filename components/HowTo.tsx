@@ -13,7 +13,7 @@ const HowTo = ({
   imgSrc: string;
 }) => {
   const stateShowTool = useSelector(
-    (state: { tool: ToolState }) => state.tool.showTool
+    (state: { tool: ToolState }) => state.tool.showTool,
   );
   useEffect(() => {}, [stateShowTool]);
   return (
@@ -42,12 +42,12 @@ const HowTo = ({
           </picture>
         </div>
         <div className="how-to-steps">
-          <div itemScope itemType="http://schema.org/HowTo">
+          <div itemScope itemType="https://schema.org/HowTo">
             {/* @ts-ignore */}
             <h2 itemProp="name">{howTo.name}</h2>
             {/* @ts-ignore */}
             <p itemProp="description">{howTo.description}</p>
-            <ol itemScope itemType="http://schema.org/HowToStep">
+            <ol itemScope itemType="https://schema.org/HowToStep">
               {/* @ts-ignore */}
               {howTo.step.map((step, index) => (
                 <li key={index}>
