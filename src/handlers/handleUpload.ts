@@ -5,8 +5,10 @@ import { type RefObject } from "react";
 import { resetErrorMessage, setField, type ToolState } from "../store";
 import type { Action, Dispatch } from "@reduxjs/toolkit/react";
 import { parseErrorResponse } from "../utils";
+
 let filesOnSubmit = [];
 let prevState = null;
+
 export const handleUpload = async (
   e: React.FormEvent<HTMLFormElement>,
   downloadBtn: RefObject<HTMLAnchorElement>,
@@ -32,6 +34,7 @@ export const handleUpload = async (
   dispatch(setField({ isSubmitted: true }));
 
   if (!files) return;
+
   // Extract file names from the File[] array
   const fileNames = files.map((file) => file.name);
 
@@ -50,16 +53,20 @@ export const handleUpload = async (
     return;
   }
   prevState = strState;
-  // this is what i'm sending:
+
+  // Prepare form data
   const formData = new FormData();
   for (let i = 0; i < files.length; i++) {
     formData.append("files", files[i]);
   }
   formData.append("rotations", JSON.stringify(state.rotations));
   formData.append("passwords", JSON.stringify(state.passwords));
+
+  // Add lock password for lock-pdf route
   if (state.path === "lock-pdf") {
-    formData.append("password", state.password); // The password to lock with
+    formData.append("password", state.password);
   }
+
   let url: string = "";
   let endpoint = "/api/";
 
@@ -69,9 +76,11 @@ export const handleUpload = async (
   } else {
     url = `${endpoint}${state.path}`;
   }
+
   if (state.errorMessage) {
     return;
   }
+
   const originalFileName =
     state.fileName || files[0]?.name?.split(".").slice(0, -1).join(".");
 
@@ -93,7 +102,7 @@ export const handleUpload = async (
       responseType: "arraybuffer",
       withCredentials: true
     });
-    // const originalFileName = files[0]?.name?.split(".").slice(0, -1).join(".");
+
     const mimeType = response.data.type || response.headers["content-type"];
     const mimeTypeData = mimeTypeLookupTable[mimeType] || {
       outputFileMimeType: mimeType,
@@ -134,21 +143,47 @@ export const handleUpload = async (
     if (axios.isAxiosError(error) && error.response) {
       try {
         const errorCodeMap: Record<string, string> = {
-          // File validation errors
-          'FILE_NOT_UPLOADED': errors.alerts.fileNotUploaded,
-          'FILE_EMPTY': errors.alerts.fileEmpty,
-          'FILE_TOO_LARGE': errors.alerts.fileTooLarge,
-          'INVALID_FILE_TYPE': errors.alerts.invalidFileType,
-          'FILE_CORRUPT': errors.alerts.fileCorrupt,
-          'INSUFFICIENT_CONVERSION_UNITS': errors.alerts.insufficientUnits,
+          // General file validation errors
+          'NO_FILES_PROVIDED': errors.alerts.fileNotUploaded || 'No files provided',
+          'FILE_NOT_UPLOADED': errors.alerts.fileNotUploaded || 'File not uploaded',
+          'FILE_EMPTY': errors.alerts.fileEmpty || 'File is empty',
+          'FILE_TOO_LARGE': errors.alerts.fileTooLarge || 'File is too large',
+          'TOO_MANY_FILES': errors.alerts.tooManyFiles || 'Too many files uploaded',
+          'INVALID_FILE_TYPE': errors.alerts.invalidFileType || 'Invalid file type',
+          'FILE_CORRUPT': errors.alerts.fileCorrupt || 'File is corrupted',
+
+          // PDF-specific errors
+          'INVALID_PDF': errors.alerts.invalidPdf || 'Invalid PDF file',
+          'PDF_NOT_ENCRYPTED': errors.alerts.pdfNotEncrypted || 'PDF is not password-protected',
+
+          // Lock-PDF specific errors
+          'NO_LOCK_PASSWORD_PROVIDED': errors.alerts.noLockPassword || 'Please provide a password to lock the PDF',
+          'LOCKING_FAILED': errors.alerts.lockingFailed || 'Failed to lock PDF. Please try again.',
+
+          // Unlock-PDF specific errors
+          'NO_PASSWORDS_PROVIDED': errors.alerts.noPasswordsProvided || 'Please provide passwords for locked PDFs',
+          'UNLOCKING_FAILED': errors.alerts.unlockingFailed || 'Failed to unlock PDF. Please check the password and try again.',
+          'INCORRECT_PASSWORD': errors.alerts.incorrectPassword || 'Incorrect password provided',
+          'PASSWORD_REQUIRED': errors.alerts.passwordRequired || 'Password required to unlock PDF',
+
+          // Settings errors
+          'INVALID_SETTINGS_FORMAT': errors.alerts.invalidSettings || 'Invalid settings format',
+
           // Auth errors
-          'AUTH_TOKEN_MISSING': errors.alerts.authRequired,
-          'AUTH_TOKEN_EXPIRED': errors.alerts.sessionExpired,
-          'AUTH_INVALID_TOKEN': errors.alerts.invalidToken,
-          'AUTH_USER_NOT_FOUND': errors.alerts.userNotFound,
-          'AUTH_SERVER_ERROR': errors.alerts.authError,
-          'SERVER_CONFIG_ERROR': errors.alerts.serverError,
-          'MAX_PAGES_EXCEEDED': errors.MAX_PAGES_EXCEEDED.message,
+          'UNAUTHORIZED': errors.alerts.authRequired || 'Authentication required',
+          'INVALID_TOKEN': errors.alerts.invalidToken || 'Invalid authentication token',
+          'AUTH_TOKEN_MISSING': errors.alerts.authRequired || 'Authentication required',
+          'AUTH_TOKEN_EXPIRED': errors.alerts.sessionExpired || 'Session expired. Please sign in again.',
+          'AUTH_INVALID_TOKEN': errors.alerts.invalidToken || 'Invalid authentication token',
+          'AUTH_USER_NOT_FOUND': errors.alerts.userNotFound || 'User not found',
+          'AUTH_SERVER_ERROR': errors.alerts.authError || 'Authentication error',
+
+          // Server errors
+          'SERVER_CONFIG_ERROR': errors.alerts.serverError || 'Server configuration error',
+
+          // Other errors
+          'INSUFFICIENT_CONVERSION_UNITS': errors.alerts.insufficientUnits || 'Insufficient conversion units',
+          'MAX_PAGES_EXCEEDED': errors.MAX_PAGES_EXCEEDED?.message || 'Maximum pages exceeded',
         };
 
         const { errorCode } = parseErrorResponse(error);

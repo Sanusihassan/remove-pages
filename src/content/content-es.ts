@@ -200,24 +200,44 @@ export const errors: _errors = {
   alerts: {
     // Frontend validation
     maxFiles: "Máximo 15 archivos. ¡Suscríbete para más!",
-    singleFileSize: "El archivo debe ser menor de 100 MB. ¡Actualiza para subir archivos más grandes!",
+    singleFileSize: "El tamaño del archivo debe ser inferior a 100 MB. ¡Actualiza para subir archivos más grandes!",
     perFilePages: "500 páginas por archivo. ¡Desbloquea más ahora!",
     fileSize: "50 MB por archivo. ¡Actualiza para más!",
-    notPasswordProtected: "Uno o más archivos no están protegidos con contraseña",
+    serverError: "Error del servidor. Por favor, inténtalo de nuevo más tarde.",
     // Backend file validation
-    fileNotUploaded: "No se subió ningún archivo. Por favor selecciona un archivo.",
-    fileEmpty: "El archivo subido está vacío. Por favor selecciona un archivo válido.",
-    fileTooLarge: "El archivo excede 200 MB. ¡Actualiza para archivos más grandes!",
-    invalidFileType: "Tipo de archivo inválido. Por favor sube un formato compatible.",
-    fileCorrupt: "El archivo parece estar dañado. Por favor intenta con otro archivo.",
+    fileNotUploaded: "No se subió ningún archivo. Por favor, selecciona un archivo.",
+    fileEmpty: "El archivo subido está vacío. Por favor, selecciona un archivo válido.",
+    fileTooLarge: "El archivo excede el límite de 200 MB. ¡Actualiza para archivos más grandes!",
+    invalidFileType: "Tipo de archivo inválido. Por favor, sube un formato compatible.",
+    fileCorrupt: "El archivo parece estar corrupto. Por favor, intenta con otro archivo.",
     insufficientUnits: "Unidades de conversión insuficientes. ¡Actualiza o recarga!",
     // Auth errors
-    authRequired: "Por favor inicia sesión para usar funciones premium.",
-    sessionExpired: "Tu sesión ha expirado. Por favor inicia sesión nuevamente.",
-    invalidToken: "Autenticación fallida. Por favor inicia sesión nuevamente.",
-    userNotFound: "Cuenta no encontrada. Por favor inicia sesión nuevamente.",
-    authError: "Error de autenticación. Por favor intenta de nuevo.",
-    serverError: "Error del servidor. Por favor intenta más tarde.",
+    authRequired: "Por favor, inicia sesión para usar funciones premium.",
+    sessionExpired: "Tu sesión ha expirado. Por favor, inicia sesión de nuevo.",
+    invalidToken: "Autenticación fallida. Por favor, inicia sesión de nuevo.",
+    userNotFound: "Cuenta no encontrada. Por favor, inicia sesión de nuevo.",
+    authError: "Error de autenticación. Por favor, inténtalo de nuevo.",
+    notPasswordProtected: "Uno o más archivos no están protegidos con contraseña",
+    // Spanish (es)
+    tooManyFiles: "Demasiados archivos subidos",
+
+    // PDF-specific errors
+    invalidPdf: "Archivo PDF inválido o corrupto.",
+    pdfNotEncrypted: "Este PDF no está protegido con contraseña y no necesita ser desbloqueado.",
+
+    // Lock-PDF errors
+    noLockPassword: "Por favor, proporciona una contraseña para bloquear el PDF.",
+    lockingFailed: "Fallo al bloquear PDF. Por favor, inténtalo de nuevo.",
+
+    // Unlock-PDF errors
+    noPasswordsProvided: "Por favor, proporciona contraseñas para los PDFs bloqueados.",
+    unlockingFailed: "Fallo al desbloquear PDF. Por favor, verifica tu contraseña e inténtalo de nuevo.",
+    incorrectPassword: "Contraseña incorrecta. Por favor, inténtalo de nuevo.",
+    passwordRequired: "Este PDF está protegido con contraseña. Por favor, ingresa la contraseña.",
+
+    // Settings errors
+    invalidSettings: "Configuraciones inválidas proporcionadas. Por favor, actualiza e inténtalo de nuevo.",
+    conversionFailed: "Conversión fallida. Por favor, inténtalo de nuevo.",
   },
 };
 

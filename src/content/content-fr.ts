@@ -197,24 +197,43 @@ export const errors: _ = {
     alerts: {
         // Frontend validation
         maxFiles: "Maximum 15 fichiers. Abonnez-vous pour plus !",
-        singleFileSize: "Le fichier doit faire moins de 100 Mo. Passez à la version supérieure pour des fichiers plus gros !",
+        singleFileSize: "La taille du fichier doit être inférieure à 100 Mo. Passez à la version supérieure pour uploader des fichiers plus grands !",
         perFilePages: "500 pages par fichier. Débloquez plus maintenant !",
         fileSize: "50 Mo par fichier. Passez à la version supérieure pour plus !",
-        notPasswordProtected: "Un ou plusieurs fichiers ne sont pas protégés par mot de passe",
+        serverError: "Erreur serveur. Veuillez réessayer plus tard.",
+        tooManyFiles: "Trop de fichiers téléchargés",
         // Backend file validation
-        fileNotUploaded: "Aucun fichier téléchargé. Veuillez sélectionner un fichier.",
-        fileEmpty: "Le fichier téléchargé est vide. Veuillez sélectionner un fichier valide.",
-        fileTooLarge: "Le fichier dépasse 200 Mo. Passez à la version supérieure pour des fichiers plus gros !",
-        invalidFileType: "Type de fichier invalide. Veuillez télécharger un format pris en charge.",
-        fileCorrupt: "Le fichier semble être corrompu. Veuillez essayer un autre fichier.",
+        fileNotUploaded: "Aucun fichier n'a été uploadé. Veuillez sélectionner un fichier.",
+        fileEmpty: "Le fichier uploadé est vide. Veuillez sélectionner un fichier valide.",
+        fileTooLarge: "Le fichier dépasse la limite de 200 Mo. Passez à la version supérieure pour des fichiers plus grands !",
+        invalidFileType: "Type de fichier invalide. Veuillez uploader un format pris en charge.",
+        fileCorrupt: "Le fichier semble corrompu. Veuillez essayer un autre fichier.",
         insufficientUnits: "Unités de conversion insuffisantes. Passez à la version supérieure ou rechargez !",
         // Auth errors
         authRequired: "Veuillez vous connecter pour utiliser les fonctionnalités premium.",
-        sessionExpired: "Votre session a expiré. Veuillez vous reconnecter.",
-        invalidToken: "Échec de l'authentification. Veuillez vous reconnecter.",
-        userNotFound: "Compte introuvable. Veuillez vous reconnecter.",
+        sessionExpired: "Votre session a expiré. Veuillez vous connecter à nouveau.",
+        invalidToken: "Échec de l'authentification. Veuillez vous connecter à nouveau.",
+        userNotFound: "Compte non trouvé. Veuillez vous connecter à nouveau.",
         authError: "Erreur d'authentification. Veuillez réessayer.",
-        serverError: "Erreur du serveur. Veuillez réessayer plus tard.",
+        notPasswordProtected: "Un ou plusieurs fichiers ne sont pas protégés par mot de passe",
+
+        // PDF-specific errors
+        invalidPdf: "Fichier PDF invalide ou corrompu.",
+        pdfNotEncrypted: "Ce PDF n'est pas protégé par mot de passe et n'a pas besoin d'être déverrouillé.",
+
+        // Lock-PDF errors
+        noLockPassword: "Veuillez fournir un mot de passe pour verrouiller le PDF.",
+        lockingFailed: "Échec du verrouillage du PDF. Veuillez réessayer.",
+
+        // Unlock-PDF errors
+        noPasswordsProvided: "Veuillez fournir des mots de passe pour les PDFs verrouillés.",
+        unlockingFailed: "Échec du déverrouillage du PDF. Veuillez vérifier votre mot de passe et réessayer.",
+        incorrectPassword: "Mot de passe incorrect. Veuillez réessayer.",
+        passwordRequired: "Ce PDF est protégé par mot de passe. Veuillez entrer le mot de passe.",
+
+        // Settings errors
+        invalidSettings: "Paramètres invalides fournis. Veuillez actualiser et réessayer.",
+        conversionFailed: "Échec de la conversion. Veuillez réessayer.",
     },
 };
 

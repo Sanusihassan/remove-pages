@@ -198,25 +198,44 @@ export const errors: _ = {
     },
     alerts: {
         // Frontend validation
-        maxFiles: "最多15个文件。订阅获取更多！",
-        singleFileSize: "文件大小必须小于100 MB。升级以上传更大的文件！",
-        perFilePages: "每个文件500页。立即解锁更多！",
-        fileSize: "每个文件50 MB。升级获取更多！",
-        notPasswordProtected: "一个或多个文件未受密码保护",
+        maxFiles: "最多 15 个文件。订阅以获取更多！",
+        singleFileSize: "文件大小必须小于 100 MB。升级以上传更大的文件！",
+        perFilePages: "每个文件 500 页。现在解锁更多！",
+        fileSize: "每个文件 50MB。升级以获取更多！",
+        serverError: "服务器错误。请稍后重试。",
+        tooManyFiles: "上传的文件太多",
         // Backend file validation
         fileNotUploaded: "未上传文件。请选择一个文件。",
-        fileEmpty: "上传的文件为空。请选择一个有效的文件。",
-        fileTooLarge: "文件超过200 MB限制。升级以获取更大文件！",
-        invalidFileType: "文件类型无效。请上传支持的格式。",
-        fileCorrupt: "文件似乎已损坏。请尝试其他文件。",
+        fileEmpty: "上传的文件为空。请选择一个有效文件。",
+        fileTooLarge: "文件超过 200MB 限制。升级以处理更大的文件！",
+        invalidFileType: "无效的文件类型。请上传支持的格式。",
+        fileCorrupt: "文件似乎已损坏。请尝试另一个文件。",
         insufficientUnits: "转换单位不足。升级或充值！",
         // Auth errors
         authRequired: "请登录以使用高级功能。",
         sessionExpired: "您的会话已过期。请重新登录。",
-        invalidToken: "身份验证失败。请重新登录。",
+        invalidToken: "认证失败。请重新登录。",
         userNotFound: "未找到账户。请重新登录。",
-        authError: "身份验证错误。请重试。",
-        serverError: "服务器错误。请稍后重试。",
+        authError: "认证错误。请重试。",
+        notPasswordProtected: "一个或多个文件未受密码保护",
+
+        // PDF-specific errors
+        invalidPdf: "无效或损坏的 PDF 文件。",
+        pdfNotEncrypted: "此 PDF 未受密码保护，不需要解锁。",
+
+        // Lock-PDF errors
+        noLockPassword: "请提供密码以锁定 PDF。",
+        lockingFailed: "锁定 PDF 失败。请重试。",
+
+        // Unlock-PDF errors
+        noPasswordsProvided: "请为锁定的 PDF 提供密码。",
+        unlockingFailed: "解锁 PDF 失败。请检查您的密码并重试。",
+        incorrectPassword: "密码不正确。请重试。",
+        passwordRequired: "此 PDF 受密码保护。请输入密码。",
+
+        // Settings errors
+        invalidSettings: "提供的设置无效。请刷新并重试。",
+        conversionFailed: "转换失败。请重试。",
     },
 };
 

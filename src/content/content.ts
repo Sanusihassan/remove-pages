@@ -225,7 +225,26 @@ export const errors = {
     invalidToken: "Authentication failed. Please log in again.",
     userNotFound: "Account not found. Please log in again.",
     authError: "Authentication error. Please try again.",
-    notPasswordProtected: "One or more files are not password protected"
+    notPasswordProtected: "One or more files are not password protected",
+
+    // PDF-specific errors
+    invalidPdf: "Invalid or corrupted PDF file.",
+    pdfNotEncrypted: "This PDF is not password-protected and doesn't need to be unlocked.",
+
+    // Lock-PDF errors
+    noLockPassword: "Please provide a password to lock the PDF.",
+    lockingFailed: "Failed to lock PDF. Please try again.",
+
+    // Unlock-PDF errors
+    noPasswordsProvided: "Please provide passwords for the locked PDFs.",
+    unlockingFailed: "Failed to unlock PDF. Please check your password and try again.",
+    incorrectPassword: "Incorrect password. Please try again.",
+    passwordRequired: "This PDF is password-protected. Please enter the password.",
+    tooManyFiles: "Too many files uploaded",
+
+    // Settings errors
+    invalidSettings: "Invalid settings provided. Please refresh and try again.",
+    conversionFailed: "Conversion failed. Please try again.",
   },
 };
 
