@@ -168,8 +168,11 @@ export const handleUpload = async (
           'SERVER_CONFIG_ERROR': errors.alerts.serverError || 'Server configuration error',
 
           // Other errors
-          'INSUFFICIENT_CONVERSION_UNITS': errors.alerts.insufficientUnits || 'Insufficient conversion units',
           'MAX_PAGES_EXCEEDED': errors.MAX_PAGES_EXCEEDED?.message || 'Maximum pages exceeded',
+          'NO_PAGES_SELECTED': errors.alerts.noPagesSelected,
+          'INVALID_PAGE_SELECTION': errors.alerts.invalidPageSelection,
+          'REMOVAL_FAILED': errors.alerts.removalFailed,
+          'ALL_PAGES_REMOVED': errors.alerts.allPagesRemoved,
         };
 
         const { errorCode } = parseErrorResponse(error);

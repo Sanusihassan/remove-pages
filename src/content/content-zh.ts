@@ -204,6 +204,10 @@ export const errors: _ = {
         // Settings errors
         invalidSettings: "提供的设置无效。请刷新并重试。",
         conversionFailed: "转换失败。请重试。",
+        noPagesSelected: "请至少选择一页删除",
+        invalidPageSelection: "无效的页面选择格式",
+        removalFailed: "删除页面失败。请重试。",
+        allPagesRemoved: "无法删除所有页面。至少必须保留一页。"
     },
 };
 

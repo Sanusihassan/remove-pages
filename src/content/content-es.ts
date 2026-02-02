@@ -206,6 +206,10 @@ export const errors: _errors = {
     // Settings errors
     invalidSettings: "Configuraciones inválidas proporcionadas. Por favor, actualiza e inténtalo de nuevo.",
     conversionFailed: "Conversión fallida. Por favor, inténtalo de nuevo.",
+    noPagesSelected: "Por favor, seleccione al menos una página para eliminar",
+    invalidPageSelection: "Formato de selección de páginas inválido",
+    removalFailed: "Fallo al eliminar páginas. Por favor, inténtelo de nuevo.",
+    allPagesRemoved: "No se pueden eliminar todas las páginas. Debe quedar al menos una página."
   },
 };
 

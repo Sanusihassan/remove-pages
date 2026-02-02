@@ -214,6 +214,10 @@ export const errors = {
     // Settings errors
     invalidSettings: "Invalid settings provided. Please refresh and try again.",
     conversionFailed: "Conversion failed. Please try again.",
+    noPagesSelected: "Please select at least one page to remove",
+    invalidPageSelection: "Invalid page selection format",
+    removalFailed: "Failed to remove pages. Please try again.",
+    allPagesRemoved: "Cannot remove all pages. At least one page must remain."
   },
 };
 

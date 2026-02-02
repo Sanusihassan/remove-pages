@@ -206,6 +206,10 @@ export const errors: _ = {
         // Settings errors
         invalidSettings: "अमान्य सेटिंग्स प्रदान की गईं। कृपया रिफ्रेश करें और पुनः प्रयास करें।",
         conversionFailed: "परिवर्तन विफल। कृपया पुनः प्रयास करें।",
+        noPagesSelected: "कृपया हटाने के लिए कम से कम एक पेज चुनें",
+        invalidPageSelection: "अमान्य पेज चयन फॉर्मेट",
+        removalFailed: "पेज हटाने में विफल। कृपया पुनः प्रयास करें。",
+        allPagesRemoved: "सभी पेज हटा नहीं सकते। कम से कम एक पेज रहना चाहिए।"
     },
 };
 

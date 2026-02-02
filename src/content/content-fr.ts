@@ -202,6 +202,10 @@ export const errors: _ = {
         // Settings errors
         invalidSettings: "Paramètres invalides fournis. Veuillez actualiser et réessayer.",
         conversionFailed: "Échec de la conversion. Veuillez réessayer.",
+        noPagesSelected: "Veuillez sélectionner au moins une page à supprimer",
+        invalidPageSelection: "Format de sélection de pages invalide",
+        removalFailed: "Échec de la suppression des pages. Veuillez réessayer.",
+        allPagesRemoved: "Impossible de supprimer toutes les pages. Au moins une page doit rester."
     },
 };
 
