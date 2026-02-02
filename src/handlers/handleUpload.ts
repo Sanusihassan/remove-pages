@@ -10,22 +10,14 @@ let filesOnSubmit = [];
 let prevState = null;
 
 export const handleUpload = async (
-  e: React.FormEvent<HTMLFormElement>,
+  e: React.SubmitEvent<HTMLFormElement>,
   downloadBtn: RefObject<HTMLAnchorElement>,
   dispatch: Dispatch<Action>,
   state: {
     path: string;
     errorMessage: string;
     fileName: string;
-    rotations: {
-      k: string;
-      r: number;
-    }[];
-    passwords: {
-      k: string;
-      p: string;
-    }[];
-    password: string;
+    selectedPages: string;
   },
   files: File[],
   errors: _
@@ -59,13 +51,7 @@ export const handleUpload = async (
   for (let i = 0; i < files.length; i++) {
     formData.append("files", files[i]);
   }
-  formData.append("rotations", JSON.stringify(state.rotations));
-  formData.append("passwords", JSON.stringify(state.passwords));
-
-  // Add lock password for lock-pdf route
-  if (state.path === "lock-pdf") {
-    formData.append("password", state.password);
-  }
+  formData.append("selectedPages", state.selectedPages);
 
   let url: string = "";
   let endpoint = "/api/";
@@ -89,7 +75,7 @@ export const handleUpload = async (
   } = {
     "application/zip": {
       outputFileMimeType: "application/zip",
-      outputFileName: `${originalFileName || "PDFEquips"}-compressed.zip`,
+      outputFileName: `${originalFileName || "PDFEquips"}.zip`,
     },
     "application/pdf": {
       outputFileMimeType: "application/pdf",

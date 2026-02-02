@@ -2,49 +2,26 @@ import type { tool as _tool, tools as _tools, edit_page as _edit_page, downloadF
 import type { adBlockerContentType } from "./content";
 
 export const tool: _tool = {
-    Lock_PDF: {
-        title: "قفل PDF",
-        seoTitle: "حماية PDF بكلمة مرور - تأمين ملف PDF الخاص بك عبر الإنترنت",
-        description: "قم بتأمين ملف PDF الخاص بك بكلمة مرور لمنع الوصول غير المصرح به.",
-        keywords: "حماية PDF بكلمة مرور, تأمين ملف PDF, قفل PDF عبر الإنترنت, تشفير PDF, حماية مستند PDF, أداة أمان PDF",
-        color: "#2980b9",
+    Remove_Page: {
+        title: "إزالة صفحة",
+        seoTitle: "حذف صفحات من PDF عبر الإنترنت - أداة إزالة الصفحات",
+        keywords: "إزالة صفحات PDF، حذف صفحات من PDF، مزيل صفحات PDF، إزالة صفحات PDF عبر الإنترنت، محرر PDF، تعديل PDF، أداة PDF آمنة، أداة PDF سهلة الاستخدام",
+        description: "احذف الصفحات غير المرغوب فيها من مستند PDF الخاص بك واحفظ الملف المعدل كملف PDF جديد.",
+        color: "#d63031",
         type: ".pdf",
-        to: "/lock-pdf",
+        to: "/remove-pages",
         features: [
             {
-                title: "سهل الاستخدام",
-                description: "قم بقفل ملفات PDF الخاصة بك بسرعة بواجهة بسيطة."
+                title: "سريع وفعال",
+                description: "قم بإزالة الصفحات غير المرغوب فيها من مستندات PDF الخاصة بك بسرعة دون التضحية بالجودة."
             },
             {
-                title: "تشفير قوي",
-                description: "تطبيق تشفير قوي بكلمة مرور لحماية مستنداتك."
+                title: "آمن وخاص",
+                description: "ملفاتك محمية بتشفير SSL وتُحذف من خوادمنا فورًا بعد المعالجة."
             },
-            {
-                title: "ضمان الخصوصية",
-                description: "يتم تشفير ملفاتك وحذفها من خوادمنا بعد المعالجة."
-            }
-        ]
-    },
-    Unlock_PDF: {
-        title: "فتح PDF",
-        seoTitle: "إزالة كلمة مرور PDF - فتح ملف PDF الخاص بك عبر الإنترنت",
-        description: "قم بإزالة حماية كلمة المرور من ملف PDF الخاص بك بسهولة باستخدام أداتنا سهلة الاستخدام.",
-        keywords: "إزالة كلمة مرور PDF, فتح PDF عبر الإنترنت, فك تشفير PDF, الوصول إلى PDF المؤمّن, أداة إزالة كلمة مرور PDF, فتح مستند PDF",
-        color: "#3498db",
-        type: ".pdf",
-        to: "/unlock-pdf",
-        features: [
             {
                 title: "سهل الاستخدام",
-                description: "افتح ملفات PDF بسهولة بعملية مباشرة."
-            },
-            {
-                title: "فك تشفير سريع",
-                description: "إزالة كلمات مرور PDF بسرعة وكفاءة."
-            },
-            {
-                title: "معالجة آمنة",
-                description: "يتم التعامل مع ملفاتك بأمان وإزالتها من خوادمنا بعد الفتح."
+                description: "واجهة مستخدم سهلة تتيح لك إزالة الصفحات من PDF الخاص بك ببضع نقرات فقط."
             }
         ]
     }
@@ -52,29 +29,15 @@ export const tool: _tool = {
 
 export const edit_page: _edit_page = {
     edit_page_titles: {
-        lock_pdf: "قفل PDF وحماية PDF",
-        unlock_pdf: "إلغاء قفل PDF"
+        remove_pages: "خيارات إزالة الصفحات"
     },
-    loader_text: "الرجاء الانتظار...",
-    add_more_button: "أضف المزيد من الملفات",
+    loader_text: "يرجى الانتظار...",
+    add_more_button: "إضافة المزيد من الملفات",
     action_buttons: {
-        lock_pdf: "قفل PDF",
-        unlock_pdf: "إلغاء قفل PDF"
+        remove_pages: "إزالة الصفحات"
     },
-    lock_button_title: "الرجاء تأكيد كلمة المرور عن طريق إدخالها مرتين.",
-    unlock_button_title: "أدخل كلمة المرور لكل ملف محمي",
-    pages: "صفحات",
-    page: "صفحة واحدة",
-    lock_pdf: {
-        title: "قم بتعيين كلمة مرور لقفل ملف PDF الخاص بك",
-        password: "كلمه السر",
-        repeatPassword: "اعد كلمة السر",
-        no_match: "كلمات المرور غير متطابقة."
-    },
-    unlock_pdf: {
-        title: "أدخل كلمة المرور للملفات التي تتطلب ذلك",
-        password_for: "كلمة السر ل"
-    },
+    pages: "الصفحات",
+    page: "صفحة",
     filenameOptions: {
         label: "اسم الملف الناتج (اختياري)",
         placeholder: "أدخل اسم الملف",
@@ -85,40 +48,43 @@ export const edit_page: _edit_page = {
             cta: "الترقية الآن",
         },
     },
-    languageSelectContent: {
-        placeholder: "اختر اللغات (حد أقصى 3)",
-        warning: "هذا المستند ممسوح ضوئيًا. يرجى اختيار لغته لضمان نتائج دقيقة.",
-        ocr_warning: "تم اكتشاف مستند ممسوح ضوئيًا. للحصول على أفضل النتائج، استخدم أداة OCR PDF الخاصة بنا مع اكتشاف متقدم للغة ودقة أعلى. يمكنك أيضًا تعيين اللغة هنا للمعالجة الأساسية.",
+    fileCard: {
+        page: "صفحة",
+        pages: "صفحات",
+        remove_file: "إزالة الملف",
+        loading: "جار التحميل...",
+        pages_to_remove: "الصفحات المراد إزالتها:",
+        remaining: "المتبقي:",
+        warning_cannot_remove_all: "⚠️ لا يمكنك إزالة جميع الصفحات من المستند.",
+    },
+    options: {
+        info: 'لحذف الصفحات من المستند، انقر عليها. يمكنك أيضًا استخدام مفتاح "shift" لتحديد عدة صفحات في وقت واحد.',
+        total_pages: "إجمالي الصفحات",
+        pages_to_remove: "الصفحات المراد إزالتها:",
+        placeholder: "مثال: 2،8-32",
+        helper_text: "انقر على الصفحات أعلاه أو اكتب أرقام الصفحات هنا (مثل: 2،5،8-12)",
+        summary_pages_to_remove: "الصفحات المراد إزالتها:",
+        summary_remaining_pages: "الصفحات المتبقية:",
+        warning_cannot_remove_all: "⚠️ لا يمكنك إزالة جميع الصفحات من المستند.",
     },
 };
 
 export const downloadFile: _downloadFile = {
     titles: {
-        "lock-pdf": [
-            "تم قفل ملفات ال PDF!",
-            "تم قفل ملف ال PDF!"
-        ],
-        "unlock-pdf": [
-            "تم إلغاء قفل ملفال ال PDF!",
-            "تم إلغاء قفل ملف ال PDF!"
+        "remove-pages": [
+            "تمت إزالة صفحاتك بنجاح!"
         ]
     },
     btnText: {
-        "lock-pdf": [
-            "تنزيل ملفات PDF المقفلة",
-            "تنزيل ملف PDF المقفل"
-        ],
-        "unlock-pdf": [
-            "تحميل الملفات الغير مغلقة",
-            "تحميل الملف الغير مغلق"
+        "remove-pages": [
+            "تحميل ملف PDF المعدّل",
+            "تحميل الملفات المعدّلة"
         ]
     },
     backto: {
-        "lock-pdf": "العودة إلى قفل PDF",
-        "unlock-pdf": "العودة إلى إلغاء قفل ملفات ال PDF"
+        "remove-pages": "العودة إلى إزالة الصفحات"
     }
 };
-
 export const tools: _tools = {
     select: "اختر",
     or_drop: "أو أسقط الملفات هنا",

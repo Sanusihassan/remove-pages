@@ -10,11 +10,8 @@
 svg {
   display: initial !important;
 }
-
-$pdf-color: #fc271c;
 $color-map: (
-  "lock-pdf": #2980b9,
-  "unlock-pdf": #3498db,
+  "remove-pages": #d63031,
 );
 
 :root {

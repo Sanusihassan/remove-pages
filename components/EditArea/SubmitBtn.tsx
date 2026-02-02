@@ -1,4 +1,3 @@
-import { Spinner } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useFileStore } from "../../src/file-store";
 import { type ToolState, setField } from "../../src/store";
@@ -30,19 +29,13 @@ export function SubmitBtn({
   const subscriptionStatus = useSelector(
     (state: { tool: ToolState }) => state.tool.subscriptionStatus,
   );
-  const filesNotPasswordProtected = useSelector(
-    (state: { tool: ToolState }) => state.tool.filesNotPasswordProtected,
-  );
   // ✅ Always call the hook, then use the condition
   const isAdBlockedState = useSelector(
     (state: { tool: ToolState }) => state.tool.isAdBlocked,
   );
   const isAdBlocked =
     process.env.NODE_ENV === "development" ? false : isAdBlockedState;
-  useEffect(() => {
-    console.log("errorMessage", errorMessage);
-    console.log("filesNotPasswordProtected", filesNotPasswordProtected);
-  }, []);
+  useEffect(() => {}, []);
   return (
     <button
       className={`submit-btn ${k}`}
@@ -70,10 +63,7 @@ export function SubmitBtn({
         }
       }}
       disabled={
-        errorMessage.length > 0 ||
-        limitationMsg.length > 0 ||
-        isAdBlocked ||
-        filesNotPasswordProtected
+        errorMessage.length > 0 || limitationMsg.length > 0 || isAdBlocked
       }
     >
       <bdi>
@@ -84,7 +74,7 @@ export function SubmitBtn({
         }
       </bdi>{" "}
       {isSubmitted ? (
-        <Spinner as="span" animation="grow" role="status" aria-hidden="true" />
+        <span className="spinner-grow" role="status" aria-hidden="true"></span>
       ) : null}
     </button>
   );

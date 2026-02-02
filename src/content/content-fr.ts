@@ -1,49 +1,26 @@
 import type { adBlockerContentType } from "./content";
 import type { edit_page as _edit_page, tool as _tool, tools as _tools, downloadFile as _downloadFile, errors as _ } from "../content";
 export const tool: _tool = {
-    Lock_PDF: {
-        title: "Verrouiller PDF",
-        seoTitle: "Protéger PDF avec Mot de Passe - Sécuriser votre Fichier PDF en Ligne",
-        description: "Sécurisez votre fichier PDF avec un mot de passe pour empêcher tout accès non autorisé.",
-        keywords: "protéger PDF avec mot de passe, sécuriser fichier PDF, verrouiller PDF en ligne, crypter PDF, protéger document PDF, outil de sécurité PDF",
-        color: "#2980b9",
+    Remove_Page: {
+        title: "Supprimer une Page",
+        seoTitle: "Supprimer des Pages d'un PDF en Ligne - Outil de Suppression de Pages",
+        keywords: "supprimer des pages de PDF, supprimer des pages d'un PDF, outil de suppression de pages PDF, suppression de pages PDF en ligne, éditeur de PDF, modification de PDF, outil PDF sécurisé, outil PDF facile à utiliser",
+        description: "Supprimez les pages indésirables de votre document PDF et enregistrez le fichier modifié en tant que nouveau PDF.",
+        color: "#d63031",
         type: ".pdf",
-        to: "/lock-pdf",
+        to: "/remove-pages",
         features: [
             {
-                title: "Facile à Utiliser",
-                description: "Verrouillez rapidement vos fichiers PDF avec une interface simple."
+                title: "Rapide et Efficace",
+                description: "Supprimez rapidement les pages indésirables de vos documents PDF sans compromettre la qualité."
             },
             {
-                title: "Cryptage Fort",
-                description: "Appliquez un cryptage fort avec un mot de passe pour protéger vos documents."
+                title: "Sécurisé et Privé",
+                description: "Vos fichiers sont protégés par un cryptage SSL et supprimés de nos serveurs immédiatement après le traitement."
             },
-            {
-                title: "Confidentialité Assurée",
-                description: "Vos fichiers sont cryptés et supprimés de nos serveurs après traitement."
-            }
-        ]
-    },
-    Unlock_PDF: {
-        title: "Déverrouiller PDF",
-        seoTitle: "Supprimer le Mot de Passe PDF - Déverrouiller votre Fichier PDF en Ligne",
-        description: "Supprimez facilement la protection par mot de passe de votre fichier PDF avec notre outil convivial.",
-        keywords: "supprimer le mot de passe PDF, déverrouiller PDF en ligne, décrypter PDF, accéder à PDF sécurisé, outil de suppression de mot de passe PDF, déverrouiller document PDF",
-        color: "#3498db",
-        type: ".pdf",
-        to: "/unlock-pdf",
-        features: [
             {
                 title: "Facile à Utiliser",
-                description: "Déverrouillez les fichiers PDF facilement avec un processus simple."
-            },
-            {
-                title: "Décryptage Rapide",
-                description: "Supprimez les mots de passe PDF rapidement et efficacement."
-            },
-            {
-                title: "Traitement Sécurisé",
-                description: "Vos fichiers sont traités en toute sécurité et supprimés de nos serveurs après déverrouillage."
+                description: "Interface conviviale qui vous permet de supprimer des pages de votre PDF en quelques clics."
             }
         ]
     }
@@ -51,29 +28,15 @@ export const tool: _tool = {
 
 export const edit_page: _edit_page = {
     edit_page_titles: {
-        lock_pdf: "Verrouiller PDF et protéger PDF",
-        unlock_pdf: "Déverrouiller le PDF"
+        remove_pages: "Options pour supprimer des pages"
     },
-    loader_text: "Veuillez patienter...",
+    loader_text: "veuillez patienter...",
     add_more_button: "Ajouter plus de fichiers",
     action_buttons: {
-        lock_pdf: "Verrouiller PDF",
-        unlock_pdf: "Déverrouiller le PDF"
+        remove_pages: "Supprimer des pages"
     },
-    lock_button_title: "Veuillez confirmer le mot de passe en le saisissant deux fois.",
-    unlock_button_title: "Saisissez le mot de passe pour chaque fichier protégé",
     pages: "pages",
     page: "page",
-    lock_pdf: {
-        title: "Définissez un mot de passe pour verrouiller votre fichier PDF",
-        password: "Mot de passe",
-        repeatPassword: "Répéter le mot de passe",
-        no_match: "Les mots de passe ne correspondent pas."
-    },
-    unlock_pdf: {
-        title: "Entrez le mot de passe pour les fichiers qui le nécessitent",
-        password_for: "mot de passe pour"
-    },
     filenameOptions: {
         label: "Nom du fichier de sortie (facultatif)",
         placeholder: "Entrez le nom du fichier",
@@ -84,39 +47,44 @@ export const edit_page: _edit_page = {
             cta: "Mettre à niveau maintenant",
         },
     },
-    languageSelectContent: {
-        placeholder: "Choisir les langues (maximum 3)",
-        warning: "Ce document est numérisé. Veuillez sélectionner sa langue pour garantir des résultats précis.",
-        ocr_warning: "Document numérisé détecté. Pour de meilleurs résultats, utilisez notre outil OCR PDF avec détection avancée de langue et précision supérieure. Vous pouvez également définir la langue ici pour un traitement de base.",
+    fileCard: {
+        page: "page",
+        pages: "pages",
+        remove_file: "Supprimer le fichier",
+        loading: "Chargement...",
+        pages_to_remove: "Pages à supprimer :",
+        remaining: "Restantes :",
+        warning_cannot_remove_all: "⚠️ Vous ne pouvez pas supprimer toutes les pages du document.",
+    },
+    options: {
+        info: 'Pour supprimer des pages du document, cliquez dessus. Vous pouvez également utiliser la touche "shift" pour sélectionner plusieurs pages à la fois.',
+        total_pages: "Total de pages",
+        pages_to_remove: "Pages à supprimer :",
+        placeholder: "exemple : 2,8-32",
+        helper_text: "Cliquez sur les pages ci-dessus ou tapez les numéros de page ici (ex : 2,5,8-12)",
+        summary_pages_to_remove: "Pages à supprimer :",
+        summary_remaining_pages: "Pages restantes :",
+        warning_cannot_remove_all: "⚠️ Vous ne pouvez pas supprimer toutes les pages du document.",
     },
 };
 
 export const downloadFile: _downloadFile = {
     titles: {
-        "lock-pdf": [
-            "Les fichiers PDF ont été verrouillés!",
-            "Le fichier PDF a été verrouillé!"
-        ],
-        "unlock-pdf": [
-            "Les fichiers PDF ont été débloqués !",
-            "Le fichier PDF a été débloqué !"
+        "remove-pages": [
+            "Vos pages ont été supprimées avec succès!"
         ]
     },
     btnText: {
-        "lock-pdf": [
-            "Télécharger des fichiers PDF verrouillés",
-            "Télécharger un fichier PDF verrouillé"
-        ],
-        "unlock-pdf": [
-            "Télécharger des fichiers PDF déverrouillés",
-            "Télécharger le fichier PDF débloqué"
+        "remove-pages": [
+            "Télécharger le PDF modifié",
+            "Télécharger les fichiers modifiés"
         ]
     },
     backto: {
-        "lock-pdf": "Retour à la verrouillage PDF",
-        "unlock-pdf": "Retour à Déverrouiller le PDF"
+        "remove-pages": "Retour aux pages supprimées"
     }
 };
+
 
 // French (fr) - tools
 export const tools: _tools = {

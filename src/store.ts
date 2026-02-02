@@ -1,4 +1,3 @@
-// Updated code with selectedLanguages and its related selectors removed
 import { createSlice, createSelector, type Draft, type PayloadAction } from "@reduxjs/toolkit";
 
 type WritableDraft<T> = {
@@ -16,13 +15,11 @@ export interface ToolState {
   showOptions: boolean;
   fileName: string;
   limitationMsg: string;
-  rotations: { k: string; r: number }[];
-  passwords: { k: string; p: string }[];
-  password: string;
   subscriptionStatus: boolean | null;
   isAdBlocked: boolean;
   ocr_warning: string;
-  filesNotPasswordProtected: boolean;
+  selectedPages: string;
+  pageCount: number;
 }
 
 const initialState: ToolState = {
@@ -34,13 +31,11 @@ const initialState: ToolState = {
   showOptions: false,
   fileName: "",
   limitationMsg: "",
-  rotations: [],
-  passwords: [],
   subscriptionStatus: null,
   isAdBlocked: false,
   ocr_warning: "",
-  password: "",
-  filesNotPasswordProtected: false
+  selectedPages: "",
+  pageCount: 0,
 };
 
 const toolSlice = createSlice({
@@ -75,16 +70,6 @@ export const { resetErrorMessage, setField } = toolSlice.actions;
  * Select the entire tool state
  */
 export const selectToolState = (state: { tool: ToolState }) => state.tool;
-
-export const selectRotations = createSelector(
-  [selectToolState],
-  (state) => state.rotations
-);
-
-export const selectPasswords = createSelector(
-  [selectToolState],
-  (state) => state.passwords
-);
 
 
 export default toolSlice.reducer;

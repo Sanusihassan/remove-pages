@@ -1,51 +1,88 @@
 export const tool = {
-  Lock_PDF: {
-    title: "Lock PDF",
-    seoTitle: "Password Protect PDF - Secure Your PDF File Online",
-    description: "Secure your PDF file with a password to prevent unauthorized access.",
-    keywords: "password protect PDF, secure PDF file, lock PDF online, encrypt PDF, protect PDF document, PDF security tool",
-    color: "#2980b9",
+  Remove_Page: {
+    title: "Remove Page",
+    seoTitle: "Delete Pages from PDF Online - Page Remover Tool",
+    keywords: "remove PDF pages, delete pages from PDF, PDF page remover, online PDF page removal, PDF editor, PDF modification, secure PDF tool, easy-to-use PDF tool",
+    description: "Delete unwanted pages from your PDF document and save the modified file as a new PDF.",
+    color: "#d63031",
     type: ".pdf",
-    to: "/lock-pdf",
+    to: "/remove-pages",
     features: [
       {
-        title: "Easy to Use",
-        description: "Quickly lock your PDF files with a simple interface."
+        title: "Fast and Efficient",
+        description: "Quickly remove unwanted pages from your PDF documents without compromising quality."
       },
       {
-        title: "Strong Encryption",
-        description: "Apply strong password encryption to safeguard your documents."
+        title: "Secure and Private",
+        description: "Your files are protected with SSL encryption and deleted from our servers immediately after processing."
       },
       {
-        title: "Privacy Ensured",
-        description: "Your files are encrypted and deleted from our servers after processing."
-      }
-    ]
-  },
-  Unlock_PDF: {
-    title: "Unlock PDF",
-    seoTitle: "Remove PDF Password - Unlock Your PDF File Online",
-    description: "Easily remove password protection from your PDF file with our user-friendly tool.",
-    keywords: "remove PDF password, unlock PDF online, decrypt PDF, access secured PDF, PDF password remover, unlock PDF document",
-    color: "#3498db",
-    type: ".pdf",
-    to: "/unlock-pdf",
-    features: [
-      {
-        title: "User-Friendly",
-        description: "Easily unlock PDF files with a straightforward process."
-      },
-      {
-        title: "Quick Decryption",
-        description: "Remove PDF passwords quickly and efficiently."
-      },
-      {
-        title: "Secure Processing",
-        description: "Your files are handled securely and removed from our servers after unlocking."
+        title: "Easy-to-Use",
+        description: "User-friendly interface that allows you to remove pages from your PDF with just a few clicks."
       }
     ]
   }
 };
+
+export const edit_page = {
+  edit_page_titles: {
+    remove_pages: "Remove Pages options"
+  },
+  loader_text: "please wait...",
+  add_more_button: "Add more files",
+  action_buttons: {
+    remove_pages: "Remove Pages"
+  },
+  pages: "pages",
+  page: "page",
+  filenameOptions: {
+    label: "Output File Name (Optional)",
+    placeholder: "Enter file name",
+    helperText: "This will be the name of the compressed PDF when downloaded.",
+    cta: "View Plans",
+    upgradeNotice: {
+      msg: "Levels from 2.0 to 10.0 are available with premium.",
+      cta: "Upgrade now",
+    },
+  },
+  fileCard: {
+    page: "page",
+    pages: "pages",
+    remove_file: "Remove file",
+    loading: "Loading...",
+    pages_to_remove: "Pages to remove:",
+    remaining: "Remaining:",
+    warning_cannot_remove_all: "⚠️ You cannot remove all pages from the document.",
+  },
+  options: {
+    info: 'To delete pages from the document, click on them. You can also use the "shift" key to select multiple pages at once.',
+    total_pages: "Total pages",
+    pages_to_remove: "Pages to remove:",
+    placeholder: "example: 2,8-32",
+    helper_text: "Click on pages above or type page numbers here (e.g., 2,5,8-12)",
+    summary_pages_to_remove: "Pages to remove:",
+    summary_remaining_pages: "Remaining pages:",
+    warning_cannot_remove_all: "⚠️ You cannot remove all pages from the document.",
+  },
+};
+
+export const downloadFile = {
+  titles: {
+    "remove-pages": [
+      "Your pages have been successfully removed!"
+    ]
+  },
+  btnText: {
+    "remove-pages": [
+      "Download Modified PDF",
+      "Download Modified files"
+    ]
+  },
+  backto: {
+    "remove-pages": "Back To Remove Pages"
+  },
+};
+
 export type ToolType = {
   title: string;
   seoTitle: string;
@@ -59,75 +96,7 @@ export type ToolType = {
     description: string;
   }[];
 }
-export type Paths = "lock-pdf" | "unlock-pdf";
-export const edit_page = {
-  edit_page_titles: {
-    lock_pdf: "Lock PDF & Protect PDF",
-    unlock_pdf: "Unlock PDF"
-  },
-  loader_text: "please wait...",
-  add_more_button: "Add more files",
-  action_buttons: {
-    lock_pdf: "Lock PDF",
-    unlock_pdf: "Unlock PDF"
-  },
-  lock_button_title: "Please confirm the password by entering it twice.",
-  unlock_button_title: "Enter the password for each protected file",
-  pages: "pages",
-  page: "page",
-  lock_pdf: {
-    title: "Set a password to lock your PDF file",
-    password: "Password",
-    repeatPassword: "Repeat password",
-    no_match: "The passwords do not match."
-  },
-  unlock_pdf: {
-    title: "Enter the password for files that require it",
-    password_for: "Password for"
-  },
-  filenameOptions: {
-    label: "Output File Name (Optional)",
-    placeholder: "Enter file name",
-    helperText: "This will be the name of the compressed PDF when downloaded.",
-    cta: "View Plans",
-    upgradeNotice: {
-      msg: "Levels from 2.0 to 10.0 are available with premium.",
-      cta: "Upgrade now",
-    },
-  },
-  languageSelectContent: {
-    placeholder: "Choose languages (maximum 3)",
-    warning: "This document is scanned. Please select its language to ensure accurate results.",
-    ocr_warning: "Scanned document detected. For best results, use our OCR PDF tool with advanced language detection and higher accuracy. You can also set the language here for basic processing.",
-  },
-};
-
-export const downloadFile = {
-  titles: {
-    "lock-pdf": [
-      "PDF files have been locked!",
-      "PDF file has been locked!"
-    ],
-    "unlock-pdf": [
-      "PDF files have been unlocked!",
-      "PDF file has been unlocked!"
-    ]
-  },
-  btnText: {
-    "lock-pdf": [
-      "Download Locked PDF files",
-      "Download Locked PDF file"
-    ],
-    "unlock-pdf": [
-      "Download unlocked PDF files",
-      "Download unlocked PDF file"
-    ]
-  },
-  backto: {
-    "lock-pdf": "Back To Lock PDF",
-    "unlock-pdf": "Back To Unlock PDF"
-  }
-};
+export type Paths = "remove-pages"
 
 export const tools = {
   select: "Select",

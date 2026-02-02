@@ -104,10 +104,7 @@ const EditPage = ({
             }
           </bdi>
         </h5>
-        <Options
-          edit_page={edit_page}
-          layout={path as "lock-pdf" | "unlock-pdf"}
-        />
+        <Options content={edit_page.options} />
         <div className="hide-onsmall">
           <SubmitBtn errors={errors} k={path} edit_page={edit_page} />
         </div>

@@ -47,19 +47,6 @@ export function ToolWrapper(props: ToolWrapperProps) {
       <div className="container">
         <Features
           features={features as { title: string; description: string }[]}
-          // @ts-ignore
-          tool={
-            to as
-              | "/pdf-to-powerpoint"
-              | "/word-to-pdf"
-              | "/powerpoint-to-pdf"
-              | "/excel-to-pdf"
-              | "/html-to-pdf"
-              | "/pdf-to-word"
-              | "/pdf-to-excel"
-              | "/pdf-to-pdf-a"
-              | "/pdf-to-text"
-          }
         />
       </div>
       <AdBlockDetector content={adBlockerContent} lang={lang} />
