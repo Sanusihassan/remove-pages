@@ -41,7 +41,7 @@ const DownloadFile = ({
     (state: { tool: ToolState }) => state.tool.subscriptionStatus,
   );
   const fileName = useSelector(
-    (state: { tool: ToolState }) => state.tool.fileName,
+    (state: { tool: ToolState }) => state.tool.fileName || files[0].name,
   );
   const titles = downloadFile.titles[path as keyof typeof downloadFile.titles];
   const title = titles[files && files.length > 1 ? 0 : 1] || titles[0];
