@@ -3,17 +3,16 @@ import { create } from "zustand";
 
 export interface FileStore {
   files: File[];
-  fileInput: RefObject<HTMLInputElement> | null;
-  submitBtn: React.RefObject<HTMLButtonElement> | null;
-  downloadBtn: React.RefObject<HTMLAnchorElement> | null;
+  fileInput: RefObject<HTMLInputElement | null> | null;
+  submitBtn: React.RefObject<HTMLButtonElement | null> | null;
   imageUrls: {
     file: File;
     imageUrl: string;
   }[];
+  downloadBlob: Blob | null;
   setFiles: (files: FileList | File[]) => void;
-  setFileInput: (refEl: RefObject<HTMLInputElement> | null) => void;
-  setSubmitBtn: (refEl: React.RefObject<HTMLButtonElement> | null) => void;
-  setDownloadBtn: (refEl: React.RefObject<HTMLAnchorElement> | null) => void;
+  setFileInput: (refEl: RefObject<HTMLInputElement | null> | null) => void;
+  setSubmitBtn: (refEl: React.RefObject<HTMLButtonElement | null> | null) => void;
   setImageUrls: Dispatch<
     SetStateAction<
       {
@@ -22,6 +21,8 @@ export interface FileStore {
       }[]
     >
   >;
+  setDownloadBlob: (blob: Blob) => void;
+  clearDownloadBlob: () => void;
 }
 
 export const useFileStore = create<FileStore>((set) => ({
@@ -31,6 +32,7 @@ export const useFileStore = create<FileStore>((set) => ({
   submitBtn: null,
   imageUrls: [],
   filesOnSubmit: [],
+  downloadBlob: null,
   setFiles: (files: FileList | File[]) => {
     const uniqueFiles = new Set<File>();
 
@@ -42,14 +44,11 @@ export const useFileStore = create<FileStore>((set) => ({
 
     set({ files: Array.from(uniqueFiles) });
   },
-  setFileInput(refEl: RefObject<HTMLInputElement> | null) {
+  setFileInput(refEl: RefObject<HTMLInputElement | null> | null) {
     set({ fileInput: refEl });
   },
-  setSubmitBtn(refEl: React.RefObject<HTMLButtonElement> | null) {
+  setSubmitBtn(refEl: React.RefObject<HTMLButtonElement | null> | null) {
     set({ submitBtn: refEl });
-  },
-  setDownloadBtn(refEl: React.RefObject<HTMLAnchorElement> | null) {
-    set({ downloadBtn: refEl });
   },
   setImageUrls(value: SetStateAction<{ file: File; imageUrl: string }[]>) {
     set((prevState) => ({
@@ -57,4 +56,8 @@ export const useFileStore = create<FileStore>((set) => ({
         typeof value === "function" ? value(prevState.imageUrls) : value,
     }));
   },
+  setDownloadBlob: (blob) =>
+    set({ downloadBlob: blob }),
+  clearDownloadBlob: () =>
+    set({ downloadBlob: null }),
 }));

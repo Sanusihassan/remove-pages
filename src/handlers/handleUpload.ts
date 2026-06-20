@@ -1,31 +1,166 @@
-import axios from "axios";
-import { downloadConvertedFile } from "../downloadFile";
-import type { errors as _ } from "../content";
-import { type RefObject } from "react";
-import { resetErrorMessage, setField, type ToolState } from "../store";
-import type { Action, Dispatch } from "@reduxjs/toolkit/react";
-import { parseErrorResponse } from "../utils";
+// ============================================================================
+// REFACTORED handleUpload.ts (merge-pdf) - Using Blob Pattern
+// ============================================================================
 
-let filesOnSubmit = [];
-let prevState = null;
+import axios from "axios";
+import type { errors as _ } from "../content";
+import { resetErrorMessage, setField } from "../store";
+import type { Action, Dispatch } from "@reduxjs/toolkit/react";
+
+// ============================================================================
+// FIX: Properly typed module variables (fixes TS7034)
+// ============================================================================
+
+let filesOnSubmit: string[] = [];
+let prevState: string | null = null;
+
+// ============================================================================
+// TYPES
+// ============================================================================
+
+type ErrorCode =
+  | "TOTAL_PAGES"
+  | "PER_FILE_PAGES"
+  | "MAX_FILES_EXCEEDED"
+  | "FILE_TOO_LARGE"
+  | "FILE_CORRUPT"
+  | "NOT_SUPPORTED_TYPE"
+  | "NO_FILES_SELECTED"
+  | "EMPTY_FILE"
+  | "UNKNOWN_ERROR";
+
+interface ErrorResponse {
+  errcode: ErrorCode;
+}
+
+// ============================================================================
+// HELPERS
+// ============================================================================
+
+interface UploadResponse {
+  blob: Blob;
+  mimeType: string;
+}
+
+async function sendRequest(
+  url: string,
+  formData: FormData
+): Promise<UploadResponse> {
+  try {
+    const response = await axios.post(url, formData, {
+      responseType: "blob",
+      withCredentials: true,
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    const blob = new Blob([response.data], {
+      type: response.headers["content-type"] || "application/octet-stream",
+    });
+
+    return {
+      blob,
+      mimeType: response.headers["content-type"] || "application/octet-stream",
+    };
+  } catch (err: any) {
+    // Error response might also be a Blob
+    if (err.response?.data instanceof Blob) {
+      try {
+        const text = await err.response.data.text();
+        err.response.data = JSON.parse(text);
+      } catch (parseError) {
+        console.error("Failed to parse error response:", parseError);
+        err.response.data = { errcode: "UNKNOWN_ERROR" };
+      }
+    }
+    throw err;
+  }
+}
+
+/**
+ * Parse error blob response to JSON
+ */
+async function parseErrorBlob(blob: Blob): Promise<ErrorResponse | null> {
+  try {
+    const text = await blob.text();
+    return JSON.parse(text) as ErrorResponse;
+  } catch {
+    return null;
+  }
+}
+
+// ============================================================================
+// MIME TYPE LOOKUP TABLE
+// ============================================================================
+
+const mimeTypeLookupTable: {
+  [key: string]: { outputFileMimeType: string; outputFileName: string };
+} = {
+  "application/zip": {
+    outputFileMimeType: "application/zip",
+    outputFileName: "merged.zip",
+  },
+  "application/pdf": {
+    outputFileMimeType: "application/pdf",
+    outputFileName: "merged.pdf",
+  },
+  "application/msword": {
+    outputFileMimeType: "application/msword",
+    outputFileName: "merged.docx",
+  },
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document": {
+    outputFileMimeType:
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    outputFileName: "merged.docx",
+  },
+  "application/vnd.ms-excel": {
+    outputFileMimeType: "application/vnd.ms-excel",
+    outputFileName: "merged.xlsx",
+  },
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": {
+    outputFileMimeType:
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    outputFileName: "merged.xlsx",
+  },
+  "application/vnd.ms-powerpoint": {
+    outputFileMimeType: "application/vnd.ms-powerpoint",
+    outputFileName: "merged.pptx",
+  },
+  "application/vnd.openxmlformats-officedocument.presentationml.presentation": {
+    outputFileMimeType:
+      "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    outputFileName: "merged.pptx",
+  },
+  "text/plain": {
+    outputFileMimeType: "text/plain",
+    outputFileName: "merged.txt",
+  },
+};
+
+// ============================================================================
+// MAIN HANDLER (Refactored)
+// ============================================================================
 
 export const handleUpload = async (
   e: React.SubmitEvent<HTMLFormElement>,
-  downloadBtn: RefObject<HTMLAnchorElement>,
+  // NOTE: downloadBtn parameter REMOVED
   dispatch: Dispatch<Action>,
   state: {
     path: string;
     errorMessage: string;
     fileName: string;
-    selectedPages: string;
+    selectedPages: string;  // ← AND HERE
   },
   files: File[],
-  errors: _
+  errors: _,
+  setDownloadBlob: (blob: Blob, filename: string) => void
 ) => {
   e.preventDefault();
   dispatch(setField({ isSubmitted: true }));
 
-  if (!files) return;
+  if (!files) {
+    dispatch(setField({ isSubmitted: false }));
+    return;
+  }
 
   // Extract file names from the File[] array
   const fileNames = files.map((file) => file.name);
@@ -34,7 +169,9 @@ export const handleUpload = async (
   const allFilesPresent = fileNames.every((fileName) =>
     filesOnSubmit.includes(fileName)
   );
+
   const strState = JSON.stringify(state);
+
   if (
     allFilesPresent &&
     files.length === filesOnSubmit.length &&
@@ -44,153 +181,140 @@ export const handleUpload = async (
     dispatch(resetErrorMessage());
     return;
   }
+
   prevState = strState;
 
-  // Prepare form data
+  // ────────────────────────────────────────────────────────────────────────
+  // Build FormData
+  // ────────────────────────────────────────────────────────────────────────
+
   const formData = new FormData();
   for (let i = 0; i < files.length; i++) {
     formData.append("files", files[i]);
   }
   formData.append("selectedPages", state.selectedPages);
 
+  // ────────────────────────────────────────────────────────────────────────
+  // Build URL
+  // ────────────────────────────────────────────────────────────────────────
+
   let url: string = "";
-  let endpoint = "/api/";
 
   // @ts-ignore
   if (process.env.NODE_ENV === "development") {
-    url = `http://localhost:8000${endpoint}${state.path}`;
+    url = `http://localhost:8000/api/${state.path}`;
   } else {
-    url = `${endpoint}${state.path}`;
+    url = `/api/${state.path}`;
   }
 
+  // Early exit if there's already an error
   if (state.errorMessage) {
+    dispatch(setField({ isSubmitted: false }));
     return;
   }
 
-  const originalFileName =
-    state.fileName || files[0]?.name?.split(".").slice(0, -1).join(".");
+  // Get original filename for download
+  const originalFileName = files[0]?.name?.split(".").slice(0, -1).join(".");
 
-  const mimeTypeLookupTable: {
-    [key: string]: { outputFileMimeType: string; outputFileName: string };
-  } = {
-    "application/zip": {
-      outputFileMimeType: "application/zip",
-      outputFileName: `${originalFileName || "PDFEquips"}.zip`,
-    },
-    "application/pdf": {
-      outputFileMimeType: "application/pdf",
-      outputFileName: `${originalFileName}.pdf`,
-    },
-  };
+  // ────────────────────────────────────────────────────────────────────────
+  // API Call & Blob Handling
+  // ────────────────────────────────────────────────────────────────────────
 
   try {
-    const response = await axios.post(url, formData, {
-      responseType: "arraybuffer",
-      withCredentials: true
-    });
+    // NEW: Use sendRequest helper
+    const { blob, mimeType } = await sendRequest(url, formData);
 
-    const mimeType = response.data.type || response.headers["content-type"];
+    // Look up expected output format
     const mimeTypeData = mimeTypeLookupTable[mimeType] || {
       outputFileMimeType: mimeType,
       outputFileName: "",
     };
+
     const { outputFileMimeType, outputFileName } = mimeTypeData;
-    const compressedFileSize = response.data.byteLength;
 
-    // Dispatch the compressed file size to Redux store
-    dispatch(
-      setField({
-        compressedFileSize: compressedFileSize,
-      })
-    );
+    // Ensure blob has correct MIME type
+    const typedBlob = new Blob([blob], {
+      type: outputFileMimeType || "application/octet-stream",
+    });
 
+    // ───────────────────────────────────────────────────────────────────────
+    // NEW: Deferred download via setDownloadBlob
+    // ───────────────────────────────────────────────────────────────────────
+    setDownloadBlob(typedBlob, state.fileName || outputFileName);
+
+    // Update UI state
     dispatch(setField({ showDownloadBtn: true }));
-    downloadConvertedFile(
-      response,
-      outputFileMimeType,
-      outputFileName || state.fileName,
-      downloadBtn
-    );
-    filesOnSubmit = files.map((f) => f.name);
+    dispatch(resetErrorMessage());
+    dispatch(setField({ isSubmitted: false }));
 
-    if (response.status !== 200) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    } else {
-      dispatch(resetErrorMessage());
-      dispatch(setField({ isSubmitted: false }));
-    }
+    // Update tracking
+    filesOnSubmit = files.map((f) => f.name);
   } catch (error) {
+    // ───────────────────────────────────────────────────────────────────────
+    // Error Handling
+    // ───────────────────────────────────────────────────────────────────────
+
     if ((error as { code: string }).code === "ERR_NETWORK") {
       dispatch(setField({ errorMessage: errors.ERR_NETWORK.message }));
+      dispatch(setField({ isSubmitted: false }));
       return;
     }
 
     // Handle server validation/auth errors
-    if (axios.isAxiosError(error) && error.response) {
-      try {
-        const errorCodeMap: Record<string, string> = {
-          // General file validation errors
-          'NO_FILES_PROVIDED': errors.alerts.fileNotUploaded || 'No files provided',
-          'FILE_NOT_UPLOADED': errors.alerts.fileNotUploaded || 'File not uploaded',
-          'FILE_EMPTY': errors.alerts.fileEmpty || 'File is empty',
-          'FILE_TOO_LARGE': errors.alerts.fileTooLarge || 'File is too large',
-          'TOO_MANY_FILES': errors.alerts.tooManyFiles || 'Too many files uploaded',
-          'INVALID_FILE_TYPE': errors.alerts.invalidFileType || 'Invalid file type',
-          'FILE_CORRUPT': errors.alerts.fileCorrupt || 'File is corrupted',
+    if (axios.isAxiosError(error) && error.response?.data) {
+      // Parse error response blob
+      const errorData = await parseErrorBlob(error.response.data);
 
-          // PDF-specific errors
-          'INVALID_PDF': errors.alerts.invalidPdf || 'Invalid PDF file',
-          'PDF_NOT_ENCRYPTED': errors.alerts.pdfNotEncrypted || 'PDF is not password-protected',
+      if (errorData) {
+        let limitationMsg = "";
+        let errMsg = "";
 
-          // Lock-PDF specific errors
-          'NO_LOCK_PASSWORD_PROVIDED': errors.alerts.noLockPassword || 'Please provide a password to lock the PDF',
-          'LOCKING_FAILED': errors.alerts.lockingFailed || 'Failed to lock PDF. Please try again.',
+        switch (errorData.errcode) {
+          case "MAX_FILES_EXCEEDED":
+            limitationMsg = errors.alerts.maxFiles;
+            break;
 
-          // Unlock-PDF specific errors
-          'NO_PASSWORDS_PROVIDED': errors.alerts.noPasswordsProvided || 'Please provide passwords for locked PDFs',
-          'UNLOCKING_FAILED': errors.alerts.unlockingFailed || 'Failed to unlock PDF. Please check the password and try again.',
-          'INCORRECT_PASSWORD': errors.alerts.incorrectPassword || 'Incorrect password provided',
-          'PASSWORD_REQUIRED': errors.alerts.passwordRequired || 'Password required to unlock PDF',
+          case "PER_FILE_PAGES":
+            limitationMsg = errors.alerts.perFilePages;
+            break;
 
-          // Settings errors
-          'INVALID_SETTINGS_FORMAT': errors.alerts.invalidSettings || 'Invalid settings format',
+          case "FILE_TOO_LARGE":
+            limitationMsg = errors.alerts.fileSize;
+            break;
 
-          // Auth errors
-          'UNAUTHORIZED': errors.alerts.authRequired || 'Authentication required',
-          'INVALID_TOKEN': errors.alerts.invalidToken || 'Invalid authentication token',
-          'AUTH_TOKEN_MISSING': errors.alerts.authRequired || 'Authentication required',
-          'AUTH_TOKEN_EXPIRED': errors.alerts.sessionExpired || 'Session expired. Please sign in again.',
-          'AUTH_INVALID_TOKEN': errors.alerts.invalidToken || 'Invalid authentication token',
-          'AUTH_USER_NOT_FOUND': errors.alerts.userNotFound || 'User not found',
-          'AUTH_SERVER_ERROR': errors.alerts.authError || 'Authentication error',
+          case "FILE_CORRUPT":
+            limitationMsg = errMsg =
+              errors["FILE_CORRUPT"]?.message || "File is corrupt";
+            break;
 
-          // Server errors
-          'SERVER_CONFIG_ERROR': errors.alerts.serverError || 'Server configuration error',
+          case "NOT_SUPPORTED_TYPE":
+            errMsg = errors["NOT_SUPPORTED_TYPE"]?.message ||
+              "File type not supported";
+            break;
 
-          // Other errors
-          'MAX_PAGES_EXCEEDED': errors.MAX_PAGES_EXCEEDED?.message || 'Maximum pages exceeded',
-          'NO_PAGES_SELECTED': errors.alerts.noPagesSelected,
-          'INVALID_PAGE_SELECTION': errors.alerts.invalidPageSelection,
-          'REMOVAL_FAILED': errors.alerts.removalFailed,
-          'ALL_PAGES_REMOVED': errors.alerts.allPagesRemoved,
-        };
+          case "NO_FILES_SELECTED":
+            errMsg =
+              errors["NO_FILES_SELECTED"]?.message || "No files selected";
+            break;
 
-        const { errorCode } = parseErrorResponse(error);
+          case "EMPTY_FILE":
+            errMsg = errors["EMPTY_FILE"]?.message || "File is empty";
+            break;
 
-        const message = errorCodeMap[errorCode];
-
-        if (message) {
-          dispatch(setField({ limitationMsg: message }));
-          dispatch(setField({ errorCode }));
-          return;
+          default:
+            errMsg = errors["UNKNOWN_ERROR"]?.message || "An error occurred";
         }
-      } catch {
-        // Failed to parse error response
+
+        if (errMsg) {
+          dispatch(setField({ errorMessage: errMsg }));
+        }
+
+        if (limitationMsg) {
+          dispatch(setField({ limitationMsg }));
+        }
       }
     }
 
-    dispatch(setField({ isSubmitted: false }));
-  } finally {
     dispatch(setField({ isSubmitted: false }));
   }
 };
