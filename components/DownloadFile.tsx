@@ -41,13 +41,13 @@ const DownloadFile = ({
     (state: { tool: ToolState }) => state.tool.subscriptionStatus,
   );
   const fileName = useSelector(
-    (state: { tool: ToolState }) => state.tool.fileName || files[0].name,
+    (state: { tool: ToolState }) => state.tool.fileName,
   );
   const titles = downloadFile.titles[path as keyof typeof downloadFile.titles];
   const title = titles[files && files.length > 1 ? 0 : 1] || titles[0];
   const handleDownload = () => {
     if (!downloadBlob) return;
-    saveBlob(downloadBlob, fileName || "PDFEquips");
+    saveBlob(downloadBlob, fileName || files[0]?.name || "PDFEquips");
     if (!subscriptionStatus) {
       increaseDailySiteUsage();
     }
