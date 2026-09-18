@@ -67,6 +67,11 @@ export const edit_page: _edit_page = {
         summary_remaining_pages: "الصفحات المتبقية:",
         warning_cannot_remove_all: "⚠️ لا يمكنك إزالة جميع الصفحات من المستند.",
     },
+    fileNameInput: {
+        label: "اسم الملف الناتج (اختياري)",
+        placeholder: "أدخل اسم الملف",
+        helperText: "سيكون هذا اسم المستند الذي يتم تنزيله.",
+    },
 };
 
 export const downloadFile: _downloadFile = {

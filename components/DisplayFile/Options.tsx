@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { Info } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import { setField, selectToolState } from "../../src/store";
+import { OutputFileNameInput } from "./Options/OutputFileNameInput";
+import type { edit_page } from "../../src/content";
 
 // ============ TYPES ============
 export interface RemovePagesOptionsProps {
@@ -17,6 +19,7 @@ export interface RemovePagesOptionsProps {
     warning_cannot_remove_all: string;
   };
   themeColor?: string;
+  fileNameInput: edit_page["fileNameInput"];
 }
 
 // ============ CONSTANTS ============
@@ -26,6 +29,7 @@ const THEME_COLOR_DEFAULT = "#d63031"; // Red theme
 export const RemovePagesOptions = ({
   content,
   themeColor = THEME_COLOR_DEFAULT,
+  fileNameInput,
 }: RemovePagesOptionsProps) => {
   const dispatch = useDispatch();
   const { selectedPages, pageCount } = useSelector(selectToolState);
@@ -167,6 +171,9 @@ export const RemovePagesOptions = ({
           </p>
         </div>
       ) : null}
+      <div className="footer">
+        <OutputFileNameInput content={fileNameInput} />
+      </div>
     </div>
   );
 };

@@ -104,7 +104,10 @@ const EditPage = ({
             }
           </bdi>
         </h5>
-        <Options content={edit_page.options} />
+        <Options
+          content={edit_page.options}
+          fileNameInput={edit_page.fileNameInput}
+        />
         <div className="hide-onsmall">
           <SubmitBtn errors={errors} k={path} edit_page={edit_page} />
         </div>

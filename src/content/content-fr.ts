@@ -66,6 +66,11 @@ export const edit_page: _edit_page = {
         summary_remaining_pages: "Pages restantes :",
         warning_cannot_remove_all: "⚠️ Vous ne pouvez pas supprimer toutes les pages du document.",
     },
+    fileNameInput: {
+        label: "Nom du fichier de sortie (facultatif)",
+        placeholder: "Saisir le nom du fichier",
+        helperText: "Ce sera le nom du document qui sera téléchargé.",
+    },
 };
 
 export const downloadFile: _downloadFile = {

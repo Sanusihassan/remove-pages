@@ -67,6 +67,11 @@ export const edit_page: _edit_page = {
         summary_remaining_pages: "剩余页面：",
         warning_cannot_remove_all: "⚠️ 您不能删除文档中的所有页面。",
     },
+    fileNameInput: {
+        label: "输出文件名（可选）",
+        placeholder: "输入文件名",
+        helperText: "这将是下载的文档名称。",
+    },
 };
 
 export const downloadFile: _downloadFile = {
