@@ -81,6 +81,32 @@ export const downloadFile = {
   backto: {
     "remove-pages": "Back To Remove Pages"
   },
+  shareOverlayExtra: {
+    copiedText: "Copied",
+    copy_link: "Copy Link",
+  },
+  premiumToast: {
+    variants: [
+      {
+        message: "Want better results? Try Premium for superior formatting & accuracy!",
+        actionButton: "Try Premium",
+      },
+      {
+        message: "Prefer an ad-free experience? Premium removes ads entirely.",
+        actionButton: "Go Premium",
+      },
+    ],
+  },
+  shareOverlay: {
+    "remove-pages": {
+      modalTitles: ["Let others know!", "Share the excitement!", "Be part of our community!"],
+      modalDescription:
+        "Getting rid of the blank page or stray scan in the middle of a PDF, without touching the rest of it.",
+      shareText:
+        "Deletes selected pages from a PDF and produces a new PDF with the remaining pages intact.",
+      url: "https://www.pdfequips.com/remove-pages",
+    },
+  }
 };
 
 export type ToolType = {

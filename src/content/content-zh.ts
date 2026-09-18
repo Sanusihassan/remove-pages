@@ -83,6 +83,32 @@ export const downloadFile: _downloadFile = {
     },
     backto: {
         "remove-pages": "返回到删除页面"
+    },
+    shareOverlayExtra: {
+        copiedText: "已复制",
+        copy_link: "复制链接",
+    },
+    premiumToast: {
+        variants: [
+            {
+                message: "想要更好的效果？试试 Premium 以获得更出色的排版和准确度！",
+                actionButton: "体验 Premium",
+            },
+            {
+                message: "想要无广告体验？Premium 可完全移除所有广告。",
+                actionButton: "升级 Premium",
+            },
+        ],
+    },
+    shareOverlay: {
+        "remove-pages": {
+            modalTitles: ["让更多人知道！", "分享这份喜悦！", "成为我们社区的一员！"],
+            modalDescription:
+                "清除 PDF 中间的空白页或多余扫描页，且完全不影响其余内容。",
+            shareText:
+                "从 PDF 中删除选定页面，并生成包含其余完好页面的新 PDF。",
+            url: "https://www.pdfequips.com/remove-pages",
+        },
     }
 };
 

@@ -82,6 +82,32 @@ export const downloadFile: _downloadFile = {
     },
     backto: {
         "remove-pages": "Retour aux pages supprimées"
+    },
+    shareOverlayExtra: {
+        copiedText: "Copié",
+        copy_link: "Copier le lien",
+    },
+    premiumToast: {
+        variants: [
+            {
+                message: "Vous voulez de meilleurs résultats ? Essayez Premium pour un formatage et une précision supérieurs !",
+                actionButton: "Essayer Premium",
+            },
+            {
+                message: "Vous préférez une expérience sans publicité ? Premium supprime entièrement les publicités.",
+                actionButton: "Passer à Premium",
+            },
+        ],
+    },
+    shareOverlay: {
+        "remove-pages": {
+            modalTitles: ["Faites-le savoir !", "Partagez l'enthousiasme !", "Faites partie de notre communauté !"],
+            modalDescription:
+                "Supprimer la page blanche ou la numérisation indésirable au milieu d'un PDF, sans toucher au reste.",
+            shareText:
+                "Supprime les pages sélectionnées d'un PDF et génère un nouveau PDF en conservant les pages restantes intactes.",
+            url: "https://www.pdfequips.com/remove-pages",
+        },
     }
 };
 

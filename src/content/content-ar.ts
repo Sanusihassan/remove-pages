@@ -83,6 +83,32 @@ export const downloadFile: _downloadFile = {
     },
     backto: {
         "remove-pages": "العودة إلى إزالة الصفحات"
+    },
+    premiumToast: {
+        variants: [
+            {
+                message: "هل تريد نتائج أفضل؟ جرب Premium للحصول على دقة وتنسيق ممتازين!",
+                actionButton: "جرب Premium",
+            },
+            {
+                message: "هل تفضل تجربة خالية من الإعلانات؟ Premium يزيل الإعلانات تمامًا.",
+                actionButton: "احصل على Premium",
+            },
+        ],
+    },
+    shareOverlayExtra: {
+        copiedText: "تم النسخ",
+        copy_link: "نسخ الرابط",
+    },
+    shareOverlay: {
+        "remove-pages": {
+            modalTitles: ["أخبر الآخرين!", "شاركنا الحماس!", "كن جزءًا من مجتمعنا!"],
+            modalDescription:
+                "التخلص من الصفحة الفارغة أو المسح الضوئي الزائد في منتصف ملف PDF دون المساس ببقية الصفحات.",
+            shareText:
+                "يحذف الصفحات المحددة من ملف PDF وينتج ملف PDF جديدًا مع الحفاظ على الصفحات المتبقية كما هي.",
+            url: "https://www.pdfequips.com/remove-pages",
+        },
     }
 };
 export const tools: _tools = {

@@ -84,6 +84,32 @@ export const downloadFile: _downloadFile = {
     },
     backto: {
         "remove-pages": "पृष्ठ हटाने पर वापस जाएं"
+    },
+    shareOverlayExtra: {
+        copiedText: "कॉपी किया गया",
+        copy_link: "लिंक कॉपी करें",
+    },
+    premiumToast: {
+        variants: [
+            {
+                message: "बेहतर परिणाम चाहते हैं? बेहतर फॉर्मेटिंग और सटीकता के लिए Premium आज़माएं!",
+                actionButton: "Premium आज़माएं",
+            },
+            {
+                message: "विज्ञापन-मुक्त अनुभव पसंद करते हैं? Premium विज्ञापनों को पूरी तरह से हटा देता है।",
+                actionButton: "Premium प्राप्त करें",
+            },
+        ],
+    },
+    shareOverlay: {
+        "remove-pages": {
+            modalTitles: ["दूसरों को भी बताएं!", "उत्साह साझा करें!", "हमारे समुदाय का हिस्सा बनें!"],
+            modalDescription:
+                "बाकी दस्तावेज़ को छुए बिना, PDF के बीच में मौजूद खाली पृष्ठ या अनावश्यक स्कैन को हटाएं।",
+            shareText:
+                "PDF से चयनित पृष्ठों को हटाता है और शेष पृष्ठों को सुरक्षित रखते हुए एक नया PDF बनाता है।",
+            url: "https://www.pdfequips.com/remove-pages",
+        },
     }
 };
 

@@ -83,6 +83,32 @@ export const downloadFile: _downloadFile = {
   },
   backto: {
     "remove-pages": "Volver a Eliminar páginas"
+  },
+  shareOverlayExtra: {
+    copiedText: "Copiado",
+    copy_link: "Copiar enlace",
+  },
+  premiumToast: {
+    variants: [
+      {
+        message: "¡¿Quieres mejores resultados?! Prueba Premium para obtener mayor formato y precisión.",
+        actionButton: "Probar Premium",
+      },
+      {
+        message: "¿Prefieres una experiencia sin anuncios? Premium elimina los anuncios por completo.",
+        actionButton: "Obtener Premium",
+      },
+    ],
+  },
+  shareOverlay: {
+    "remove-pages": {
+      modalTitles: ["¡Hazlo saber a los demás!", "¡Comparte el entusiasmo!", "¡Sé parte de nuestra comunidad!"],
+      modalDescription:
+        "Elimina esa página en blanco o escaneo indeseado en medio de un PDF, sin alterar el resto del documento.",
+      shareText:
+        "Elimina las páginas seleccionadas de un PDF y genera un nuevo PDF con las páginas restantes intactas.",
+      url: "https://www.pdfequips.com/remove-pages",
+    },
   }
 };
 
