@@ -1,5 +1,3 @@
-import { useSelector } from "react-redux";
-import type { ToolState } from "../src/store";
 import { GrSecure } from "react-icons/gr";
 import EasyIcon from "./icons/EasyIcon";
 import QuickIcon from "./icons/QuickIcon";
@@ -9,13 +7,9 @@ export const Features = ({
 }: {
   features: { title: string; description: string }[];
 }) => {
-  const stateShowTool = useSelector(
-    (state: { tool: ToolState }) => state.tool.showTool,
-  );
-
   const icons = [QuickIcon, GrSecure, EasyIcon];
   return (
-    <div className={`features${stateShowTool ? "" : " d-none"}`}>
+    <div className="features hide-when-editing">
       {features.map(({ title, description }, i) => {
         const Icon = icons[i];
         return (
