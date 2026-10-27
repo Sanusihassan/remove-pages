@@ -1,9 +1,9 @@
 export const tool = {
   Remove_Page: {
     title: "Remove Page",
-    seoTitle: "Delete Pages from PDF Online - Page Remover Tool",
+    seoTitle: "Remove Pages from PDF Online Free - Delete PDF Pages",
     keywords: "remove PDF pages, delete pages from PDF, PDF page remover, online PDF page removal, PDF editor, PDF modification, secure PDF tool, easy-to-use PDF tool",
-    description: "Delete unwanted pages from your PDF document and save the modified file as a new PDF.",
+    description: "Delete pages from a PDF online for free. Click the pages you don't need, or type page numbers like 2,5,8-12, and download the new PDF. No sign-up.",
     color: "#d63031",
     type: ".pdf",
     to: "/remove-pages",
