@@ -151,7 +151,8 @@ const DownloadFile = ({
           </button>
         </div>
       </div>
-      {!subscriptionStatus ? (
+      {/* null = status still loading; wait for it so subscribers never see the toast flash */}
+      {subscriptionStatus === false ? (
         <PremiumToast
           content={downloadFile.premiumToast}
           lang={lang}
